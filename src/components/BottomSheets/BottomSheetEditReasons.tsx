@@ -103,6 +103,13 @@ BottomSheetStartDateProps) => {
                 className="px-2 ml-2 text-white bg-blue-600 rounded-md"
                 onClick={async () => {
                   if (newReasonInput.length === 0) return;
+                  if (newReasonInput.includes(",")) {
+                    showAlert(
+                      "Invalid Reason",
+                      "Reasons cannot contain commas",
+                    );
+                    return;
+                  }
                   if (
                     userPreferences.reasons.some(
                       (item) =>
