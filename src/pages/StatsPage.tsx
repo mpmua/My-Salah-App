@@ -257,11 +257,12 @@ const StatsPage = ({
       await toggleDBConnection(dbConnection, "open");
 
       let query = `SELECT date, salahName, salahStatus, reasons, notes
-        FROM salahDataTable`;
-      const queryValues: string[] = [];
+        FROM salahDataTable
+        WHERE date >= ?`;
+      const queryValues: string[] = [userPreferences.userStartDate];
 
       if (rangeStartTime !== undefined && rangeEndTime !== undefined) {
-        query += " WHERE date >= ? AND date <= ?";
+        query += " AND date >= ? AND date <= ?";
         queryValues.push(
           format(rangeStartTime, "yyyy-MM-dd"),
           format(rangeEndTime, "yyyy-MM-dd"),
@@ -376,7 +377,7 @@ const StatsPage = ({
     return () => {
       cancelled = true;
     };
-  }, [dbConnection, fetchedSalahData, statsToShow, isStatsPage, rangeStartTime, rangeEndTime]);
+  }, [dbConnection, fetchedSalahData, statsToShow, isStatsPage, rangeStartTime, rangeEndTime, userPreferences.userStartDate]);
 
   return (
     <IonPage>
