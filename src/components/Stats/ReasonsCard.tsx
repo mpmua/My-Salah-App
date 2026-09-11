@@ -1,9 +1,11 @@
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { HiOutlineChevronRight } from "react-icons/hi2";
 import {
   reasonsToShowType,
   SalahNamesType,
   ReasonCountsByStatusType,
 } from "../../types/types";
-import { AnimatePresence, motion } from "framer-motion";
 import { salahStatusColorsHexCodes } from "../../utils/constants";
 import ReasonsList from "./ReasonsList";
 
@@ -11,106 +13,133 @@ interface ReasonsCardProps {
   setReasonsToShow: React.Dispatch<React.SetStateAction<reasonsToShowType>>;
   setShowReasonsSheet: React.Dispatch<React.SetStateAction<boolean>>;
   reasonCountsByStatus: ReasonCountsByStatusType;
-  status: "male-alone" | "late" | "missed";
+  statuses: (keyof ReasonCountsByStatusType)[];
   statsToShow: SalahNamesType | "All";
 }
+
+const statusLabels: Record<keyof ReasonCountsByStatusType, string> = {
+  "male-alone": "Alone",
+  late: "Late",
+  missed: "Missed",
+};
 
 const ReasonsCard = ({
   setReasonsToShow,
   setShowReasonsSheet,
   reasonCountsByStatus,
-  status,
+  statuses,
   statsToShow,
 }: ReasonsCardProps) => {
-  return (
-    <AnimatePresence>
-      <motion.section
-        // layout
-        className="text-sm bg-[var(--card-bg-color)] mt-5 rounded-2xl h-full"
-      >
-        <h1 className="py-4 mx-4 text-lg text-center">
-          {`Top Reasons For ${
-            status === "male-alone"
-              ? `Praying ${
-                  statsToShow !== "All" ? statsToShow : ""
-                } Salah Alone`
-              : status === "late"
-                ? `Praying ${statsToShow !== "All" ? statsToShow : ""} Salah Late`
-                : status === "missed"
-                  ? `Missing ${statsToShow !== "All" ? statsToShow : ""} Salah`
-                  : ""
-          }`}
-        </h1>
-        {Object.entries(reasonCountsByStatus[status]).length > 0 ? (
-          <ReasonsList
-            reasonCountsByStatus={reasonCountsByStatus}
-            status={status}
-            partialOrFull="partial"
-          />
-        ) : (
-          <section className="relative h-full">
-            <h1 className="absolute flex items-center justify-center text-sm transform -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/3">
-              <section className="">
-                <p className="text-center ">
-                  No reasons entered for Salah which were{" "}
-                  {status === "male-alone"
-                    ? "prayed alone"
-                    : status === "late"
-                      ? "performed late"
-                      : status === "missed"
-                        ? "missed"
-                        : null}
-                </p>
-              </section>
-            </h1>
-            <table className="opacity-0">
-              <tbody>
-                {Array.from({ length: 3 })
-                  .fill(0)
-                  .map((_, i) => (
-                    <tr className="" key={i}>
-                      <td className="p-2">{"key"}</td>
-                      <td className="w-1/2 p-2">
-                        <section className="relative">
-                          <p className="h-2"></p>
-                          <p
-                            style={{
-                              //  width: Math.round(("value" / reasonsSum) * 100) + "%",
-                              backgroundColor:
-                                salahStatusColorsHexCodes[status],
-                            }}
-                            className="absolute top-0 h-2 rounded-md reasons-bar"
-                          ></p>
-                        </section>
-                      </td>
-                      <td className="p-2">
-                        <p>""</p>
-                        <p className="text-xs text-end">(0%)</p>{" "}
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </section>
-        )}
+  const [selectedStatus, setSelectedStatus] = useState<
+    keyof ReasonCountsByStatusType
+  >(statuses[0] ?? "late");
 
+  const activeStatus = statuses.includes(selectedStatus)
+    ? selectedStatus
+    : statuses[0];
+
+  if (!activeStatus) {
+    return null;
+  }
+
+  const activeReasonCount = Object.keys(
+    reasonCountsByStatus[activeStatus],
+  ).length;
+  const salahName = statsToShow === "All" ? "" : `${statsToShow} `;
+  const heading =
+    activeStatus === "male-alone"
+      ? `Top Reasons For Praying ${salahName}Salah Alone`
+      : activeStatus === "late"
+        ? `Top Reasons For Praying ${salahName}Salah Late`
+        : `Top Reasons For Missing ${salahName}Salah`;
+
+  return (
+    <section className="mt-5 overflow-hidden text-sm bg-[var(--card-bg-color)] rounded-2xl">
+      <h2 className="px-5 pt-4 text-lg font-semibold">{heading}</h2>
+
+      <div
+        role="tablist"
+        aria-label="Reason status"
+        className="flex px-3 mt-2 border-b border-[var(--app-border-color)]"
+      >
+        {statuses.map((status) => {
+          const isSelected = status === activeStatus;
+
+          return (
+            <button
+              key={status}
+              id={`reasons-tab-${status}`}
+              type="button"
+              role="tab"
+              aria-selected={isSelected}
+              aria-controls={`reasons-panel-${status}`}
+              onClick={() => setSelectedStatus(status)}
+              style={
+                isSelected
+                  ? { color: salahStatusColorsHexCodes[status] }
+                  : undefined
+              }
+              className={`relative flex-1 min-h-11 -mb-px font-medium ${
+                isSelected ? "" : "opacity-60"
+              }`}
+            >
+              {statusLabels[status]}
+              {isSelected && (
+                <span
+                  aria-hidden="true"
+                  className="absolute bottom-0 w-16 h-0.5 -translate-x-1/2 rounded-full left-1/2"
+                  style={{ backgroundColor: salahStatusColorsHexCodes[status] }}
+                />
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={activeStatus}
+          id={`reasons-panel-${activeStatus}`}
+          role="tabpanel"
+          aria-labelledby={`reasons-tab-${activeStatus}`}
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -4 }}
+          transition={{ duration: 0.15 }}
+        >
+          {activeReasonCount > 0 ? (
+            <ReasonsList
+              reasonCountsByStatus={reasonCountsByStatus}
+              status={activeStatus}
+              partialOrFull="partial"
+            />
+          ) : (
+            <p className="flex items-center justify-center min-h-40 px-5 text-center opacity-60">
+              No reasons entered for Salah which were{" "}
+              {activeStatus === "male-alone"
+                ? "prayed alone"
+                : activeStatus === "late"
+                  ? "performed late"
+                  : "missed"}
+            </p>
+          )}
+        </motion.div>
+      </AnimatePresence>
+
+      {activeReasonCount > 3 && (
         <button
-          id="open-reasons-sheet"
-          style={{ borderTop: "1px solid var(--app-border-color)" }}
+          type="button"
           onClick={() => {
-            setReasonsToShow(status);
+            setReasonsToShow(activeStatus);
             setShowReasonsSheet(true);
           }}
-          className={`mb-10 pt-2 text-center w-full ${
-            Object.entries(reasonCountsByStatus[status]).length > 3
-              ? "visible"
-              : "invisible"
-          }`}
+          className="flex items-center justify-between w-full px-5 py-3 text-blue-500 border-t border-[var(--app-border-color)]"
         >
-          <p className="text-[1rem]">Show More</p>
+          <span>Show all</span>
+          <HiOutlineChevronRight aria-hidden="true" />
         </button>
-      </motion.section>
-    </AnimatePresence>
+      )}
+    </section>
   );
 };
 

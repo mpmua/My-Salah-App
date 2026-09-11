@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
 import { AnimatePresence, motion } from "framer-motion";
 
 import Calendar from "../components/Stats/Calendar";
@@ -240,6 +238,11 @@ const StatsPage = ({
       color: salahStatusColorsHexCodes.missed,
     },
   ];
+
+  const reasonStatuses: (keyof ReasonCountsByStatusType)[] =
+    userPreferences.userGender === "male"
+      ? ["male-alone", "late", "missed"]
+      : ["late", "missed"];
 
   const rangeStartTime = activeDateRange?.start.getTime();
   const rangeEndTime = activeDateRange?.end.getTime();
@@ -572,48 +575,13 @@ const StatsPage = ({
                     todaysDate={todaysDate}
                   />
                 )}
-                <Swiper
-                  className="mt-5"
-                  spaceBetween={50}
-                  slidesPerView={1}
-                  modules={[Pagination]}
-                  pagination={{ clickable: true }}
-                >
-                  {userPreferences.userGender === "male" &&
-                    salahStatusStatistics.salahMaleAloneDatesOverall > 0 && (
-                      <SwiperSlide>
-                        <ReasonsCard
-                          setReasonsToShow={setReasonsToShow}
-                          setShowReasonsSheet={setShowReasonsSheet}
-                          reasonCountsByStatus={reasonCountsByStatus}
-                          status={"male-alone"}
-                          statsToShow={statsToShow}
-                        />
-                      </SwiperSlide>
-                    )}
-                  {salahStatusStatistics.salahLateDatesOverall > 0 && (
-                    <SwiperSlide>
-                      <ReasonsCard
-                        setReasonsToShow={setReasonsToShow}
-                        setShowReasonsSheet={setShowReasonsSheet}
-                        reasonCountsByStatus={reasonCountsByStatus}
-                        status={"late"}
-                        statsToShow={statsToShow}
-                      />
-                    </SwiperSlide>
-                  )}
-                  {salahStatusStatistics.salahMissedDatesOverall > 0 && (
-                    <SwiperSlide>
-                      <ReasonsCard
-                        setReasonsToShow={setReasonsToShow}
-                        setShowReasonsSheet={setShowReasonsSheet}
-                        reasonCountsByStatus={reasonCountsByStatus}
-                        status={"missed"}
-                        statsToShow={statsToShow}
-                      />
-                    </SwiperSlide>
-                  )}
-                </Swiper>
+                <ReasonsCard
+                  setReasonsToShow={setReasonsToShow}
+                  setShowReasonsSheet={setShowReasonsSheet}
+                  reasonCountsByStatus={reasonCountsByStatus}
+                  statuses={reasonStatuses}
+                  statsToShow={statsToShow}
+                />
               </motion.section>
             </AnimatePresence>
             <BottomSheetReasons

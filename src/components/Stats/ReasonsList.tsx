@@ -14,43 +14,70 @@ const ReasonsList = ({
 }: ReasonsListProps) => {
   const reasonsSum = Object.values(reasonCountsByStatus[status]).reduce(
     (acc, total) => acc + total,
-    0
+    0,
   );
 
   return (
-    <section className="px-5">
+    <section className="px-5 py-1">
       {Object.entries(reasonCountsByStatus[status])
         .slice(
           0,
           partialOrFull === "partial"
             ? 3
-            : Object.entries(reasonCountsByStatus[status]).length
+            : Object.entries(reasonCountsByStatus[status]).length,
         )
-        .map(([key, value], index) => (
-          <section className="" key={index}>
-            <section className="flex items-center justify-between py-2">
-              <p className="whitespace-nowrap">{`${index + 1}. ${key}`}</p>
-              <section className="whitespace-nowrap text-end">
-                <p className="text-sm">
-                  {((value / reasonsSum) * 100).toFixed(1)}%
-                </p>{" "}
-              </section>
+        .map(([key, value], index) => {
+          const percentage = (value / reasonsSum) * 100;
+
+          return (
+            <section
+              className={`flex gap-3 py-3 ${
+                index > 0
+                  ? "border-t border-[var(--app-border-color)]"
+                  : ""
+              }`}
+              key={key}
+            >
+              <span className="flex items-center justify-center w-8 h-8 text-xs font-semibold rounded-full shrink-0 bg-[var(--sheet-option-bg)]">
+                {index + 1}
+              </span>
+              <div className="min-w-0 grow">
+                <div className="flex items-center justify-between gap-2">
+                  <p
+                    className={`font-semibold ${
+                      partialOrFull === "partial"
+                        ? "truncate"
+                        : "break-words"
+                    }`}
+                  >
+                    {key}
+                  </p>
+                  <div className="flex items-center gap-2 text-xs whitespace-nowrap">
+                    <span className="opacity-60">
+                      {value} {value > 1 ? "times" : "time"}
+                    </span>
+                    <span
+                      className="font-semibold"
+                      style={{ color: salahStatusColorsHexCodes[status] }}
+                    >
+                      {percentage.toFixed(1)}%
+                    </span>
+                  </div>
+                </div>
+                <div className="relative h-2 mt-2 overflow-hidden bg-[var(--reasons-bar-bg)] rounded-md">
+                  <span
+                    aria-hidden="true"
+                    style={{
+                      width: `${Math.round(percentage)}%`,
+                      backgroundColor: salahStatusColorsHexCodes[status],
+                    }}
+                    className="absolute inset-y-0 left-0 rounded-md"
+                  />
+                </div>
+              </div>
             </section>
-            <section className="relative">
-              <p className="h-2 bg-[var(--reasons-bar-bg)] rounded-md"></p>
-              <p
-                style={{
-                  width: Math.round((value / reasonsSum) * 100) + "%",
-                  backgroundColor: salahStatusColorsHexCodes[status],
-                }}
-                className="absolute top-0 left-0 h-2 rounded-md"
-              ></p>
-              <p className="pt-2 pb-4 text-sm text-end">
-                {value} {value > 1 ? "times" : "time"}
-              </p>
-            </section>
-          </section>
-        ))}
+          );
+        })}
     </section>
   );
 };
