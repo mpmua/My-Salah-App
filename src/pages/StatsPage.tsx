@@ -255,118 +255,122 @@ const StatsPage = ({
     let cancelled = false;
     setReasonCountsByStatus({ "male-alone": {}, late: {}, missed: {} });
 
-  const fetchSalahDataFromDB = async () => {
-    try {
-      await toggleDBConnection(dbConnection, "open");
+    const fetchSalahDataFromDB = async () => {
+      try {
+        await toggleDBConnection(dbConnection, "open");
 
-      let query = `SELECT date, salahName, salahStatus, reasons, notes
+        let query = `SELECT date, salahName, salahStatus, reasons, notes
         FROM salahDataTable
         WHERE date >= ?`;
-      const queryValues: string[] = [userPreferences.userStartDate];
+        const queryValues: string[] = [userPreferences.userStartDate];
 
-      if (rangeStartTime !== undefined && rangeEndTime !== undefined) {
-        query += " AND date >= ? AND date <= ?";
-        queryValues.push(
-          format(rangeStartTime, "yyyy-MM-dd"),
-          format(rangeEndTime, "yyyy-MM-dd"),
+        if (rangeStartTime !== undefined && rangeEndTime !== undefined) {
+          query += " AND date >= ? AND date <= ?";
+          queryValues.push(
+            format(rangeStartTime, "yyyy-MM-dd"),
+            format(rangeEndTime, "yyyy-MM-dd"),
+          );
+        }
+
+        const DBResultAllSalahData = await dbConnection.current!.query(
+          query,
+          queryValues,
         );
-      }
 
-      const DBResultAllSalahData = await dbConnection.current!.query(
-        query,
-        queryValues,
-      );
-
-      if (!DBResultAllSalahData.values) {
-        throw new Error("DBResultAllSalahData.values are undefined");
-      }
-
-      const DBResultAllSalahDataValues = DBResultAllSalahData.values;
-
-      const maleAloneReasonsArr: string[] = [];
-      const lateReasonsArr: string[] = [];
-      const missedReasonsArr: string[] = [];
-
-      const salahStatusesWithoutReasons = ["group", "excused", "female-alone"];
-
-      const populateReasonsArrays = (i: number) => {
-        const reasons = DBResultAllSalahDataValues[i].reasons.split(", ");
-        const salahStatus = DBResultAllSalahDataValues[i].salahStatus;
-
-        if (salahStatus === "male-alone") {
-          maleAloneReasonsArr.push(reasons);
-        } else if (salahStatus === "late") {
-          lateReasonsArr.push(reasons);
-        } else if (salahStatus === "missed") {
-          missedReasonsArr.push(reasons);
+        if (!DBResultAllSalahData.values) {
+          throw new Error("DBResultAllSalahData.values are undefined");
         }
-      };
 
-      for (let i = 0; i < DBResultAllSalahDataValues.length; i++) {
-        if (
-          !salahStatusesWithoutReasons.includes(
-            DBResultAllSalahDataValues[i].salahStatus,
-          ) &&
-          DBResultAllSalahDataValues[i].reasons !== ""
-        ) {
-          const salahName: SalahNamesType =
-            DBResultAllSalahDataValues[i].salahName;
+        const DBResultAllSalahDataValues = DBResultAllSalahData.values;
 
-          if (statsToShow === "All") {
-            populateReasonsArrays(i);
-          } else if (statsToShow === "Fajr" && salahName === "Fajr") {
-            populateReasonsArrays(i);
-          } else if (statsToShow === "Dhuhr" && salahName === "Dhuhr") {
-            populateReasonsArrays(i);
-          } else if (statsToShow === "Asr" && salahName === "Asar") {
-            populateReasonsArrays(i);
-          } else if (statsToShow === "Maghrib" && salahName === "Maghrib") {
-            populateReasonsArrays(i);
-          } else if (statsToShow === "Isha" && salahName === "Isha") {
-            populateReasonsArrays(i);
+        const maleAloneReasonsArr: string[] = [];
+        const lateReasonsArr: string[] = [];
+        const missedReasonsArr: string[] = [];
+
+        const salahStatusesWithoutReasons = [
+          "group",
+          "excused",
+          "female-alone",
+        ];
+
+        const populateReasonsArrays = (i: number) => {
+          const reasons = DBResultAllSalahDataValues[i].reasons.split(", ");
+          const salahStatus = DBResultAllSalahDataValues[i].salahStatus;
+
+          if (salahStatus === "male-alone") {
+            maleAloneReasonsArr.push(reasons);
+          } else if (salahStatus === "late") {
+            lateReasonsArr.push(reasons);
+          } else if (salahStatus === "missed") {
+            missedReasonsArr.push(reasons);
+          }
+        };
+
+        for (let i = 0; i < DBResultAllSalahDataValues.length; i++) {
+          if (
+            !salahStatusesWithoutReasons.includes(
+              DBResultAllSalahDataValues[i].salahStatus,
+            ) &&
+            DBResultAllSalahDataValues[i].reasons !== ""
+          ) {
+            const salahName: SalahNamesType =
+              DBResultAllSalahDataValues[i].salahName;
+
+            if (statsToShow === "All") {
+              populateReasonsArrays(i);
+            } else if (statsToShow === "Fajr" && salahName === "Fajr") {
+              populateReasonsArrays(i);
+            } else if (statsToShow === "Dhuhr" && salahName === "Dhuhr") {
+              populateReasonsArrays(i);
+            } else if (statsToShow === "Asr" && salahName === "Asar") {
+              populateReasonsArrays(i);
+            } else if (statsToShow === "Maghrib" && salahName === "Maghrib") {
+              populateReasonsArrays(i);
+            } else if (statsToShow === "Isha" && salahName === "Isha") {
+              populateReasonsArrays(i);
+            }
           }
         }
+        const obj: ReasonCountsByStatusType = {
+          "male-alone": {},
+          late: {},
+          missed: {},
+        };
+
+        const calculateReasonAmounts = (
+          arr: string[],
+          status: keyof ReasonCountsByStatusType,
+        ) => {
+          arr.forEach((reason: string) => {
+            if (reason === "") return;
+
+            if (obj[status][reason]) {
+              obj[status][reason] += 1;
+            } else {
+              obj[status][reason] = 1;
+            }
+          });
+
+          const sortedObj = Object.entries(obj[status])
+            .sort((a, b) => a[1] - b[1])
+            .reverse();
+
+          obj[status] = Object.fromEntries(sortedObj);
+        };
+
+        calculateReasonAmounts(maleAloneReasonsArr.flat(), "male-alone");
+        calculateReasonAmounts(lateReasonsArr.flat(), "late");
+        calculateReasonAmounts(missedReasonsArr.flat(), "missed");
+
+        if (!cancelled) {
+          setReasonCountsByStatus(obj);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        await toggleDBConnection(dbConnection, "close");
       }
-      const obj: ReasonCountsByStatusType = {
-        "male-alone": {},
-        late: {},
-        missed: {},
-      };
-
-      const calculateReasonAmounts = (
-        arr: string[],
-        status: keyof ReasonCountsByStatusType,
-      ) => {
-        arr.forEach((reason: string) => {
-          if (reason === "") return;
-
-          if (obj[status][reason]) {
-            obj[status][reason] += 1;
-          } else {
-            obj[status][reason] = 1;
-          }
-        });
-
-        const sortedObj = Object.entries(obj[status])
-          .sort((a, b) => a[1] - b[1])
-          .reverse();
-
-        obj[status] = Object.fromEntries(sortedObj);
-      };
-
-      calculateReasonAmounts(maleAloneReasonsArr.flat(), "male-alone");
-      calculateReasonAmounts(lateReasonsArr.flat(), "late");
-      calculateReasonAmounts(missedReasonsArr.flat(), "missed");
-
-      if (!cancelled) {
-        setReasonCountsByStatus(obj);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      await toggleDBConnection(dbConnection, "close");
-    }
-  };
+    };
 
     // Finish closing the previous request's connection before starting another.
     reasonsFetchQueue.current = reasonsFetchQueue.current
@@ -380,7 +384,15 @@ const StatsPage = ({
     return () => {
       cancelled = true;
     };
-  }, [dbConnection, fetchedSalahData, statsToShow, isStatsPage, rangeStartTime, rangeEndTime, userPreferences.userStartDate]);
+  }, [
+    dbConnection,
+    fetchedSalahData,
+    statsToShow,
+    isStatsPage,
+    rangeStartTime,
+    rangeEndTime,
+    userPreferences.userStartDate,
+  ]);
 
   return (
     <IonPage>
@@ -403,7 +415,7 @@ const StatsPage = ({
             {/* <div className="sticky z-10 top-[56px] bg-white dark:bg-[#121212]"> */}
 
             <IonSegment
-              className="stats-period-segment mt-5"
+              className="mt-5 stats-period-segment"
               mode="ios"
               value={statsPeriod}
               onIonChange={(e) => {
@@ -435,75 +447,77 @@ const StatsPage = ({
               statsToShow={statsToShow}
             />
 
-            {statsPeriod === "monthly" && <div className="flex items-center justify-between py-2 my-5">
-              <button
-                type="button"
-                aria-label="Previous year"
-                disabled={currentMonth + 1 > formattedMonths.length - 1}
-                className="flex items-center justify-center w-10 h-10 text-2xl disabled:opacity-30"
-                onClick={() => {
-                  setCurrentMonth((prev) => {
-                    if (prev + 12 > formattedMonths.length - 1) {
-                      return formattedMonths.length - 1;
-                    }
-                    return prev + 12;
-                  });
-                }}
-              >
-                <HiOutlineChevronDoubleLeft />
-              </button>
-              <button
-                type="button"
-                aria-label="Previous month"
-                disabled={currentMonth === formattedMonths.length - 1}
-                onClick={() => {
-                  setCurrentMonth((prev) => {
-                    if (prev === formattedMonths.length - 1) {
-                      return prev;
-                    }
-                    return prev + 1;
-                  });
-                }}
-                className="flex items-center justify-center w-10 h-10 text-2xl disabled:opacity-30"
-              >
-                <HiOutlineChevronLeft />
-              </button>
-              <span className="text-lg font-semibold tracking-wide text-center">
-                {formattedMonths[currentMonth]}
-              </span>
-              <button
-                type="button"
-                aria-label="Next month"
-                disabled={currentMonth === 0}
-                onClick={() => {
-                  setCurrentMonth((prev) => {
-                    if (prev === 0) {
-                      return prev;
-                    }
-                    return prev - 1;
-                  });
-                }}
-                className="flex items-center justify-center w-10 h-10 text-2xl disabled:opacity-30"
-              >
-                <HiOutlineChevronRight />
-              </button>
-              <button
-                type="button"
-                aria-label="Next year"
-                disabled={currentMonth === 0}
-                onClick={() => {
-                  setCurrentMonth((prev) => {
-                    if (prev - 12 <= 0) {
-                      return 0;
-                    }
-                    return prev - 12;
-                  });
-                }}
-                className="flex items-center justify-center w-10 h-10 text-2xl disabled:opacity-30"
-              >
-                <HiOutlineChevronDoubleRight />
-              </button>
-            </div>}
+            {statsPeriod === "monthly" && (
+              <div className="flex items-center justify-between py-2 my-5">
+                <button
+                  type="button"
+                  aria-label="Previous year"
+                  disabled={currentMonth + 1 > formattedMonths.length - 1}
+                  className="flex items-center justify-center w-10 h-10 text-2xl disabled:opacity-30"
+                  onClick={() => {
+                    setCurrentMonth((prev) => {
+                      if (prev + 12 > formattedMonths.length - 1) {
+                        return formattedMonths.length - 1;
+                      }
+                      return prev + 12;
+                    });
+                  }}
+                >
+                  <HiOutlineChevronDoubleLeft />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Previous month"
+                  disabled={currentMonth === formattedMonths.length - 1}
+                  onClick={() => {
+                    setCurrentMonth((prev) => {
+                      if (prev === formattedMonths.length - 1) {
+                        return prev;
+                      }
+                      return prev + 1;
+                    });
+                  }}
+                  className="flex items-center justify-center w-10 h-10 text-2xl disabled:opacity-30"
+                >
+                  <HiOutlineChevronLeft />
+                </button>
+                <span className="text-lg font-semibold tracking-wide text-center">
+                  {formattedMonths[currentMonth]}
+                </span>
+                <button
+                  type="button"
+                  aria-label="Next month"
+                  disabled={currentMonth === 0}
+                  onClick={() => {
+                    setCurrentMonth((prev) => {
+                      if (prev === 0) {
+                        return prev;
+                      }
+                      return prev - 1;
+                    });
+                  }}
+                  className="flex items-center justify-center w-10 h-10 text-2xl disabled:opacity-30"
+                >
+                  <HiOutlineChevronRight />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next year"
+                  disabled={currentMonth === 0}
+                  onClick={() => {
+                    setCurrentMonth((prev) => {
+                      if (prev - 12 <= 0) {
+                        return 0;
+                      }
+                      return prev - 12;
+                    });
+                  }}
+                  className="flex items-center justify-center w-10 h-10 text-2xl disabled:opacity-30"
+                >
+                  <HiOutlineChevronDoubleRight />
+                </button>
+              </div>
+            )}
 
             {statsPeriod === "yearly" && (
               <div className="flex items-center justify-between px-6 py-2 my-5">
@@ -539,6 +553,14 @@ const StatsPage = ({
               </div>
             )}
 
+            {statsPeriod === "overall" && (
+              <div className="flex items-center justify-center py-2 my-5">
+                <span className="flex items-center text-lg font-semibold tracking-wide text-center min-h-10">
+                  {format(userStartDateParsed, "do MMMM yyyy")} – Today
+                </span>
+              </div>
+            )}
+
             {/* </div> */}
             <AnimatePresence mode="wait">
               <motion.section
@@ -549,21 +571,21 @@ const StatsPage = ({
                 transition={{ duration: 0.2 }}
               >
                 {Object.values(donutPieChartData).some((obj) => obj.value) && (
-                  <DonutPieChart
-                    donutPieChartData={donutPieChartData}
+                  <DonutPieChart donutPieChartData={donutPieChartData} />
+                )}
+                {statsPeriod === "monthly" && (
+                  <Calendar
+                    dbConnection={dbConnection}
+                    fetchedSalahData={fetchedSalahData}
+                    statsToShow={statsToShow}
+                    setClickedDate={setClickedDate}
+                    clickedDate={clickedDate}
+                    currentMonth={currentMonth}
+                    userStartDateParsed={userStartDateParsed}
+                    todaysDate={todaysDate}
+                    formattedMonths={formattedMonths}
                   />
                 )}
-                {statsPeriod === "monthly" && <Calendar
-                  dbConnection={dbConnection}
-                  fetchedSalahData={fetchedSalahData}
-                  statsToShow={statsToShow}
-                  setClickedDate={setClickedDate}
-                  clickedDate={clickedDate}
-                  currentMonth={currentMonth}
-                  userStartDateParsed={userStartDateParsed}
-                  todaysDate={todaysDate}
-                  formattedMonths={formattedMonths}
-                />}
                 {statsPeriod === "yearly" && (
                   <YearlyStats
                     fetchedSalahData={fetchedSalahData}

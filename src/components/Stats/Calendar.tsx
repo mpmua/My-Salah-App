@@ -137,17 +137,17 @@ const Calendar = ({
       <section
         // transition={{ layout: { duration: 0.5, ease: "easeInOut" } }}
         style={{ height: "auto" }}
-        className={`bg-[var(--card-bg-color)] mt-5 pb-5 calendar-single-month-wrap whitespace-nowrap box-shadow: 0 25px 50px -12px rgb(31, 35, 36) rounded-2xl`}
+        className={`bg-[var(--card-bg-color)] mt-5 py-5 calendar-single-month-wrap whitespace-nowrap box-shadow: 0 25px 50px -12px rgb(31, 35, 36) rounded-2xl`}
       >
         <div
           ref={calenderSingleMonthHeightRef}
           className={`month-name-days-dates-wrap`}
         >
-          <section className="flex items-center justify-between p-4">
+          {/* <section className="flex items-center justify-between p-4">
             <p className="font-semibold text-center">
               {formattedMonths[currentMonth]}
             </p>
-          </section>
+          </section> */}
           <div className="grid grid-cols-7 px-2 mb-3 place-items-center days-row-wrap">
             {["M", "T", "W", "T", "F", "S", "S"].map((day, i) => (
               <div

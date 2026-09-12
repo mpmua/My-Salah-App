@@ -194,7 +194,7 @@ ion-segment-button {
 
 .stats-period-segment {
   --background: var(--stats-control-bg-color);
-  padding: 0.125rem;
+  padding: 0;
   border-radius: 0.5rem;
 }
 
@@ -208,6 +208,10 @@ ion-segment-button {
   --color: var(--stats-control-text-color);
   --color-checked: white;
   --indicator-color: #3977db;
+}
+
+.stats-period-segment-button::part(indicator) {
+  padding-inline: 0;
 }
 
 ion-modal {

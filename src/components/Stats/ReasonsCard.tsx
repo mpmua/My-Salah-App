@@ -55,7 +55,9 @@ const ReasonsCard = ({
 
   return (
     <section className="mt-5 overflow-hidden text-sm bg-[var(--card-bg-color)] rounded-2xl">
-      <h2 className="px-4 pt-4 text-base font-semibold min-h-20">{heading}</h2>
+      <h2 className="px-4 pt-4 text-base font-semibold text-center min-h-20">
+        {heading}
+      </h2>
 
       <div
         role="tablist"
@@ -115,7 +117,7 @@ const ReasonsCard = ({
               partialOrFull="partial"
             />
           ) : (
-            <p className="flex items-center justify-center min-h-40 px-4 text-center opacity-60">
+            <p className="flex items-center justify-center px-4 text-center min-h-40 opacity-60">
               No reasons entered for Salah which were{" "}
               {activeStatus === "male-alone"
                 ? "prayed alone"
@@ -127,20 +129,20 @@ const ReasonsCard = ({
         </motion.div>
       </AnimatePresence>
 
-        <button
-          type="button"
-          disabled={activeReasonCount <= 3}
-          onClick={() => {
-            setReasonsToShow(activeStatus);
-            setShowReasonsSheet(true);
-          }}
-          className={`flex items-center justify-between w-full px-4 py-3 text-blue-500 border-t border-[var(--app-border-color)] ${
-            activeReasonCount > 3 ? "visible" : "invisible"
-          }`}
-        >
-          <span>Show all</span>
-          <HiOutlineChevronRight aria-hidden="true" />
-        </button>
+      <button
+        type="button"
+        disabled={activeReasonCount <= 3}
+        onClick={() => {
+          setReasonsToShow(activeStatus);
+          setShowReasonsSheet(true);
+        }}
+        className={`flex items-center justify-between w-full px-4 py-3 text-blue-500 border-t border-[var(--app-border-color)] ${
+          activeReasonCount > 3 ? "visible" : "invisible"
+        }`}
+      >
+        <span>Show all</span>
+        <HiOutlineChevronRight aria-hidden="true" />
+      </button>
     </section>
   );
 };
