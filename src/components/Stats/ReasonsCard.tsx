@@ -55,12 +55,12 @@ const ReasonsCard = ({
 
   return (
     <section className="mt-5 overflow-hidden text-sm bg-[var(--card-bg-color)] rounded-2xl">
-      <h2 className="px-5 pt-4 text-lg font-semibold min-h-20">{heading}</h2>
+      <h2 className="px-4 pt-4 text-base font-semibold min-h-20">{heading}</h2>
 
       <div
         role="tablist"
         aria-label="Reason status"
-        className="flex px-3 mt-2 border-b border-[var(--app-border-color)]"
+        className="flex px-4 mt-2 border-b border-[var(--app-border-color)]"
       >
         {statuses.map((status) => {
           const isSelected = status === activeStatus;
@@ -115,7 +115,7 @@ const ReasonsCard = ({
               partialOrFull="partial"
             />
           ) : (
-            <p className="flex items-center justify-center min-h-40 px-5 text-center opacity-60">
+            <p className="flex items-center justify-center min-h-40 px-4 text-center opacity-60">
               No reasons entered for Salah which were{" "}
               {activeStatus === "male-alone"
                 ? "prayed alone"
@@ -134,7 +134,7 @@ const ReasonsCard = ({
             setReasonsToShow(activeStatus);
             setShowReasonsSheet(true);
           }}
-          className={`flex items-center justify-between w-full px-5 py-3 text-blue-500 border-t border-[var(--app-border-color)] ${
+          className={`flex items-center justify-between w-full px-4 py-3 text-blue-500 border-t border-[var(--app-border-color)] ${
             activeReasonCount > 3 ? "visible" : "invisible"
           }`}
         >

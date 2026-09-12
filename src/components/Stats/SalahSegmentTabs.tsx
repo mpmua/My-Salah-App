@@ -20,16 +20,10 @@ const SalahSegmentTabs = ({
 }: SalahSegmentTabsProps) => {
   return (
     <section className="mt-5">
-      <p
-        id="salah-filter-label"
-        className="mb-2 text-xs font-semibold tracking-[0.15em] opacity-60"
-      >
-        SALAH
-      </p>
       <div
         role="group"
-        aria-labelledby="salah-filter-label"
-        className="grid grid-cols-6 gap-1"
+        aria-label="Salah filter"
+        className="grid grid-cols-6 gap-2"
       >
         {salahOptions.map((salah) => (
           <button
@@ -40,7 +34,7 @@ const SalahSegmentTabs = ({
             className="h-11 min-w-0"
           >
             <span
-              className={`flex h-8 w-full items-center justify-center whitespace-nowrap rounded-full text-[10px] font-semibold min-[375px]:text-xs ${
+              className={`flex h-8 w-full items-center justify-center whitespace-nowrap rounded-xl text-[10px] font-semibold min-[375px]:text-xs ${
                 statsToShow === salah
                   ? "bg-[#3977db] text-white"
                   : "bg-[var(--stats-control-bg-color)] text-[var(--stats-control-text-color)]"

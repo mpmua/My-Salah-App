@@ -18,7 +18,7 @@ const ReasonsList = ({
   );
 
   return (
-    <section className="px-5 py-1">
+    <section className={partialOrFull === "partial" ? "px-4 py-1" : "px-5 py-1"}>
       {Object.entries(reasonCountsByStatus[status])
         .slice(
           0,
@@ -38,17 +38,21 @@ const ReasonsList = ({
               }`}
               key={key}
             >
-              <span className="flex items-center justify-center w-8 h-8 text-xs font-semibold rounded-full shrink-0 bg-[var(--sheet-option-bg)]">
+              <span className={`flex items-center justify-center w-8 h-8 text-xs shrink-0 ${
+                partialOrFull === "partial"
+                  ? "opacity-60"
+                  : "font-semibold rounded-full bg-[var(--sheet-option-bg)]"
+              }`}>
                 {index + 1}
               </span>
               <div className="min-w-0 grow">
                 <div className="flex items-center justify-between gap-2">
                   <p
-                    className={`font-semibold ${
+                    className={
                       partialOrFull === "partial"
-                        ? "truncate"
-                        : "break-words"
-                    }`}
+                        ? "font-medium truncate"
+                        : "font-semibold break-words"
+                    }
                   >
                     {key}
                   </p>
