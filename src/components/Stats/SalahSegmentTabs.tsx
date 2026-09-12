@@ -19,7 +19,7 @@ const SalahSegmentTabs = ({
   statsToShow,
 }: SalahSegmentTabsProps) => {
   return (
-    <section className="mt-5">
+    <section className="mt-1">
       <div
         role="group"
         aria-label="Salah filter"
@@ -34,7 +34,7 @@ const SalahSegmentTabs = ({
             className="h-11 min-w-0"
           >
             <span
-              className={`flex h-8 w-full items-center justify-center whitespace-nowrap rounded-xl text-[10px] font-semibold min-[375px]:text-xs ${
+              className={`flex h-8 w-full items-center justify-center whitespace-nowrap rounded-lg text-[10px] font-medium min-[375px]:text-xs ${
                 statsToShow === salah
                   ? "bg-[#3977db] text-white"
                   : "bg-[var(--stats-control-bg-color)] text-[var(--stats-control-text-color)]"
