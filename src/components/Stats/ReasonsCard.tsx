@@ -55,7 +55,7 @@ const ReasonsCard = ({
 
   return (
     <section className="mt-5 overflow-hidden text-sm bg-[var(--card-bg-color)] rounded-2xl">
-      <h2 className="px-5 pt-4 text-lg font-semibold">{heading}</h2>
+      <h2 className="px-5 pt-4 text-lg font-semibold min-h-20">{heading}</h2>
 
       <div
         role="tablist"
@@ -106,6 +106,7 @@ const ReasonsCard = ({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -4 }}
           transition={{ duration: 0.15 }}
+          className="min-h-44"
         >
           {activeReasonCount > 0 ? (
             <ReasonsList
@@ -126,19 +127,20 @@ const ReasonsCard = ({
         </motion.div>
       </AnimatePresence>
 
-      {activeReasonCount > 3 && (
         <button
           type="button"
+          disabled={activeReasonCount <= 3}
           onClick={() => {
             setReasonsToShow(activeStatus);
             setShowReasonsSheet(true);
           }}
-          className="flex items-center justify-between w-full px-5 py-3 text-blue-500 border-t border-[var(--app-border-color)]"
+          className={`flex items-center justify-between w-full px-5 py-3 text-blue-500 border-t border-[var(--app-border-color)] ${
+            activeReasonCount > 3 ? "visible" : "invisible"
+          }`}
         >
           <span>Show all</span>
           <HiOutlineChevronRight aria-hidden="true" />
         </button>
-      )}
     </section>
   );
 };
