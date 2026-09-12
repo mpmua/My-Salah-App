@@ -206,11 +206,6 @@ const YearlyStats = ({
       aria-label={`${selectedYear} ${statsToShow} monthly statistics`}
       className="mt-5"
     >
-      <h2 className="text-lg font-semibold">{selectedYear} at a glance</h2>
-      <p className="mt-1 mb-3 text-xs opacity-60">
-        Each bar shows all four Salah statuses
-      </p>
-
       {bestMonth && (
         <BestMonthCard
           bestMonth={bestMonth}
