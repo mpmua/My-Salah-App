@@ -4,7 +4,7 @@ import {
 } from "../../utils/constants";
 import { changeLogs } from "../../utils/changelog";
 import { LATEST_APP_VERSION } from "../../utils/changelog";
-import { IonContent, IonModal } from "@ionic/react";
+import { IonContent, IonFooter, IonModal } from "@ionic/react";
 import { useRef } from "react";
 
 interface BottomSheetChangeLogProps {
@@ -31,42 +31,49 @@ const BottomSheetChangelog = ({
       breakpoints={MODAL_BREAKPOINTS}
     >
       <IonContent>
-        <section className="mb-24">
-          <h1 className="mx-6 mt-8 mb-4 text-4xl ">Whats new?</h1>
+        <section className="px-5 pt-6 pb-5">
+          <h1 className="mt-0 mb-5 text-2xl font-semibold">What's new?</h1>
           {changeLogs.map((item, i) => (
             <section
               key={i}
-              className="mx-6 mt-4 changelog-individual-log  border-b border-[var(--app-border-color)]"
-              // style={{ borderColor: i === 0 ? "red" : "" }}
+              className="p-4 mt-5 bg-[var(--sheet-option-bg)] rounded-2xl"
             >
-              <p>
+              <p className="flex items-center justify-between gap-3 text-sm font-semibold">
                 v{item.versionNum}
                 {item.versionNum === LATEST_APP_VERSION && (
-                  <span className="font-bold"> - Latest Version</span>
+                  <span className="px-2 py-1 text-xs font-medium bg-[var(--card-bg-color)] rounded-md">
+                    Latest
+                  </span>
                 )}
               </p>
               {item.changes.map((item) => (
                 <section
                   key={item.heading}
-                  // style={{ border: `1px solid ${activeBackgroundColor}` }}
-                  className="p-4 mt-4 mb-5"
+                  className="pt-4 mt-4 border-t border-[var(--app-border-color)]"
                 >
-                  <h2 className="mt-0 mb-2 text-lg font-medium">
+                  <h2 className="mt-0 mb-2 text-sm font-semibold leading-snug">
                     {item.heading}
                   </h2>
-                  <p className="text-sm">{item.text}</p>
+                  <p className="text-sm leading-relaxed text-[var(--stats-control-text-color)]">
+                    {item.text}
+                  </p>
                 </section>
               ))}
             </section>
-          ))}{" "}
+          ))}
+        </section>
+      </IonContent>
+      <IonFooter className="ion-no-border">
+        <div className="px-5 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] bg-[var(--card-bg-color)] border-t border-[var(--app-border-color)]">
           <button
+            type="button"
             onClick={() => modal.current?.dismiss()}
-            className="w-[90%] rounded-xl text-white bg-[#3880ff] p-5 text-center fixed bottom-[7%] left-1/2 transform -translate-x-1/2 translate-y-1/2"
+            className="w-full min-h-11 px-4 py-3 text-sm font-semibold text-center text-white bg-[#3880ff] rounded-xl"
           >
             Close
           </button>
-        </section>
-      </IonContent>
+        </div>
+      </IonFooter>
     </IonModal>
   );
 };

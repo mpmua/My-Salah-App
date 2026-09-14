@@ -6,6 +6,66 @@ export const LATEST_APP_VERSION = "5.2";
 
 export const changeLogs = [
   {
+    versionNum: LATEST_APP_VERSION,
+    changes: [
+      {
+        heading: "New Feature: Monthly, Yearly & Overall Stats",
+        text: (
+          <>
+            <strong>Added:</strong> You can now see your stats for a month, a
+            year, or all the time you've been tracking. The status breakdown and
+            reasons show data for the period and Salah you've selected. Overall
+            shows a card for each year, and Yearly shows one for each month. Tap
+            a year to see its months, then tap a month to open the calendar. You
+            can still tap a date to see each Salah's status, reasons, and notes.
+          </>
+        ),
+      },
+      {
+        heading: "New Feature: Your Best Month",
+        text: (
+          <>
+            <strong>Added:</strong> Yearly view now shows the month with your
+            highest percentage of Salah prayed in Jamaah (for men) or on time
+            (for women). The current month isn't included, and a month needs at
+            least 70% of its Salah entries filled in to count. Excused prayers
+            don't count for or against women in this comparison.
+          </>
+        ),
+      },
+      {
+        heading: "Improvement: A New Look for Stats",
+        text: (
+          <>
+            <strong>Improved:</strong> The pie chart has been replaced with a
+            bar and percentages for each status. The streak card, Salah buttons,
+            and month and year controls have a new look too.
+          </>
+        ),
+      },
+      {
+        heading: "Improvement: Tabs for Reasons",
+        text: (
+          <>
+            <strong>Improved:</strong> You no longer need to swipe between
+            reasons cards. Tap a status tab to see its top reasons, and tap
+            "Show all" if there are more than three.
+          </>
+        ),
+      },
+      {
+        heading: "Fix: Reasons Stats",
+        text: (
+          <>
+            <strong>Fixed:</strong> If you move your tracking start date to a
+            later date, reasons from before that date no longer appear in your
+            stats.
+          </>
+        ),
+      },
+    ],
+  },
+  {
     versionNum: "5.1",
     changes: [
       {
