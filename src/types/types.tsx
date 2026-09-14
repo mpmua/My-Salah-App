@@ -132,8 +132,8 @@ export interface StatsDateRangeType {
   end: Date;
 }
 
-export interface MonthlySalahStatsType {
-  month: string;
+export interface SalahPeriodStatsType {
+  period: string;
   totalStatusCount: number;
   statusCounts: {
     group: number;

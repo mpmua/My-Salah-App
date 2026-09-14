@@ -146,6 +146,11 @@ const StatsPage = ({
     setStatsPeriod("monthly");
   };
 
+  const handleYearSelect = (year: number) => {
+    setSelectedYear(year);
+    setStatsPeriod("yearly");
+  };
+
   const getAllSalahStatuses = () => {
     for (let i = 0; i < fetchedSalahData.length; i++) {
       if (activeDateRange) {
@@ -586,10 +591,12 @@ const StatsPage = ({
                     formattedMonths={formattedMonths}
                   />
                 )}
-                {statsPeriod === "yearly" && (
+                {statsPeriod !== "monthly" && (
                   <YearlyStats
                     fetchedSalahData={fetchedSalahData}
                     selectedYear={selectedYear}
+                    showAllYears={statsPeriod === "overall"}
+                    onYearSelect={handleYearSelect}
                     onMonthSelect={handleMonthSelect}
                     statsToShow={statsToShow}
                     userGender={userPreferences.userGender}

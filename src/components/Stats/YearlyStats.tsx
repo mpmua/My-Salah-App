@@ -10,7 +10,7 @@ import {
 } from "date-fns";
 import {
   BestMonthStatsType,
-  MonthlySalahStatsType,
+  SalahPeriodStatsType,
   SalahNamesType,
   SalahRecordsArrayType,
   SalahStatusType,
@@ -21,6 +21,8 @@ import BestMonthCard from "./BestMonthCard";
 interface YearlyStatsPropsType {
   fetchedSalahData: SalahRecordsArrayType;
   selectedYear: number;
+  showAllYears: boolean;
+  onYearSelect: (year: number) => void;
   onMonthSelect: (month: Date) => void;
   statsToShow: Exclude<SalahNamesType, "Asar"> | "All";
   userGender: string;
@@ -57,6 +59,8 @@ const statusDisplayDetails = {
 const YearlyStats = ({
   fetchedSalahData,
   selectedYear,
+  showAllYears,
+  onYearSelect,
   onMonthSelect,
   statsToShow,
   userGender,
@@ -64,13 +68,20 @@ const YearlyStats = ({
   todaysDate,
 }: YearlyStatsPropsType) => {
   const salahName = statsToShow === "Asr" ? "Asar" : statsToShow;
+  const earliestYear = getYear(userStartDateParsed);
+  const periods = showAllYears
+    ? Array.from(
+        { length: getYear(todaysDate) - earliestYear + 1 },
+        (_, i) => String(earliestYear + i),
+      )
+    : months;
   const relevantStatuses: Exclude<SalahStatusType, "">[] =
     userGender === "male"
       ? ["group", "male-alone", "late", "missed"]
       : ["female-alone", "excused", "late", "missed"];
 
-  const salahStatsByMonth: MonthlySalahStatsType[] = months.map((month) => ({
-    month,
+  const salahStatsByPeriod: SalahPeriodStatsType[] = periods.map((period) => ({
+    period,
     totalStatusCount: 0,
     statusCounts: {
       group: 0,
@@ -93,7 +104,11 @@ const YearlyStats = ({
   fetchedSalahData.forEach((item) => {
     const itemDate = parseISO(item.date);
 
-    if (getYear(itemDate) !== selectedYear) {
+    if (
+      showAllYears
+        ? isBefore(itemDate, userStartDateParsed) || isAfter(itemDate, todaysDate)
+        : getYear(itemDate) !== selectedYear
+    ) {
       return;
     }
 
@@ -108,16 +123,18 @@ const YearlyStats = ({
           ]
         : [item.salahs[salahName]];
 
-    const monthIndex = getMonth(itemDate);
+    const i = showAllYears
+      ? getYear(itemDate) - earliestYear
+      : getMonth(itemDate);
 
     statuses.forEach((status) => {
       if (status !== "") {
-        salahStatsByMonth[monthIndex].statusCounts[status] += 1;
+        salahStatsByPeriod[i].statusCounts[status] += 1;
       }
     });
   });
 
-  salahStatsByMonth.forEach((item) => {
+  salahStatsByPeriod.forEach((item) => {
     relevantStatuses.forEach((status) => {
       item.totalStatusCount += item.statusCounts[status];
     });
@@ -136,7 +153,7 @@ const YearlyStats = ({
     isBefore(endOfMonth(monthStart), userStartDateParsed) ||
     isAfter(monthStart, todaysDate);
 
-  const getMonthPerformance = (monthData: MonthlySalahStatsType) => {
+  const getMonthPerformance = (monthData: SalahPeriodStatsType) => {
     const relevantStatusCount =
       userGender === "male"
         ? monthData.totalStatusCount
@@ -161,7 +178,11 @@ const YearlyStats = ({
 
   let bestMonth: BestMonthStatsType | null = null;
 
-  salahStatsByMonth.forEach((monthData, i) => {
+  salahStatsByPeriod.forEach((monthData, i) => {
+    if (showAllYears) {
+      return;
+    }
+
     const monthStart = new Date(selectedYear, i, 1);
     const monthPerformance = getMonthPerformance(monthData);
 
@@ -203,7 +224,9 @@ const YearlyStats = ({
 
   return (
     <section
-      aria-label={`${selectedYear} ${statsToShow} monthly statistics`}
+      aria-label={showAllYears
+        ? `${statsToShow} yearly statistics`
+        : `${selectedYear} ${statsToShow} monthly statistics`}
       className="mt-5"
     >
       {bestMonth && (
@@ -228,21 +251,27 @@ const YearlyStats = ({
       </div> */}
 
       <div className="grid grid-cols-3 gap-3">
-        {salahStatsByMonth.map((monthData, i) => {
-          const monthStart = new Date(selectedYear, i, 1);
-          const isUnavailable = isMonthUnavailable(monthStart);
+        {salahStatsByPeriod.map((periodData, i) => {
+          const periodStart = showAllYears
+            ? new Date(earliestYear + i, 0, 1)
+            : new Date(selectedYear, i, 1);
+          const isUnavailable = !showAllYears && isMonthUnavailable(periodStart);
 
           return (
             <button
-              key={monthData.month}
+              key={periodData.period}
               type="button"
-              aria-label={`View ${monthData.month} ${selectedYear} calendar`}
+              aria-label={showAllYears
+                ? `View ${periodData.period} monthly statistics`
+                : `View ${periodData.period} ${selectedYear} calendar`}
               disabled={isUnavailable}
-              onClick={() => onMonthSelect(monthStart)}
+              onClick={() => showAllYears
+                ? onYearSelect(getYear(periodStart))
+                : onMonthSelect(periodStart)}
               className={`p-3 text-left bg-[var(--card-bg-color)] rounded-xl ${isUnavailable ? "opacity-30" : ""}`}
             >
               <span className="block text-sm font-semibold">
-                {monthData.month}
+                {periodData.period}
               </span>
 
               <span className="flex h-2 my-3 overflow-hidden rounded-full bg-[var(--app-border-color)]">
@@ -251,7 +280,7 @@ const YearlyStats = ({
                     key={status}
                     aria-hidden="true"
                     style={{
-                      width: `${monthData.statusPercentages[status]}%`,
+                      width: `${periodData.statusPercentages[status]}%`,
                       backgroundColor: salahStatusColorsHexCodes[status],
                     }}
                   />
@@ -275,7 +304,7 @@ const YearlyStats = ({
                       {statusDisplayDetails[status].label}:{" "}
                     </span>
                     <span>
-                      {Math.round(monthData.statusPercentages[status])}%
+                      {Math.round(periodData.statusPercentages[status])}%
                     </span>
                   </span>
                 ))}
