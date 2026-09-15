@@ -1,6 +1,7 @@
-import { GoCalendar } from "react-icons/go";
+import { GoCalendar, GoGraph } from "react-icons/go";
 // import { LATEST_APP_VERSION } from "../utils/changelog";
-import { IoBugOutline } from "react-icons/io5";
+import monthlyStatsPreview from "../assets/images/stats-update-monthly.png";
+import yearlyStatsPreview from "../assets/images/stats-update-yearly.png";
 interface MajorUpdateOverlayProps {
   setShowMajorUpdateOverlay: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -10,6 +11,7 @@ const MajorUpdateOverlay = ({
 }: MajorUpdateOverlayProps) => {
   return (
     <section
+      className="flex flex-col"
       style={{
         position: "fixed",
         top: 0,
@@ -20,73 +22,104 @@ const MajorUpdateOverlay = ({
         color: "#fff",
         padding: 20,
         zIndex: 9999,
-        overflowY: "auto",
+        overflowY: "hidden",
         paddingTop: "calc(env(safe-area-inset-top) + 20px)",
         paddingBottom: "calc(env(safe-area-inset-bottom) + 20px)",
         paddingLeft: "calc(env(safe-area-inset-left) + 20px)",
         paddingRight: "calc(env(safe-area-inset-right) + 20px)",
       }}
     >
-      {/* <img height={100} width={80} src={image}></img> */}
-      <section className="flex flex-col justify-center h-full">
-        {/* <p className="mb-2 opacity-70">Version 4.8</p> */}
+      <section className="flex-1 w-full max-w-xl min-h-0 mx-auto overflow-y-auto">
+        <div
+          aria-hidden="true"
+          className="relative max-w-sm mx-auto mb-6 overflow-hidden h-72"
+          style={{
+            maskImage:
+              "linear-gradient(to bottom, black 70%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 70%, transparent 100%)",
+          }}
+        >
+          <img
+            src={monthlyStatsPreview}
+            alt=""
+            width={780}
+            height={1688}
+            className="absolute top-4 left-[4%] w-[45%] -rotate-[8deg] rounded-2xl shadow-2xl"
+          />
+          <img
+            src={yearlyStatsPreview}
+            alt=""
+            width={780}
+            height={1688}
+            className="absolute top-4 right-[4%] w-[45%] rotate-[8deg] rounded-2xl shadow-2xl"
+          />
+        </div>
 
-        <p className="bg-[#9332ed] py-2 px-2 rounded-lg w-fit text-sm font-bold">
+        <p className="bg-[#9332ed] py-2 px-3 rounded-lg w-fit text-xs font-bold">
           MAJOR UPDATE
           {/* Version {LATEST_APP_VERSION} */}
         </p>
 
-        <p className="mt-2 text-2xl font-extrabold">
-          New Feature: Update Multiple Salahs
+        <h1 className="mt-3 mb-0 text-2xl font-bold leading-tight">
+          A New Look for Your Salah Stats
+        </h1>
+
+        <p className="mt-3 text-sm leading-relaxed text-white/80">
+          See your Salah stats by month, by year, or across your whole history.
         </p>
 
-        <section className="mb-[10rem] mt-6">
-          <div className="flex mt-5 mb-2">
-            <div>
-              <GoCalendar className="mr-5 mt-1 text-xl text-[#c583f1]" />
+        <section className="pb-4 mt-6 space-y-6">
+          <div className="flex gap-3">
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl shrink-0 bg-[#c583f1]/10">
+              <GoCalendar
+                aria-hidden="true"
+                className="w-5 h-5 text-[#c583f1]"
+              />
             </div>
 
             <div>
-              <h2 className="m-0 text-lg" style={{ color: "#c583f1" }}>
-                Bulk Salah Updates
+              <h2 className="m-0 text-base font-bold text-[#c583f1]">
+                Monthly, Yearly & Overall
               </h2>
 
-              <p className="mt-2 text-sm">
-                You can now update multiple Salah entries at once from the
-                Settings page across a selected date range. Select the prayers,
-                status, reasons, and notes you want to apply, then update your
-                Salah history in one go.
+              <p className="mt-2 text-sm leading-relaxed text-white/80">
+                Pick a Salah or view all five. Tap a year or month to explore
+                your history. Yearly mode also highlights your best month.
               </p>
             </div>
           </div>
 
-          <div className="flex mb-2 mt-7">
-            <div>
-              <IoBugOutline className="mr-5 mt-1 text-xl text-[#b4ae12]" />
+          <div className="flex gap-3">
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl shrink-0 bg-[#f6cf45]/10">
+              <GoGraph aria-hidden="true" className="w-5 h-5 text-[#f6cf45]" />
             </div>
 
             <div>
-              <h2 className="m-0 text-lg text-[#b4ae12]">
-                Bug Fixes & Performance
+              <h2 className="m-0 text-base font-bold text-[#f6cf45]">
+                A Clearer Stats Page
               </h2>
 
-              <p className="mt-2 text-sm">
-                Fixed bugs and improved performance for a smoother experience.
+              <p className="mt-2 text-sm leading-relaxed text-white/80">
+                The stats page has a cleaner look, with a clearer Salah
+                breakdown, refreshed streak card, and tabs for reasons instead
+                of swiping.
               </p>
             </div>
           </div>
         </section>
-
+      </section>
+      <div className="w-full max-w-xl pt-4 mx-auto">
         <button
           type="button"
           onClick={() => {
             setShowMajorUpdateOverlay(false);
           }}
-          className="text-center bg-[#9332ed] p-5 rounded-xl fixed left-1/2 -translate-x-1/2 w-[90%] bottom-5 mb-[env(safe-area-inset-bottom)]"
+          className="w-full min-h-12 px-4 py-3 text-lg font-bold text-center bg-[#9332ed] rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         >
           Continue
         </button>
-      </section>
+      </div>
     </section>
   );
 };

@@ -52,6 +52,9 @@ const DonutPieChart = ({
             <p className="pl-3 mt-1 text-xs font-semibold">
               {Math.round(item.percentage)}%
             </p>
+            <p className="pl-3 mt-0.5 text-[10px] leading-tight opacity-60 min-[375px]:text-[11px]">
+              {item.value.toLocaleString()} {item.value === 1 ? "prayer" : "prayers"}
+            </p>
           </div>
         ))}
       </div>
