@@ -26,3 +26,7 @@ dist-ssr
 
 /Secret
 AGENTS.md
+
+# Claude Code — local only, never committed
+CLAUDE.md
+.claude/
