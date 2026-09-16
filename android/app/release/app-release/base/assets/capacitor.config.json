@@ -1,0 +1,35 @@
+{
+	"appId": "com.mysalahapp.app",
+	"appName": "My Salah App",
+	"webDir": "dist",
+	"server": {
+		"cleartext": true
+	},
+	"plugins": {
+		"LocalNotifications": {
+			"smallIcon": "res:///ic_stat_name",
+			"iconColor": "#26a1d5"
+		},
+		"SystemBars": {
+			"insetsHandling": "disable"
+		},
+		"keyboard": {
+			"resize": "none",
+			"resizeOnFullScreen": false
+		},
+		"SplashScreen": {
+			"launchAutoHide": false
+		},
+		"CapacitorSQLite": {
+			"iosIsEncryption": false,
+			"iosKeychainPrefix": "my-salah-app-data",
+			"iosBiometric": {
+				"biometricAuth": false
+			},
+			"androidIsEncryption": false,
+			"androidBiometric": {
+				"biometricAuth": false
+			}
+		}
+	}
+}
