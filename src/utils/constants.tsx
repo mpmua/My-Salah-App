@@ -97,7 +97,7 @@ export const salahStatusColorsHexCodes = {
   "male-alone": "#D4B245",
   "female-alone": "#5FAE82",
   excused: "#8C4FB5",
-  late: "#D9653B",
+  late: "#F97316",
   missed: "#E63946",
   "": "#585858",
 };
