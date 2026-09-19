@@ -30,3 +30,6 @@ AGENTS.md
 # Claude Code — local only, never committed
 CLAUDE.md
 .claude/
+
+# Local Play Store image exports
+/play-store-exports/
