@@ -199,47 +199,47 @@ const StatsPage = ({
   const filterSalahStatuses = (salahStatus: SalahStatusType) =>
     salahStatusesOverallArr.filter((status) => status === salahStatus);
 
-  const salahStatusStatistics = {
-    salahInGroupDatesOverall: filterSalahStatuses("group").length,
-    salahMaleAloneDatesOverall: filterSalahStatuses("male-alone").length,
-    salahFemaleAloneDatesOverall: filterSalahStatuses("female-alone").length,
-    salahExcusedDatesOverall: filterSalahStatuses("excused").length,
-    salahMissedDatesOverall: filterSalahStatuses("missed").length,
-    salahLateDatesOverall: filterSalahStatuses("late").length,
+  const salahStatusCounts = {
+    group: filterSalahStatuses("group").length,
+    "male-alone": filterSalahStatuses("male-alone").length,
+    "female-alone": filterSalahStatuses("female-alone").length,
+    excused: filterSalahStatuses("excused").length,
+    missed: filterSalahStatuses("missed").length,
+    late: filterSalahStatuses("late").length,
   };
 
   const statusBreakdownData = [
     userPreferences.userGender === "male"
       ? {
           title: "In Jamaah",
-          value: salahStatusStatistics.salahInGroupDatesOverall,
+          value: salahStatusCounts.group,
           color: salahStatusColorsHexCodes.group,
         }
       : {
           title: "Prayed",
-          value: salahStatusStatistics.salahFemaleAloneDatesOverall,
+          value: salahStatusCounts["female-alone"],
           color: salahStatusColorsHexCodes["female-alone"],
         },
     userPreferences.userGender === "male"
       ? {
           title: "Alone",
-          value: salahStatusStatistics.salahMaleAloneDatesOverall,
+          value: salahStatusCounts["male-alone"],
           color: salahStatusColorsHexCodes["male-alone"],
         }
       : {
           title: "Excused",
-          value: salahStatusStatistics.salahExcusedDatesOverall,
+          value: salahStatusCounts.excused,
           color: salahStatusColorsHexCodes.excused,
         },
 
     {
       title: "Late",
-      value: salahStatusStatistics.salahLateDatesOverall,
+      value: salahStatusCounts.late,
       color: salahStatusColorsHexCodes.late,
     },
     {
       title: "Missed",
-      value: salahStatusStatistics.salahMissedDatesOverall,
+      value: salahStatusCounts.missed,
       color: salahStatusColorsHexCodes.missed,
     },
   ];
@@ -610,6 +610,7 @@ const StatsPage = ({
                   setReasonsToShow={setReasonsToShow}
                   setShowReasonsSheet={setShowReasonsSheet}
                   reasonCountsByStatus={reasonCountsByStatus}
+                  salahStatusCounts={salahStatusCounts}
                   statuses={reasonStatuses}
                   statsToShow={statsToShow}
                 />

@@ -13,6 +13,7 @@ interface ReasonsCardProps {
   setReasonsToShow: React.Dispatch<React.SetStateAction<reasonsToShowType>>;
   setShowReasonsSheet: React.Dispatch<React.SetStateAction<boolean>>;
   reasonCountsByStatus: ReasonCountsByStatusType;
+  salahStatusCounts: Record<keyof ReasonCountsByStatusType, number>;
   statuses: (keyof ReasonCountsByStatusType)[];
   statsToShow: SalahNamesType | "All";
 }
@@ -27,6 +28,7 @@ const ReasonsCard = ({
   setReasonsToShow,
   setShowReasonsSheet,
   reasonCountsByStatus,
+  salahStatusCounts,
   statuses,
   statsToShow,
 }: ReasonsCardProps) => {
@@ -45,7 +47,22 @@ const ReasonsCard = ({
   const activeReasonCount = Object.keys(
     reasonCountsByStatus[activeStatus],
   ).length;
+  const activeStatusCount = salahStatusCounts[activeStatus];
   const salahName = statsToShow === "All" ? "" : `${statsToShow} `;
+  const statusDescription =
+    activeStatus === "male-alone"
+      ? `${salahName}Salah prayed alone`
+      : activeStatus === "late"
+        ? `${salahName}Salah performed late`
+        : `missed ${salahName}Salah`;
+  const emptyStateText =
+    activeStatusCount === 0
+      ? activeStatus === "male-alone"
+        ? `No ${salahName}Salah prayed alone in this period`
+        : activeStatus === "late"
+          ? `No ${salahName}Salah performed late in this period`
+          : `No missed ${salahName}Salah recorded in this period`
+      : `No reasons were entered for ${statusDescription} in this period`;
   const heading =
     activeStatus === "male-alone"
       ? `Top Reasons For Praying ${salahName}Salah Alone`
@@ -118,12 +135,7 @@ const ReasonsCard = ({
             />
           ) : (
             <p className="flex items-center justify-center px-4 text-center min-h-40 opacity-60">
-              No reasons entered for Salah which were{" "}
-              {activeStatus === "male-alone"
-                ? "prayed alone"
-                : activeStatus === "late"
-                  ? "performed late"
-                  : "missed"}
+              {emptyStateText}
             </p>
           )}
         </motion.div>
