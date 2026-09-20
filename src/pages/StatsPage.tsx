@@ -12,7 +12,7 @@ import {
   StatsDateRangeType,
   userPreferencesType,
 } from "../types/types";
-import DonutPieChart from "../components/Stats/DonutPieChart";
+import StatusBreakdownCard from "../components/Stats/StatusBreakdownCard";
 import ReasonsCard from "../components/Stats/ReasonsCard";
 import BottomSheetReasons from "../components/BottomSheets/BottomSheetReasons";
 import StreakCounter from "../components/Stats/StreakCounter";
@@ -208,7 +208,7 @@ const StatsPage = ({
     salahLateDatesOverall: filterSalahStatuses("late").length,
   };
 
-  const donutPieChartData = [
+  const statusBreakdownData = [
     userPreferences.userGender === "male"
       ? {
           title: "In Jamaah",
@@ -575,8 +575,10 @@ const StatsPage = ({
                 exit={{ y: -10, opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                {Object.values(donutPieChartData).some((obj) => obj.value) && (
-                  <DonutPieChart donutPieChartData={donutPieChartData} />
+                {Object.values(statusBreakdownData).some((obj) => obj.value) && (
+                  <StatusBreakdownCard
+                    statusBreakdownData={statusBreakdownData}
+                  />
                 )}
                 {statsPeriod === "monthly" && (
                   <Calendar

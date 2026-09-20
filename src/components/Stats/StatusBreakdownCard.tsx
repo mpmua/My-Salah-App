@@ -1,14 +1,14 @@
-const DonutPieChart = ({
-  donutPieChartData,
+const StatusBreakdownCard = ({
+  statusBreakdownData,
 }: {
-  donutPieChartData: { title: string; value: number; color: string }[];
+  statusBreakdownData: { title: string; value: number; color: string }[];
 }) => {
-  const totalStatusCount = donutPieChartData.reduce(
+  const totalStatusCount = statusBreakdownData.reduce(
     (total, item) => total + item.value,
     0,
   );
 
-  const statusData = donutPieChartData.map((item) => ({
+  const statusData = statusBreakdownData.map((item) => ({
     ...item,
     percentage: (item.value / totalStatusCount) * 100,
   }));
@@ -62,4 +62,4 @@ const DonutPieChart = ({
   );
 };
 
-export default DonutPieChart;
+export default StatusBreakdownCard;
