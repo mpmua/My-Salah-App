@@ -232,9 +232,7 @@ const MissedSalahsListBottomSheet = ({
       // initialBreakpoint={INITIAL_MODAL_BREAKPOINT}
       // breakpoints={MODAL_BREAKPOINTS}
     >
-      <IonHeader
-      // className="ion-no-border"
-      >
+      <IonHeader className="ion-no-border">
         <IonToolbar>
           <IonTitle>Missed Salah</IonTitle>
           <IonButtons slot="end">

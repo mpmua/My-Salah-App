@@ -20,7 +20,7 @@ const DonutPieChart = ({
       <div
         role="img"
         aria-label={statusData
-          .map((item) => `${item.title}: ${Math.round(item.percentage)}%`)
+          .map((item) => `${item.title}: ${item.percentage.toFixed(1)}%`)
           .join(", ")}
         className="flex h-3 mt-4 overflow-hidden rounded-full bg-[var(--app-border-color)]"
       >
@@ -50,7 +50,7 @@ const DonutPieChart = ({
               </span>
             </div>
             <p className="pl-3 mt-1 text-xs font-semibold">
-              {Math.round(item.percentage)}%
+              {item.percentage.toFixed(1)}%
             </p>
             <p className="pl-3 mt-0.5 text-[10px] leading-tight opacity-60 min-[375px]:text-[11px]">
               {item.value.toLocaleString()} {item.value === 1 ? "prayer" : "prayers"}
