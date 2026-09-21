@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { IonReactRouter } from "@ionic/react-router";
+import type { BackButtonEvent } from "@ionic/core";
 import { App as capacitorApp } from "@capacitor/app";
 
 import {
@@ -10,6 +11,7 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
+  useIonRouter,
 } from "@ionic/react";
 
 import {
@@ -80,6 +82,30 @@ import {
   dictPreferencesDefaultValues,
 } from "./utils/constants";
 import BottomSheetChangelog from "./components/BottomSheets/BottomSheetChangeLog";
+
+const AndroidBackButtonHandler = () => {
+  const { canGoBack } = useIonRouter();
+
+  useEffect(() => {
+    if (Capacitor.getPlatform() !== "android") return;
+
+    const handleBackButton: EventListener = (event) => {
+      (event as BackButtonEvent).detail.register(-1, () => {
+        if (!canGoBack()) {
+          void capacitorApp.exitApp();
+        }
+      });
+    };
+
+    document.addEventListener("ionBackButton", handleBackButton);
+
+    return () => {
+      document.removeEventListener("ionBackButton", handleBackButton);
+    };
+  }, [canGoBack]);
+
+  return null;
+};
 
 const App = () => {
   const justLaunched = useRef(true);
@@ -939,6 +965,7 @@ const App = () => {
   return (
     <IonApp>
       <IonReactRouter>
+        <AndroidBackButtonHandler />
         <IonTabs className="app">
           <IonRouterOutlet
           //  animated={false}
