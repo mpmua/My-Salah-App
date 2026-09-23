@@ -30,6 +30,7 @@ import {
   IonContent,
   IonHeader,
   IonPage,
+  IonSpinner,
   IonTitle,
   IonToggle,
   IonToolbar,
@@ -86,7 +87,7 @@ const SettingsPage = ({
   const importDBRef = useRef<HTMLInputElement | null>(null);
   // const datePickerRef = useRef<HTMLInputElement | null>(null);
   const diaglogElement = useRef<HTMLDialogElement | null>(null);
-  const [dialogElementText, setDialogElementText] = useState<string>("");
+  const [loadingMessage, setLoadingMessage] = useState("");
   const [
     isMissedSalahCounterOptionChecked,
     setIsMissedSalahCounterOptionChecked,
@@ -117,6 +118,8 @@ const SettingsPage = ({
       if (!sqliteConnection.current) {
         throw new Error("sqliteConnection does not exist");
       }
+      setLoadingMessage("Generating file, please wait...");
+      diaglogElement.current?.showModal();
       await toggleDBConnection(dbConnection, "open");
       const rawBackupData = await dbConnection.current!.exportToJson("full");
       rawBackupData.export!.overwrite = true;
@@ -143,8 +146,6 @@ const SettingsPage = ({
       });
 
       const filePath = writeResult.uri;
-      diaglogElement.current?.showModal();
-      setDialogElementText("Generating file, please wait...");
       if (Capacitor.isNativePlatform()) {
         try {
           await Share.share({
@@ -166,7 +167,7 @@ const SettingsPage = ({
       console.error(error);
     } finally {
       diaglogElement.current?.close();
-      setDialogElementText("");
+      setLoadingMessage("");
       await toggleDBConnection(dbConnection, "close");
     }
   };
@@ -194,8 +195,8 @@ const SettingsPage = ({
           throw new Error("JSON is not valid");
         }
         try {
+          setLoadingMessage("Importing file, please wait...");
           diaglogElement.current?.showModal();
-          setDialogElementText("Importing file, please wait...");
           await sqliteConnection.current.importFromJson(fileContent);
           diaglogElement.current?.close();
           showToast("Import Successful", "short");
@@ -228,7 +229,7 @@ const SettingsPage = ({
       console.error(error);
     } finally {
       diaglogElement.current?.close();
-      setDialogElementText("");
+      setLoadingMessage("");
     }
   };
 
@@ -423,10 +424,17 @@ const SettingsPage = ({
               name="backupfile"
             ></input>
             <dialog
-              className="fixed z-50 w-1/2 p-3 text-white transform -translate-x-1/2 rounded-lg shadow-lg -translate-y-3/4 bg-zinc-950 top-3/4 left-1/2"
+              aria-labelledby="backup-loading-message"
+              className="rounded-lg bg-[var(--card-bg-color)] p-4 text-center text-[var(--ion-text-color)] shadow-lg"
               ref={diaglogElement}
             >
-              {dialogElementText}
+              <div className="flex flex-col items-center gap-2">
+                <IonSpinner
+                  aria-hidden="true"
+                  className="[--color:var(--ion-text-color)]"
+                />
+                <span id="backup-loading-message">{loadingMessage}</span>
+              </div>
             </dialog>
             {Capacitor.getPlatform() === "android" && (
               <SettingIndividual
