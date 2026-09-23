@@ -147,6 +147,7 @@ const SettingsPage = ({
 
       const filePath = writeResult.uri;
       if (Capacitor.isNativePlatform()) {
+        diaglogElement.current?.close();
         try {
           await Share.share({
             title: "mysalahapp-backup",
