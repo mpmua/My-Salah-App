@@ -508,7 +508,9 @@ const AddLocationOptions = ({
                         // }
                         // setShowAddLocationSheet(false);
                         setUserLocations(allLocations);
-                        setShowLocationAddedToast(true);
+                        if (!onboardingMode) {
+                          setShowLocationAddedToast(true);
+                        }
                         setShowAddLocationSheet?.(false);
                         // setUserLocations([
                         //   ...userLocations,
