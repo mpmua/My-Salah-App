@@ -312,7 +312,9 @@ const App = () => {
       localStorage.getItem("appVersion") !== LATEST_APP_VERSION
     ) {
       // setShowChangelogSheet(true);
-      setShowMajorUpdateOverlay(true);
+      if (LATEST_APP_VERSION === "5.2") {
+        setShowMajorUpdateOverlay(true);
+      }
       localStorage.setItem("appVersion", LATEST_APP_VERSION);
     }
   }, []);

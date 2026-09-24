@@ -1,12 +1,70 @@
+import { Capacitor } from "@capacitor/core";
+
 // 1. Increment LATEST_APP_VERSION
-//  2.Change verisonNum of the first object in changeLogs to a string number (eg "3.0")
+// 2.Change verisonNum of the first object in changeLogs to a string number (eg "3.0")
 // 3. Add new object to changeLogs Array with its versionNum being the variable LATEST_APP_VERSION
 
-export const LATEST_APP_VERSION = "5.2";
+export const LATEST_APP_VERSION: string = "5.3";
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
+    changes: [
+      ...(Capacitor.getPlatform() === "android"
+        ? [
+            {
+              heading: "Fix: Android Back Navigation",
+              text: (
+                <>
+                  <strong>Fixed:</strong> Using the back gesture on the home page
+                  now exits the app when there is no page to go back to.
+                </>
+              ),
+            },
+          ]
+        : []),
+      {
+        heading: "Improvement: Clearer Reasons Stats",
+        text: (
+          <>
+            <strong>Improved:</strong> The reasons card now distinguishes
+            between having no Salah recorded for a status and having Salah
+            recorded without reasons.
+          </>
+        ),
+      },
+      {
+        heading: "Improvement: Backup Progress",
+        text: (
+          <>
+            <strong>Improved:</strong> A loading spinner and message now appear
+            while importing or preparing a backup. The spinner closes before the
+            file-sharing screen opens.
+          </>
+        ),
+      },
+      {
+        heading: "Fix: Location Confirmation",
+        text: (
+          <>
+            <strong>Fixed:</strong> The "Location added" message no longer
+            appears later after adding a location during onboarding.
+          </>
+        ),
+      },
+      {
+        heading: "Small UI Refinement",
+        text: (
+          <>
+            <strong>Improved:</strong> Removed the unnecessary line beneath the
+            Missed Salah sheet heading.
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "5.2",
     changes: [
       {
         heading: "New Feature: Monthly, Yearly & Overall Stats",
