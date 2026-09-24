@@ -16,8 +16,8 @@ export const changeLogs = [
               heading: "Fix: Android Back Navigation",
               text: (
                 <>
-                  <strong>Fixed:</strong> Using the back gesture on the home page
-                  now exits the app when there is no page to go back to.
+                  <strong>Fixed:</strong> Using the back gesture on the Home
+                  page now exits the app when there is no page to go back to.
                 </>
               ),
             },
@@ -38,8 +38,7 @@ export const changeLogs = [
         text: (
           <>
             <strong>Improved:</strong> A loading spinner and message now appear
-            while importing or preparing a backup. The spinner closes before the
-            file-sharing screen opens.
+            while importing or preparing a backup.
           </>
         ),
       },
@@ -49,15 +48,6 @@ export const changeLogs = [
           <>
             <strong>Fixed:</strong> The "Location added" message no longer
             appears later after adding a location during onboarding.
-          </>
-        ),
-      },
-      {
-        heading: "Small UI Refinement",
-        text: (
-          <>
-            <strong>Improved:</strong> Removed the unnecessary line beneath the
-            Missed Salah sheet heading.
           </>
         ),
       },
