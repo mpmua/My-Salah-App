@@ -5,7 +5,7 @@
 *.aar
 *.ap_
 *.aab
-app/release/app-release (2)/
+app/release/
 
 # Files for the ART/Dalvik VM
 *.dex
