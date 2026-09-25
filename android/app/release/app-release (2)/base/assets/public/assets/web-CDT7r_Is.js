@@ -1,0 +1,1 @@
+import{W as e}from"./index-C2vzVF_Y.js";class r extends e{async open(){return{success:!1,error:"NativeSettings is not supported on the web platform."}}async openAndroid(){return{success:!1,error:"NativeSettings is not supported on the web platform."}}async openIOS(){return{success:!1,error:"NativeSettings is not supported on the web platform."}}}export{r as NativeSettingsWeb};
