@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { GoPerson } from "react-icons/go";
 import { GoPeople } from "react-icons/go";
 import { GoSkip } from "react-icons/go";
@@ -296,15 +296,16 @@ const BottomSheetSalahStatus = ({
     }
   };
 
+  const reducedMotion = useReducedMotion();
   const salahStatusVariants = {
-    default: { scale: 1, opacity: 0.6, transition: { duration: 0.3 } },
-    animate: { scale: 1.07, opacity: 1, transition: { duration: 0.3 } },
+    default: { y: 0, transition: { duration: reducedMotion ? 0 : 0.2 } },
+    animate: { y: -2, transition: { duration: reducedMotion ? 0 : 0.2 } },
   };
 
   // const statusBoxStyles =
   //   "h-full px-5 py-3 rounded-xl mx-auto text-center flex flex-col items-center justify-around w-full";
   const statusBoxStyles =
-    "aspect-square rounded-xl flex flex-col items-center justify-center";
+    "group relative flex min-h-[104px] h-full w-full flex-col items-start justify-center overflow-hidden rounded-xl border border-[var(--app-border-color)] bg-[var(--sheet-option-bg)] px-4 py-3 text-left text-[var(--ion-text-color)] before:absolute before:inset-0 before:origin-left before:scale-x-0 before:bg-[var(--status-color)] before:transition-transform before:duration-200 data-[selected=true]:before:scale-x-100 data-[selected=true]:border-[color:var(--status-color)] data-[selected=true]:text-[color:var(--status-foreground)] motion-reduce:before:transition-none focus-visible:ring-2 focus-visible:ring-blue-500";
 
   useEffect(() => {
     if (
@@ -347,7 +348,7 @@ const BottomSheetSalahStatus = ({
           ref={sheetWrapper}
           className="w-[90%] mx-auto mb-5 rounded-lg text-white pb-env-safe-area-inset-bottom transition-all duration-300 ease-in-out"
         >
-          <h1 className="text-[var(--ion-text-color)] mb-10 text-3xl font-light text-center leading-10">
+          <h1 className="mb-2 text-left text-[1.375rem] font-bold leading-tight text-[var(--ion-text-color)]">
             How did you pray{" "}
             {Object.keys(selectedSalahAndDate).length === 1 &&
             Object.values(selectedSalahAndDate)[0].length === 1
@@ -356,9 +357,12 @@ const BottomSheetSalahStatus = ({
                 )}?`
               : `these Salah?`}
           </h1>
+          <p className="mb-6 text-sm leading-normal text-[var(--ion-text-color)] opacity-60">
+            Choose the status that matches your prayer.
+          </p>
 
           <div
-            className={`grid grid-cols-4 items-stretch grid-rows-1 gap-2 text-xs modal-sheet-salah-statuses-wrap `}
+            className="grid grid-cols-2 items-stretch gap-2"
           >
             {userPreferences.userGender === "male" ? (
               <motion.div
@@ -366,19 +370,24 @@ const BottomSheetSalahStatus = ({
                 initial="default"
                 animate={salahStatus === "group" ? "animate" : "default"}
               >
-                <div
+                <button
+                  type="button"
+                  aria-pressed={salahStatus === "group"}
+                  data-selected={salahStatus === "group"}
                   onClick={() => {
                     setSalahStatus("group");
                   }}
                   style={{
-                    backgroundColor: salahStatusColorsHexCodes.group,
-                  }}
+                    "--status-color": salahStatusColorsHexCodes.group,
+                    "--status-foreground": "#111",
+                    borderLeft: `5px solid ${salahStatusColorsHexCodes.group}`,
+                  } as React.CSSProperties}
                   className={statusBoxStyles}
                 >
-                  {" "}
-                  <GoPeople className="w-full mb-1 text-3xl" />
-                  <p className="inline mt-1"> In Jamaah</p>
-                </div>
+                  <GoPeople aria-hidden="true" className="relative z-10 mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]" />
+                  <span className="relative z-10 text-[0.9375rem] font-semibold leading-snug">In Jamaah</span>
+                  <span className="relative z-10 mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">In congregation</span>
+                </button>
               </motion.div>
             ) : (
               <motion.div
@@ -386,19 +395,24 @@ const BottomSheetSalahStatus = ({
                 initial="default"
                 animate={salahStatus === "female-alone" ? "animate" : "default"}
               >
-                <div
+                <button
+                  type="button"
+                  aria-pressed={salahStatus === "female-alone"}
+                  data-selected={salahStatus === "female-alone"}
                   onClick={() => {
                     setSalahStatus("female-alone");
                   }}
                   style={{
-                    backgroundColor: salahStatusColorsHexCodes["female-alone"],
-                  }}
+                    "--status-color": salahStatusColorsHexCodes["female-alone"],
+                    "--status-foreground": "#111",
+                    borderLeft: `5px solid ${salahStatusColorsHexCodes["female-alone"]}`,
+                  } as React.CSSProperties}
                   className={statusBoxStyles}
                 >
-                  {" "}
-                  <GoPerson className="w-full mb-1 text-3xl" />
-                  <p className="inline mt-1">Prayed</p>
-                </div>
+                  <GoPerson aria-hidden="true" className="relative z-10 mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]" />
+                  <span className="relative z-10 text-[0.9375rem] font-semibold leading-snug">Prayed</span>
+                  <span className="relative z-10 mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">Prayer completed</span>
+                </button>
               </motion.div>
             )}
             {userPreferences.userGender === "male" ? (
@@ -408,18 +422,24 @@ const BottomSheetSalahStatus = ({
                   initial="default"
                   animate={salahStatus === "male-alone" ? "animate" : "default"}
                 >
-                  <div
+                  <button
+                    type="button"
+                    aria-pressed={salahStatus === "male-alone"}
+                    data-selected={salahStatus === "male-alone"}
                     onClick={() => {
                       setSalahStatus("male-alone");
                     }}
                     style={{
-                      backgroundColor: salahStatusColorsHexCodes["male-alone"],
-                    }}
+                      "--status-color": salahStatusColorsHexCodes["male-alone"],
+                      "--status-foreground": "#111",
+                      borderLeft: `5px solid ${salahStatusColorsHexCodes["male-alone"]}`,
+                    } as React.CSSProperties}
                     className={statusBoxStyles}
                   >
-                    <GoPerson className="w-full mb-1 text-3xl" />
-                    <p className="inline mt-1">On Time</p>
-                  </div>
+                    <GoPerson aria-hidden="true" className="relative z-10 mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]" />
+                    <span className="relative z-10 text-[0.9375rem] font-semibold leading-snug">On Time</span>
+                    <span className="relative z-10 mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">Alone, on time</span>
+                  </button>
                 </motion.div>
               </>
             ) : (
@@ -429,53 +449,71 @@ const BottomSheetSalahStatus = ({
                   initial="default"
                   animate={salahStatus === "excused" ? "animate" : "default"}
                 >
-                  <div
+                  <button
+                    type="button"
+                    aria-pressed={salahStatus === "excused"}
+                    data-selected={salahStatus === "excused"}
                     onClick={() => {
                       setSalahStatus("excused");
                     }}
                     style={{
-                      backgroundColor: salahStatusColorsHexCodes.excused,
-                    }}
+                      "--status-color": salahStatusColorsHexCodes.excused,
+                      "--status-foreground": "#fff",
+                      borderLeft: `5px solid ${salahStatusColorsHexCodes.excused}`,
+                    } as React.CSSProperties}
                     className={statusBoxStyles}
                   >
-                    <PiFlower className="w-full mb-1 text-3xl" />
-                    <p className="inline mt-1">Excused</p>
-                  </div>{" "}
+                    <PiFlower aria-hidden="true" className="relative z-10 mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]" />
+                    <span className="relative z-10 text-[0.9375rem] font-semibold leading-snug">Excused</span>
+                    <span className="relative z-10 mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">Prayer excused</span>
+                  </button>{" "}
                 </motion.div>
               </>
             )}
 
-            <motion.div
+            <motion.button
+              type="button"
               variants={salahStatusVariants}
               initial="default"
               animate={salahStatus === "late" ? "animate" : "default"}
+              aria-pressed={salahStatus === "late"}
+              data-selected={salahStatus === "late"}
               onClick={() => {
                 setSalahStatus("late");
               }}
               style={{
-                backgroundColor: salahStatusColorsHexCodes.late,
-              }}
+                "--status-color": salahStatusColorsHexCodes.late,
+                "--status-foreground": "#111",
+                borderLeft: `5px solid ${salahStatusColorsHexCodes.late}`,
+              } as React.CSSProperties}
               className={statusBoxStyles}
             >
-              <GoClock className="w-full mb-1 text-3xl" />
-              <p className="inline mt-1">Late</p>
-            </motion.div>
+              <GoClock aria-hidden="true" className="relative z-10 mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]" />
+              <span className="relative z-10 text-[0.9375rem] font-semibold leading-snug">Late</span>
+              <span className="relative z-10 mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">After its time</span>
+            </motion.button>
 
-            <motion.div
+            <motion.button
+              type="button"
               variants={salahStatusVariants}
               initial="default"
               animate={salahStatus === "missed" ? "animate" : "default"}
+              aria-pressed={salahStatus === "missed"}
+              data-selected={salahStatus === "missed"}
               onClick={() => {
                 setSalahStatus("missed");
               }}
               style={{
-                backgroundColor: salahStatusColorsHexCodes.missed,
-              }}
+                "--status-color": salahStatusColorsHexCodes.missed,
+                "--status-foreground": "#111",
+                borderLeft: `5px solid ${salahStatusColorsHexCodes.missed}`,
+              } as React.CSSProperties}
               className={statusBoxStyles}
             >
-              <GoSkip className="w-full mb-1 text-3xl" />
-              <p className="inline mt-1">Missed</p>
-            </motion.div>
+              <GoSkip aria-hidden="true" className="relative z-10 mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]" />
+              <span className="relative z-10 text-[0.9375rem] font-semibold leading-snug">Missed</span>
+              <span className="relative z-10 mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">Not prayed</span>
+            </motion.button>
           </div>
           <section
             style={{ maxHeight: reasonsHeight + "px" }}
