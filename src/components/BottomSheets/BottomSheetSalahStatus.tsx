@@ -305,7 +305,7 @@ const BottomSheetSalahStatus = ({
   // const statusBoxStyles =
   //   "h-full px-5 py-3 rounded-xl mx-auto text-center flex flex-col items-center justify-around w-full";
   const statusBoxStyles =
-    "group relative flex min-h-[104px] flex-col items-start justify-center overflow-hidden rounded-xl border border-[var(--app-border-color)] bg-[var(--status-tile-bg)] [background-image:linear-gradient(var(--status-color),var(--status-color))] [background-origin:border-box] [background-repeat:no-repeat] [background-size:5px_100%] px-4 py-3 text-left text-[var(--ion-text-color)] transition-[background-size] duration-500 data-[selected=true]:[background-size:100%_100%] data-[selected=true]:border-[color:var(--status-color)] data-[selected=true]:text-[color:var(--status-foreground)] motion-reduce:transition-none";
+    "group relative flex min-h-[104px] flex-col items-start justify-center overflow-hidden rounded-xl border border-transparent ring-1 ring-inset ring-[color:var(--status-tile-border)] bg-[var(--status-tile-bg)] [background-image:linear-gradient(var(--status-color),var(--status-color))] [background-origin:border-box] [background-repeat:no-repeat] [background-size:5px_100%] px-4 py-3 text-left text-[var(--ion-text-color)] transition-[background-size] duration-500 data-[selected=true]:[background-size:100%_100%] data-[selected=true]:ring-0 data-[selected=true]:text-[color:var(--status-foreground)] motion-reduce:transition-none";
 
   useEffect(() => {
     if (

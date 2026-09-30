@@ -21,6 +21,7 @@
   --sheet-bg-color: var(--card-bg-color);
   --sheet-option-bg: rgb(240, 240, 240);
   --status-tile-bg: rgb(240, 240, 240);
+  --status-tile-border: rgb(233, 233, 233);
   --card-shadow-color: rgb(234, 234, 234);
   --app-border-color: rgba(233, 233, 233, 1);
   --toast-bg-color: #262626;
@@ -61,6 +62,7 @@ body.dark {
   --sheet-bg-color: #1A1C1E;
   --sheet-option-bg: rgb(37, 37, 37);
   --status-tile-bg: #181A1B;
+  --status-tile-border: #272A2E;
   --card-shadow-color: rgb(31, 35, 36);
   --app-border-color: rgba(54, 49, 49, 1);
   --toast-bg-color: #d4d4d4;
