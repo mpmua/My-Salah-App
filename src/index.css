@@ -37,10 +37,15 @@
   --stats-control-text-color: rgb(74, 74, 74);
   --table-dot-icon-color: rgba(71, 71, 71, 0.9);
   --textarea-bg-color: rgb(206, 206, 206);
+  --sheet-input-border-color: #b5bbc4;
+  --sheet-input-placeholder-color: #667085;
   --missed-salah-sheet-btn-color: rgb(206, 206, 206);
   --wreath-color: #000000;
   --reasons-bg-color-status-sheet: rgb(227, 227, 227);
   --reasons-bg-active-color-status-sheet: #8acefc;
+  --reasons-border-color-status-sheet: #b5bbc4;
+  --reasons-border-active-color-status-sheet: #3880ff;
+  --reasons-text-color-status-sheet: rgb(0, 0, 0);
   --calendar-arrow-btn-color: #d2d2d2;
   --reasons-bar-bg: #888888;
   --scrollbar-track: rgb(103, 103, 103);
@@ -77,10 +82,15 @@ body.dark {
   --nav-active-tab-color: white;
   --table-dot-icon-color: rgba(180, 180, 180, 0.9);
   --textarea-bg-color: rgb(38, 38, 38);
+  --sheet-input-border-color: #555b63;
+  --sheet-input-placeholder-color: #aebbd0;
   --missed-salah-sheet-btn-color: rgb(50, 50, 50);
   --wreath-color: #e9e9e9;
-  --reasons-bg-color-status-sheet: rgb(44, 44, 44);
-  --reasons-bg-active-color-status-sheet: #2563eb;
+  --reasons-bg-color-status-sheet: #191b1d;
+  --reasons-bg-active-color-status-sheet: #27313f;
+  --reasons-border-color-status-sheet: #555b63;
+  --reasons-border-active-color-status-sheet: #8ec7f5;
+  --reasons-text-color-status-sheet: #aebbd0;
   --calendar-arrow-btn-color: #252525;
   --reasons-bar-bg: #282828;
   --scrollbar-track: rgb(103, 103, 103);
@@ -451,6 +461,16 @@ td {
 .salah-status-modal-reasons-wrap {
   transition: max-height 0.3s ease-in-out;
   overflow-y: auto;
+}
+
+.DUPLICATE-REASONS {
+  width: 90vw;
+}
+
+@media (min-width: 768px) and (min-height: 600px) {
+  .DUPLICATE-REASONS {
+    width: 540px;
+  }
 }
 
 .calendar-single-month-wrap {

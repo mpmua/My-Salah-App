@@ -305,7 +305,7 @@ const BottomSheetSalahStatus = ({
   // const statusBoxStyles =
   //   "h-full px-5 py-3 rounded-xl mx-auto text-center flex flex-col items-center justify-around w-full";
   const statusBoxStyles =
-    "group relative flex min-h-[104px] flex-col items-start justify-center overflow-hidden rounded-xl border border-transparent ring-1 ring-inset ring-[color:var(--status-tile-border)] bg-[var(--status-tile-bg)] [background-image:linear-gradient(var(--status-color),var(--status-color))] [background-origin:border-box] [background-repeat:no-repeat] [background-size:5px_100%] px-4 py-3 text-left text-[var(--ion-text-color)] transition-[background-size] duration-500 data-[selected=true]:[background-size:100%_100%] data-[selected=true]:ring-0 data-[selected=true]:text-[color:var(--status-foreground)] motion-reduce:transition-none";
+    "group relative flex min-h-[104px] flex-col items-start justify-center overflow-hidden rounded-xl border border-[color:var(--status-tile-border)] bg-[var(--status-tile-bg)] [background-image:linear-gradient(var(--status-color),var(--status-color))] [background-origin:border-box] [background-repeat:no-repeat] [background-size:5px_100%] px-4 py-3 text-left text-[var(--ion-text-color)] transition-[background-size] duration-500 data-[selected=true]:[background-size:100%_100%] data-[selected=true]:border-transparent data-[selected=true]:text-[color:var(--status-foreground)] motion-reduce:transition-none";
 
   useEffect(() => {
     if (
@@ -560,17 +560,17 @@ const BottomSheetSalahStatus = ({
           <section
             style={{ maxHeight: reasonsHeight + "px" }}
             ref={modalSheetSalahReasonsWrap}
-            className="mt-4 mb-5 overflow-x-hidden salah-status-modal-reasons-wrap scrollable-container"
+            className="mt-8 mb-5 overflow-x-hidden salah-status-modal-reasons-wrap scrollable-container"
           >
             {userPreferences.reasons.length > 0 && (
               <div>
-                <h2 className="mb-3 text-sm text-start text-[var(--ion-text-color)]">
-                  Reasons:{" "}
+                <h2 className="mb-3 text-sm font-semibold text-start text-[var(--ion-text-color)]">
+                  Reasons (optional)
                 </h2>
               </div>
             )}
             {Array.isArray(userPreferences.reasons) && (
-              <div className="flex flex-wrap text-[var(--ion-text-color)]">
+              <div className="flex flex-wrap gap-2 text-[var(--ion-text-color)]">
                 <AnimatePresence>
                   {[
                     ...new Set([
@@ -595,6 +595,7 @@ const BottomSheetSalahStatus = ({
                         transition={{ duration: 0.3 }}
                         exit={{ scale: [1, 1.2, 0], opacity: 0 }}
                         key={item}
+                        data-selected={selectedReasons.includes(item)}
                         className={reasonsStyles}
                         onClick={async () => {
                           if (!selectedReasons.includes(item)) {
@@ -621,12 +622,15 @@ const BottomSheetSalahStatus = ({
             )}
           </section>
           <div className="text-sm notes-wrap">
+            <h2 className="mb-2 text-sm font-semibold text-[var(--ion-text-color)]">
+              Notes (optional)
+            </h2>
             <IonTextarea
               aria-label="notes"
               autoGrow={true}
               rows={1}
-              className="pl-2 rounded-lg text-[var(--ion-text-color)] bg-[var(--textarea-bg-color)]"
-              placeholder="Notes"
+              className="rounded-lg border border-[color:var(--sheet-input-border-color)] bg-[var(--sheet-bg-color)] text-[var(--ion-text-color)] [--padding-start:1rem] [--padding-end:1rem] [--placeholder-color:var(--sheet-input-placeholder-color)] [--placeholder-opacity:1]"
+              placeholder="Add a note..."
               value={notes}
               onIonInput={(e) => {
                 // @ts-ignore
@@ -647,7 +651,7 @@ const BottomSheetSalahStatus = ({
                 onSheetCloseCleanup();
               }
             }}
-            className={`w-full p-4 mt-5 rounded-2xl bg-blue-600 ${
+            className={`mt-3 w-full rounded-lg bg-[var(--ion-color-primary)] px-4 py-3 text-[0.9375rem] font-semibold text-[var(--ion-color-primary-contrast)] ${
               salahStatus ? "opacity-100" : "opacity-20"
             }`}
           >
@@ -665,22 +669,25 @@ const BottomSheetSalahStatus = ({
           <div className="overflow-x-hidden salah-status-modal-reasons-wrap">
             {userPreferences.reasons.length > 0 && (
               <div>
-                <h2 className="mb-3 text-sm text-start">Reasons: </h2>
+                <h2 className="mb-3 text-sm font-semibold text-start text-[var(--ion-text-color)]">
+                  Reasons (optional)
+                </h2>
               </div>
             )}
           </div>
         </div>
 
         {Array.isArray(userPreferences.reasons) && (
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap gap-2">
             {[...new Set([...selectedReasons, ...userPreferences.reasons])]
               .sort((a, b) => a.localeCompare(b))
               .map((item) => (
                 <p
                   key={item}
+                  data-selected={selectedReasons.includes(item)}
                   style={{
                     backgroundColor: selectedReasons.includes(item)
-                      ? "#fff"
+                      ? "var(--reasons-bg-active-color-status-sheet)"
                       : "",
                   }}
                   className={reasonsStyles}
