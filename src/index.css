@@ -18,7 +18,7 @@
   /* --ion-text-color: rgba(13, 13, 13, 1); */
   --ion-text-color: rgb(0, 0, 0);
   --card-bg-color: rgb(247, 247, 247);
-  --sheet-bg-color: var(--card-bg-color);
+  --sheet-bg-color: #FEFEFE;
   --sheet-option-bg: rgb(240, 240, 240);
   --status-tile-bg: rgb(240, 240, 240);
   --status-tile-border: rgb(233, 233, 233);
@@ -41,11 +41,11 @@
   --sheet-input-placeholder-color: #667085;
   --missed-salah-sheet-btn-color: rgb(206, 206, 206);
   --wreath-color: #000000;
-  --reasons-bg-color-status-sheet: rgb(227, 227, 227);
+  --reasons-bg-color-status-sheet: #FBFCFC;
   --reasons-bg-active-color-status-sheet: #8acefc;
   --reasons-border-color-status-sheet: #b5bbc4;
   --reasons-border-active-color-status-sheet: #3880ff;
-  --reasons-text-color-status-sheet: rgb(0, 0, 0);
+  --reasons-text-color-status-sheet: #1a365d;
   --calendar-arrow-btn-color: #d2d2d2;
   --reasons-bar-bg: #888888;
   --scrollbar-track: rgb(103, 103, 103);
