@@ -558,7 +558,7 @@ const BottomSheetSalahStatus = ({
           <section
             style={{ maxHeight: reasonsHeight + "px" }}
             ref={modalSheetSalahReasonsWrap}
-            className="mt-8 mb-5 overflow-x-hidden salah-status-modal-reasons-wrap scrollable-container"
+            className="mt-8 mb-5 overflow-x-hidden salah-status-modal-reasons-wrap scrollable-container ion-content-scroll-host"
           >
             {userPreferences.reasons.length > 0 && (
               <div>
