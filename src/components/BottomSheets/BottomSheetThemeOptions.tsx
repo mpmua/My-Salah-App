@@ -1,10 +1,9 @@
-import { IonModal } from "@ionic/react";
+import { IonModal, IonRadio, IonRadioGroup, isPlatform } from "@ionic/react";
 import {
   INITIAL_MODAL_BREAKPOINT,
   MODAL_BREAKPOINTS,
 } from "../../utils/constants";
 import { themeType, userPreferencesType } from "../../types/types";
-import { MdCheck } from "react-icons/md";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import { updateUserPrefs } from "../../utils/helpers";
 
@@ -31,62 +30,77 @@ const BottomSheetThemeOptions = ({
       initialBreakpoint={INITIAL_MODAL_BREAKPOINT}
       breakpoints={MODAL_BREAKPOINTS}
     >
-      <section className="py-10 theme-sheet-content-wrap">
+      <section className="px-4 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom))] text-[var(--ion-text-color)] theme-sheet-content-wrap">
         {/* <h1 className="modal-header-text">Themes</h1> */}
-        <ul className="mx-2 my-5 rounded-lg notification-ul-wrap">
-          {/* // TODO: May need to add aria-pressed to each button */}
-          <li className="flex justify-between p-3 border-b border-[var(--table-row-border-color)]">
-            <button
-              aria-pressed={theme === "light"}
-              className="w-full text-left"
-              onClick={async () => {
-                await updateUserPrefs(
-                  dbConnection,
-                  "theme",
-                  "light",
-                  setUserPreferences,
-                );
-              }}
-            >
-              Light
-            </button>
-            {theme === "light" && <MdCheck />}
-          </li>
-          <li className="flex justify-between p-3 border-b border-[var(--table-row-border-color)]">
-            <button
-              aria-pressed={theme === "dark"}
-              onClick={async () => {
-                await updateUserPrefs(
-                  dbConnection,
-                  "theme",
-                  "dark",
-                  setUserPreferences,
-                );
-              }}
-              className="w-full text-left"
-            >
-              Dark
-            </button>
-            {theme === "dark" && <MdCheck />}
-          </li>
-          <li className="flex justify-between p-3 ">
-            <button
-              aria-pressed={theme === "system"}
-              onClick={async () => {
-                await updateUserPrefs(
-                  dbConnection,
-                  "theme",
-                  "system",
-                  setUserPreferences,
-                );
-              }}
-              className="w-full text-left"
-            >
-              System
-            </button>
-            {theme === "system" && <MdCheck />}
-          </li>
-        </ul>
+        <h1 className="mb-4 px-2 text-[1.625rem] font-bold leading-tight">
+          Theme
+        </h1>
+        <IonRadioGroup
+          aria-label="Theme"
+          value={theme}
+          onIonChange={async (e) => {
+            await updateUserPrefs(
+              dbConnection,
+              "theme",
+              e.detail.value,
+              setUserPreferences,
+            );
+          }}
+        >
+          <ul className="notification-ul-wrap">
+            {/* // TODO: May need to add aria-pressed to each button */}
+            <li className="relative border-b border-[color:var(--table-row-border-color)]">
+              {theme === "light" && (
+                <span aria-hidden="true" className="absolute left-0 top-1/2 h-7 w-1 -translate-y-1/2 rounded-full bg-[var(--ion-color-primary)]" />
+              )}
+              <IonRadio
+                mode={isPlatform("ios") ? "ios" : "md"}
+                value="light"
+                color="primary"
+                labelPlacement="start"
+                justify="space-between"
+                className="w-full px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-input-placeholder-color)] [&::part(label)]:whitespace-normal"
+              >
+                Light
+              </IonRadio>
+            </li>
+            <li className="relative border-b border-[color:var(--table-row-border-color)]">
+              {theme === "dark" && (
+                <span aria-hidden="true" className="absolute left-0 top-1/2 h-7 w-1 -translate-y-1/2 rounded-full bg-[var(--ion-color-primary)]" />
+              )}
+              <IonRadio
+                mode={isPlatform("ios") ? "ios" : "md"}
+                value="dark"
+                color="primary"
+                labelPlacement="start"
+                justify="space-between"
+                className="w-full px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-input-placeholder-color)] [&::part(label)]:whitespace-normal"
+              >
+                Dark
+              </IonRadio>
+            </li>
+            <li className="relative">
+              {theme === "system" && (
+                <span aria-hidden="true" className="absolute left-0 top-1/2 h-7 w-1 -translate-y-1/2 rounded-full bg-[var(--ion-color-primary)]" />
+              )}
+              <IonRadio
+                mode={isPlatform("ios") ? "ios" : "md"}
+                value="system"
+                color="primary"
+                labelPlacement="start"
+                justify="space-between"
+                className="w-full px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-input-placeholder-color)] [&::part(label)]:whitespace-normal"
+              >
+                <span>
+                  System
+                  <span className="mt-1 block text-sm font-normal leading-snug text-[var(--sheet-input-placeholder-color)]">
+                    Match device appearance
+                  </span>
+                </span>
+              </IonRadio>
+            </li>
+          </ul>
+        </IonRadioGroup>
       </section>
     </IonModal>
   );
