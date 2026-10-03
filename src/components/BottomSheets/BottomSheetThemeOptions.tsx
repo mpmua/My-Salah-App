@@ -47,59 +47,42 @@ const BottomSheetThemeOptions = ({
             );
           }}
         >
-          <ul className="notification-ul-wrap">
-            {/* // TODO: May need to add aria-pressed to each button */}
-            <li className="relative border-b border-[color:var(--table-row-border-color)]">
-              {theme === "light" && (
-                <span aria-hidden="true" className="absolute left-0 top-1/2 h-7 w-1 -translate-y-1/2 rounded-full bg-[var(--ion-color-primary)]" />
-              )}
-              <IonRadio
-                mode={isPlatform("ios") ? "ios" : "md"}
-                value="light"
-                color="primary"
-                labelPlacement="start"
-                justify="space-between"
-                className="w-full px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-input-placeholder-color)] [&::part(label)]:whitespace-normal"
-              >
-                Light
-              </IonRadio>
-            </li>
-            <li className="relative border-b border-[color:var(--table-row-border-color)]">
-              {theme === "dark" && (
-                <span aria-hidden="true" className="absolute left-0 top-1/2 h-7 w-1 -translate-y-1/2 rounded-full bg-[var(--ion-color-primary)]" />
-              )}
-              <IonRadio
-                mode={isPlatform("ios") ? "ios" : "md"}
-                value="dark"
-                color="primary"
-                labelPlacement="start"
-                justify="space-between"
-                className="w-full px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-input-placeholder-color)] [&::part(label)]:whitespace-normal"
-              >
-                Dark
-              </IonRadio>
-            </li>
-            <li className="relative">
-              {theme === "system" && (
-                <span aria-hidden="true" className="absolute left-0 top-1/2 h-7 w-1 -translate-y-1/2 rounded-full bg-[var(--ion-color-primary)]" />
-              )}
-              <IonRadio
-                mode={isPlatform("ios") ? "ios" : "md"}
-                value="system"
-                color="primary"
-                labelPlacement="start"
-                justify="space-between"
-                className="w-full px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-input-placeholder-color)] [&::part(label)]:whitespace-normal"
-              >
-                <span>
-                  System
-                  <span className="mt-1 block text-sm font-normal leading-snug text-[var(--sheet-input-placeholder-color)]">
-                    Match device appearance
-                  </span>
-                </span>
-              </IonRadio>
-            </li>
-          </ul>
+          {/* // TODO: May need to add aria-pressed to each button */}
+          <IonRadio
+            mode={isPlatform("ios") ? "ios" : "md"}
+            value="light"
+            color="primary"
+            labelPlacement="start"
+            justify="space-between"
+            className="w-full border-b border-[color:var(--table-row-border-color)] px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-input-placeholder-color)] [&::part(label)]:whitespace-normal before:absolute before:left-0 before:top-1/2 before:h-7 before:w-1 before:-translate-y-1/2 before:rounded-full aria-checked:before:bg-[var(--ion-color-primary)]"
+          >
+            Light
+          </IonRadio>
+          <IonRadio
+            mode={isPlatform("ios") ? "ios" : "md"}
+            value="dark"
+            color="primary"
+            labelPlacement="start"
+            justify="space-between"
+            className="w-full border-b border-[color:var(--table-row-border-color)] px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-input-placeholder-color)] [&::part(label)]:whitespace-normal before:absolute before:left-0 before:top-1/2 before:h-7 before:w-1 before:-translate-y-1/2 before:rounded-full aria-checked:before:bg-[var(--ion-color-primary)]"
+          >
+            Dark
+          </IonRadio>
+          <IonRadio
+            mode={isPlatform("ios") ? "ios" : "md"}
+            value="system"
+            color="primary"
+            labelPlacement="start"
+            justify="space-between"
+            className="w-full px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-input-placeholder-color)] [&::part(label)]:whitespace-normal before:absolute before:left-0 before:top-1/2 before:h-7 before:w-1 before:-translate-y-1/2 before:rounded-full aria-checked:before:bg-[var(--ion-color-primary)]"
+          >
+            <span>
+              System
+              <span className="mt-1 block text-sm font-normal leading-snug text-[var(--sheet-input-placeholder-color)]">
+                Match device appearance
+              </span>
+            </span>
+          </IonRadio>
         </IonRadioGroup>
       </section>
     </IonModal>
