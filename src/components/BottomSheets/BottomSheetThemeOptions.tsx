@@ -11,14 +11,14 @@ interface BottomSheetAboutUsProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   triggerId: string;
   setUserPreferences: React.Dispatch<React.SetStateAction<userPreferencesType>>;
-  theme: themeType;
+  userPreferencesTheme: themeType;
   handleTheme: (theme?: themeType) => string;
 }
 
 const BottomSheetThemeOptions = ({
   dbConnection,
   triggerId,
-  theme,
+  userPreferencesTheme,
   setUserPreferences,
 }: BottomSheetAboutUsProps) => {
   return (
@@ -37,7 +37,7 @@ const BottomSheetThemeOptions = ({
         </h1>
         <IonRadioGroup
           aria-label="Theme"
-          value={theme}
+          value={userPreferencesTheme}
           onIonChange={async (e) => {
             await updateUserPrefs(
               dbConnection,

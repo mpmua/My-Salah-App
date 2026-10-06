@@ -93,7 +93,7 @@ describe("tests for GPS location button when permission is prompt", () => {
       />
     );
 
-    gpsBtn = screen.getByText(/Use Device GPS/i);
+    gpsBtn = screen.getByText(/Use my location/i);
   });
 
   it("asks user for permission", async () => {
@@ -136,7 +136,7 @@ describe("tests for GPS location button functionality when location permission i
         userLocations={mockUserLocations}
       />
     );
-    gpsBtn = screen.getByText(/Use Device GPS/i);
+    gpsBtn = screen.getByText(/Use my location/i);
   });
 
   it("retrieves location coordinates", async () => {
@@ -363,7 +363,7 @@ describe("tests asserting location settings bottom sheet is triggered / not trig
         ]}
       />
     );
-    const gpsBtn = screen.getByText(/Use Device GPS/i);
+    const gpsBtn = screen.getByText(/Use my location/i);
     await userEvent.click(gpsBtn);
 
     const locationNameHeading = await screen.findByText(/enter location name/i);
@@ -401,7 +401,7 @@ describe("tests asserting location settings bottom sheet is triggered / not trig
       />
     );
 
-    const gpsBtn = screen.getByText(/Use Device GPS/i);
+    const gpsBtn = screen.getByText(/Use my location/i);
     await userEvent.click(gpsBtn);
 
     const locationNameHeading = await screen.findByText(/enter location name/i);
@@ -453,7 +453,7 @@ describe("tests asserting location settings bottom sheet is triggered / not trig
 //         // setUserPreferences={mockUserPrefsState}
 //       />
 //     );
-//     gpsBtn = screen.getByText(/Use Device GPS/i);
+//     gpsBtn = screen.getByText(/Use my location/i);
 //   });
 
 //   afterEach(() => {
@@ -502,7 +502,7 @@ describe("tests for GPS location button functionality when location permission i
         userLocations={mockUserLocations}
       />
     );
-    gpsBtn = screen.getByText(/Use Device GPS/i);
+    gpsBtn = screen.getByText(/Use my location/i);
   });
 
   it("shows user a prompt to open system settings on Android when location permissions are turned off in system settings", async () => {

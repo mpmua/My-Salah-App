@@ -65,7 +65,6 @@ const SettingsPage = ({
   dbConnection,
   handleSalahTrackingDataFromDB,
   isAppActive,
-  theme,
   handleTheme,
   fetchDataFromDB,
   setUserPreferences,
@@ -330,7 +329,7 @@ const SettingsPage = ({
               dbConnection={dbConnection}
               triggerId={"open-theme-options-sheet"}
               setUserPreferences={setUserPreferences}
-              theme={theme}
+              userPreferencesTheme={userPreferences.theme}
               handleTheme={handleTheme}
             />
             <div

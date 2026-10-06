@@ -15,8 +15,10 @@ import { useState } from "react";
 import cities from "../assets/cities.json";
 
 import {
+  chevronForwardOutline,
   closeCircle,
   locate,
+  lockClosedOutline,
   locationOutline,
   searchOutline,
 } from "ionicons/icons";
@@ -552,18 +554,18 @@ const AddLocationOptions = ({
         animate={{ opacity: showAddLocationForm ? 0 : 1 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
         // className={`${showAddLocationForm ? "opacity-0" : "opacity-100"}`}
+        className={`ion-content-scroll-host min-h-0 flex-1 overflow-y-auto pb-[calc(2rem+env(safe-area-inset-bottom))] text-[var(--ion-text-color)] ${onboardingMode ? "" : "px-5 overscroll-contain"}`}
       >
-        <div className="px-2 mx-5 mb-4 text-sm text-center">
-          <p>
-            To calculate Salah times, the app requires your location, you can
-            use one of the three methods below. <br></br>
-            <br></br>For the most accurate results, the first two options are
-            recommended.
-          </p>
-        </div>
-        <section className="mx-4">
-          <div
-            className=" text-center border-transparent p-2 mb-5 rounded-lg bg-[var(--sheet-option-bg)]"
+        <p className="m-0 text-[0.9375rem] leading-relaxed text-[var(--sheet-input-placeholder-color)]">
+          Prayer times are calculated from this location.
+        </p>
+        <section
+          className="sheet-group mt-5 [--sheet-group-inset:4rem]"
+          aria-label="Location methods"
+        >
+          <button
+            type="button"
+            className="sheet-group-row flex w-full items-center gap-3 px-3 py-[0.9375rem] text-left"
             onClick={async () => {
               if (showAddLocationForm) return;
 
@@ -582,57 +584,95 @@ const AddLocationOptions = ({
               // }
             }}
           >
-            <div className="mr-2">
-              <IonIcon className="text-lg" icon={locationOutline} />{" "}
-            </div>
-            <div>
-              <p className="mt-0">Use Device GPS</p>
-              <p className="text-xs opacity-80">
-                Determine Location Automatically
-              </p>
-            </div>
-          </div>
-
-          <div
-            className=" text-center border-transparent p-2 mb-5 rounded-lg  bg-[var(--sheet-option-bg)]"
-            onClick={() => {
-              if (showAddLocationForm) return;
-              setMode("manualCoords");
-              setShowAddLocationForm(true);
-            }}
-          >
-            <div className="mr-2">
-              <IonIcon className="text-lg" icon={locate} />{" "}
-            </div>
-            <div>
-              <p className="mt-0">Enter Coordinates</p>
-              <p className="text-xs opacity-80">
-                {" "}
-                Manually enter a latitude and longitude if you already know the
-                exact location
-              </p>
-            </div>
-          </div>
-          <div
-            className="text-center border-transparent p-2 mb-5 rounded-lg bg-[var(--sheet-option-bg)]"
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--sheet-icon-bg-color)] text-[var(--ion-color-primary)]">
+              <IonIcon
+                aria-hidden="true"
+                className="text-[1.375rem]"
+                icon={locationOutline}
+              />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-base font-semibold leading-snug">
+                Use my location
+                <span className="whitespace-nowrap rounded-full bg-[var(--sheet-icon-bg-color)] px-1.5 py-0.5 text-[0.6875rem] font-semibold leading-tight text-[var(--sheet-tag-text-color)]">
+                  Most accurate
+                </span>
+              </span>
+              <span className="mt-0.5 block text-sm leading-snug text-[var(--sheet-input-placeholder-color)]">
+                Asks for location permission
+              </span>
+            </span>
+            <IonIcon
+              aria-hidden="true"
+              className="shrink-0 text-lg text-[var(--sheet-input-placeholder-color)]"
+              icon={chevronForwardOutline}
+            />
+          </button>
+          <button
+            type="button"
+            className="sheet-group-row flex w-full items-center gap-3 px-3 py-[0.9375rem] text-left"
             onClick={() => {
               if (showAddLocationForm) return;
               setShowAddLocationForm(true);
               setMode("manualCitySearch");
             }}
           >
-            <div className="mr-2">
-              <IonIcon className="text-lg" icon={searchOutline} />{" "}
-            </div>
-            <div>
-              <p className="mt-0">Search Manually</p>
-              <p className="text-xs opacity-80">
-                {" "}
-                Search for a city by name and select it from the results
-              </p>
-            </div>
-          </div>
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--sheet-icon-bg-color)] text-[var(--ion-color-primary)]">
+              <IonIcon
+                aria-hidden="true"
+                className="text-[1.375rem]"
+                icon={searchOutline}
+              />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-base font-semibold leading-snug">
+                Search for a city
+              </span>
+              <span className="mt-0.5 block text-sm leading-snug text-[var(--sheet-input-placeholder-color)]">
+                Built-in list, works offline
+              </span>
+            </span>
+            <IonIcon
+              aria-hidden="true"
+              className="shrink-0 text-lg text-[var(--sheet-input-placeholder-color)]"
+              icon={chevronForwardOutline}
+            />
+          </button>
+          <button
+            type="button"
+            className="sheet-group-row flex w-full items-center gap-3 px-3 py-[0.9375rem] text-left"
+            onClick={() => {
+              if (showAddLocationForm) return;
+              setMode("manualCoords");
+              setShowAddLocationForm(true);
+            }}
+          >
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--sheet-icon-bg-color)] text-[var(--ion-color-primary)]">
+              <IonIcon aria-hidden="true" className="text-[1.375rem]" icon={locate} />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-base font-semibold leading-snug">
+                Enter coordinates
+              </span>
+              <span className="mt-0.5 block text-sm leading-snug text-[var(--sheet-input-placeholder-color)]">
+                Exact latitude and longitude
+              </span>
+            </span>
+            <IonIcon
+              aria-hidden="true"
+              className="shrink-0 text-lg text-[var(--sheet-input-placeholder-color)]"
+              icon={chevronForwardOutline}
+            />
+          </button>
         </section>
+        <p className="m-0 mt-4 flex items-center gap-2 px-1 text-xs leading-relaxed text-[var(--sheet-input-placeholder-color)]">
+          <IonIcon
+            aria-hidden="true"
+            className="shrink-0 text-[0.9375rem]"
+            icon={lockClosedOutline}
+          />
+          <span>Your location is stored only on this device.</span>
+        </p>
       </motion.section>
     </>
   );
