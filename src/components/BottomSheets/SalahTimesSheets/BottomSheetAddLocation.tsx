@@ -42,20 +42,19 @@ const BottomSheetAddLocation = ({
       breakpoints={MODAL_BREAKPOINTS}
       // className={`${isPlatform("ios") ? "" : "modal-height"}`}
       // expandToScroll={false}
-      expandToScroll={false}
       onDidDismiss={() => {
         setShowAddLocationSheet(false);
         // setShowAddLocationForm(false);
       }}
     >
-      <IonHeader className="ion-no-border shrink-0 pt-9">
+      <IonHeader className="ion-no-border pt-9">
         <IonToolbar
           // className="mt-1"
           style={{
             "--background": "transparent",
           }}
         >
-          <IonTitle className="!px-5 text-left text-[1.875rem] font-bold">
+          <IonTitle className="!px-5 text-left text-[1.875rem]">
             Add location
           </IonTitle>
         </IonToolbar>

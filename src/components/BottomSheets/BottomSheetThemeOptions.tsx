@@ -54,7 +54,7 @@ const BottomSheetThemeOptions = ({
             color="primary"
             labelPlacement="start"
             justify="space-between"
-            className="w-full border-b border-[color:var(--table-row-border-color)] px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-input-placeholder-color)] [&::part(label)]:whitespace-normal before:absolute before:left-0 before:top-1/2 before:h-7 before:w-1 before:-translate-y-1/2 before:rounded-full aria-checked:before:bg-[var(--ion-color-primary)]"
+            className="w-full border-b border-[color:var(--table-row-border-color)] px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-secondary-text-color)] [&::part(label)]:whitespace-normal before:absolute before:left-0 before:top-1/2 before:h-7 before:w-1 before:-translate-y-1/2 before:rounded-full aria-checked:before:bg-[var(--ion-color-primary)]"
           >
             Light
           </IonRadio>
@@ -64,7 +64,7 @@ const BottomSheetThemeOptions = ({
             color="primary"
             labelPlacement="start"
             justify="space-between"
-            className="w-full border-b border-[color:var(--table-row-border-color)] px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-input-placeholder-color)] [&::part(label)]:whitespace-normal before:absolute before:left-0 before:top-1/2 before:h-7 before:w-1 before:-translate-y-1/2 before:rounded-full aria-checked:before:bg-[var(--ion-color-primary)]"
+            className="w-full border-b border-[color:var(--table-row-border-color)] px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-secondary-text-color)] [&::part(label)]:whitespace-normal before:absolute before:left-0 before:top-1/2 before:h-7 before:w-1 before:-translate-y-1/2 before:rounded-full aria-checked:before:bg-[var(--ion-color-primary)]"
           >
             Dark
           </IonRadio>
@@ -74,11 +74,11 @@ const BottomSheetThemeOptions = ({
             color="primary"
             labelPlacement="start"
             justify="space-between"
-            className="w-full px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-input-placeholder-color)] [&::part(label)]:whitespace-normal before:absolute before:left-0 before:top-1/2 before:h-7 before:w-1 before:-translate-y-1/2 before:rounded-full aria-checked:before:bg-[var(--ion-color-primary)]"
+            className="w-full px-4 py-4 text-base font-semibold leading-snug [--color:var(--sheet-secondary-text-color)] [&::part(label)]:whitespace-normal before:absolute before:left-0 before:top-1/2 before:h-7 before:w-1 before:-translate-y-1/2 before:rounded-full aria-checked:before:bg-[var(--ion-color-primary)]"
           >
             <span>
               System
-              <span className="mt-1 block text-sm font-normal leading-snug text-[var(--sheet-input-placeholder-color)]">
+              <span className="mt-1 block text-sm font-normal leading-snug text-[var(--sheet-secondary-text-color)]">
                 Match device appearance
               </span>
             </span>

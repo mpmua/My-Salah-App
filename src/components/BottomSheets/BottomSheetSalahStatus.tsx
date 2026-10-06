@@ -627,7 +627,7 @@ const BottomSheetSalahStatus = ({
               aria-label="notes"
               autoGrow={true}
               rows={1}
-              className="rounded-lg border border-[color:var(--sheet-input-border-color)] bg-[var(--sheet-bg-color)] text-[var(--ion-text-color)] ![--padding-start:1rem] ![--padding-end:1rem] ![--placeholder-color:var(--sheet-input-placeholder-color)] ![--placeholder-opacity:1]"
+              className="rounded-lg border border-[color:var(--sheet-input-border-color)] bg-[var(--sheet-bg-color)] text-[var(--ion-text-color)] ![--padding-start:1rem] ![--padding-end:1rem] ![--placeholder-color:var(--sheet-secondary-text-color)] ![--placeholder-opacity:1]"
               placeholder="Add a note..."
               value={notes}
               onIonInput={(e) => {

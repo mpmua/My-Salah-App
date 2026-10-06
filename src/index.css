@@ -43,7 +43,7 @@
   --table-dot-icon-color: rgba(71, 71, 71, 0.9);
   --textarea-bg-color: rgb(206, 206, 206);
   --sheet-input-border-color: #b5bbc4;
-  --sheet-input-placeholder-color: #667085;
+  --sheet-secondary-text-color: #566476;
   --missed-salah-sheet-btn-color: rgb(206, 206, 206);
   --wreath-color: #000000;
   --reasons-bg-color-status-sheet: #FBFCFC;
@@ -94,7 +94,7 @@ body.dark {
   --table-dot-icon-color: rgba(180, 180, 180, 0.9);
   --textarea-bg-color: rgb(38, 38, 38);
   --sheet-input-border-color: #555b63;
-  --sheet-input-placeholder-color: #aebbd0;
+  --sheet-secondary-text-color: #aebbd0;
   --missed-salah-sheet-btn-color: rgb(50, 50, 50);
   --wreath-color: #e9e9e9;
   --reasons-bg-color-status-sheet: #191b1d;
@@ -245,7 +245,6 @@ ion-segment-button {
 ion-modal {
   --card-bg-color: var(--sheet-bg-color);
   --background: var(--sheet-bg-color) !important;
-  color: var(--text-color);
 }
 
 ion-modal::part(backdrop) {
@@ -262,7 +261,6 @@ ion-header {
 
 ion-alert {
   --background: var(--card-bg-color) !important;
-  color: var(--text-color);
 }
 
 ion-select-option {
@@ -396,7 +394,7 @@ ion-select.sort-select::part(inner) {
   --height: auto;
 }
 
-/* Settings-style group for sheets that list tappable rows. Set --sheet-group-inset to align dividers with the row text. */
+/* Settings-style group for sheets that list tappable rows, with a full-width line between rows. */
 .sheet-group {
   overflow: hidden;
   border: 1px solid var(--sheet-group-border);
@@ -404,18 +402,8 @@ ion-select.sort-select::part(inner) {
   background: var(--sheet-group-bg);
 }
 
-.sheet-group-row {
-  position: relative;
-}
-
-.sheet-group-row + .sheet-group-row::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: var(--sheet-group-inset, 1rem);
-  height: 1px;
-  background: var(--sheet-divider-color);
+.sheet-group > * + * {
+  border-top: 1px solid var(--sheet-divider-color);
 }
 
 .modal-height {
