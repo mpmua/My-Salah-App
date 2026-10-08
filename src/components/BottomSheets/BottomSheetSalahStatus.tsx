@@ -305,7 +305,7 @@ const BottomSheetSalahStatus = ({
   // const statusBoxStyles =
   //   "h-full px-5 py-3 rounded-xl mx-auto text-center flex flex-col items-center justify-around w-full";
   const statusBoxStyles =
-    "group relative flex min-h-[104px] flex-col items-start justify-center overflow-hidden rounded-xl border border-[color:var(--status-tile-border)] bg-[var(--status-tile-bg)] [background-image:linear-gradient(var(--status-color),var(--status-color))] [background-origin:border-box] [background-repeat:no-repeat] [background-size:5px_100%] px-4 py-3 text-left text-[var(--ion-text-color)] transition-[background-size] duration-500 data-[selected=true]:[background-size:100%_100%] data-[selected=true]:border-transparent data-[selected=true]:text-[color:var(--status-foreground)] motion-reduce:transition-none";
+    "group flex min-h-[104px] flex-col items-start justify-center overflow-hidden rounded-xl border border-[color:var(--status-tile-border)] bg-[var(--status-tile-bg)] [background-image:linear-gradient(var(--status-color),var(--status-color))] [background-origin:border-box] [background-repeat:no-repeat] [background-size:5px_100%] px-4 py-3 text-left text-[var(--ion-text-color)] transition-[background-size] duration-500 data-[selected=true]:[background-size:100%_100%] data-[selected=true]:border-transparent data-[selected=true]:text-[color:var(--status-foreground)] motion-reduce:transition-none";
 
   useEffect(() => {
     if (
@@ -384,12 +384,12 @@ const BottomSheetSalahStatus = ({
               >
                 <GoPeople
                   aria-hidden="true"
-                  className="relative z-10 mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
+                  className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
                 />
-                <span className="relative z-10 text-[0.9375rem] font-semibold leading-snug">
+                <span className="text-[0.9375rem] font-semibold leading-snug">
                   In Jamaah
                 </span>
-                <span className="relative z-10 mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
+                <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
                   In congregation
                 </span>
               </motion.button>
@@ -415,12 +415,12 @@ const BottomSheetSalahStatus = ({
               >
                 <GoPerson
                   aria-hidden="true"
-                  className="relative z-10 mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
+                  className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
                 />
-                <span className="relative z-10 text-[0.9375rem] font-semibold leading-snug">
+                <span className="text-[0.9375rem] font-semibold leading-snug">
                   Prayed
                 </span>
-                <span className="relative z-10 mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
+                <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
                   Prayer completed
                 </span>
               </motion.button>
@@ -448,12 +448,12 @@ const BottomSheetSalahStatus = ({
                 >
                   <GoPerson
                     aria-hidden="true"
-                    className="relative z-10 mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
+                    className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
                   />
-                  <span className="relative z-10 text-[0.9375rem] font-semibold leading-snug">
+                  <span className="text-[0.9375rem] font-semibold leading-snug">
                     On Time
                   </span>
-                  <span className="relative z-10 mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
+                  <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
                     Alone, on time
                   </span>
                 </motion.button>
@@ -481,12 +481,12 @@ const BottomSheetSalahStatus = ({
                 >
                   <PiFlower
                     aria-hidden="true"
-                    className="relative z-10 mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
+                    className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
                   />
-                  <span className="relative z-10 text-[0.9375rem] font-semibold leading-snug">
+                  <span className="text-[0.9375rem] font-semibold leading-snug">
                     Excused
                   </span>
-                  <span className="relative z-10 mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
+                  <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
                     Prayer excused
                   </span>
                 </motion.button>
@@ -514,12 +514,12 @@ const BottomSheetSalahStatus = ({
             >
               <GoClock
                 aria-hidden="true"
-                className="relative z-10 mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
+                className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
               />
-              <span className="relative z-10 text-[0.9375rem] font-semibold leading-snug">
+              <span className="text-[0.9375rem] font-semibold leading-snug">
                 Late
               </span>
-              <span className="relative z-10 mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
+              <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
                 After its time
               </span>
             </motion.button>
@@ -545,12 +545,12 @@ const BottomSheetSalahStatus = ({
             >
               <GoSkip
                 aria-hidden="true"
-                className="relative z-10 mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
+                className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
               />
-              <span className="relative z-10 text-[0.9375rem] font-semibold leading-snug">
+              <span className="text-[0.9375rem] font-semibold leading-snug">
                 Missed
               </span>
-              <span className="relative z-10 mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
+              <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
                 Not prayed
               </span>
             </motion.button>
@@ -619,7 +619,7 @@ const BottomSheetSalahStatus = ({
               </div>
             )}
           </section>
-          <div className="text-sm notes-wrap">
+          <div className="text-sm">
             <h2 className="mb-2 text-sm font-semibold text-[var(--ion-text-color)]">
               Notes (optional)
             </h2>

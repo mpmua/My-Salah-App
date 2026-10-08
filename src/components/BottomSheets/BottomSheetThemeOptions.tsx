@@ -30,7 +30,7 @@ const BottomSheetThemeOptions = ({
       initialBreakpoint={INITIAL_MODAL_BREAKPOINT}
       breakpoints={MODAL_BREAKPOINTS}
     >
-      <section className="px-4 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom))] text-[var(--ion-text-color)] theme-sheet-content-wrap">
+      <section className="px-4 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom))] text-[var(--ion-text-color)]">
         {/* <h1 className="modal-header-text">Themes</h1> */}
         <h1 className="mb-4 px-2 text-[1.625rem] font-bold leading-tight">
           Theme
