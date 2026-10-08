@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { GoPerson } from "react-icons/go";
 import { GoPeople } from "react-icons/go";
 import { GoSkip } from "react-icons/go";
@@ -296,16 +296,15 @@ const BottomSheetSalahStatus = ({
     }
   };
 
-  const reducedMotion = useReducedMotion();
   const salahStatusVariants = {
-    default: { y: 0, transition: { duration: reducedMotion ? 0 : 0.2 } },
-    animate: { y: -2, transition: { duration: reducedMotion ? 0 : 0.2 } },
+    default: { y: 0, transition: { duration: 0.2 } },
+    animate: { y: -2, transition: { duration: 0.2 } },
   };
 
   // const statusBoxStyles =
   //   "h-full px-5 py-3 rounded-xl mx-auto text-center flex flex-col items-center justify-around w-full";
   const statusBoxStyles =
-    "group flex min-h-[104px] flex-col items-start justify-center overflow-hidden rounded-xl border border-[color:var(--status-tile-border)] bg-[var(--status-tile-bg)] [background-image:linear-gradient(var(--status-color),var(--status-color))] [background-origin:border-box] [background-repeat:no-repeat] [background-size:5px_100%] px-4 py-3 text-left text-[var(--ion-text-color)] transition-[background-size] duration-500 data-[selected=true]:[background-size:100%_100%] data-[selected=true]:border-transparent data-[selected=true]:text-[color:var(--status-foreground)] motion-reduce:transition-none";
+    "group flex min-h-[104px] flex-col items-start justify-center overflow-hidden rounded-xl border border-[color:var(--status-tile-border)] bg-[var(--status-tile-bg)] [background-image:linear-gradient(var(--status-color),var(--status-color))] [background-origin:border-box] [background-repeat:no-repeat] [background-size:5px_100%] px-4 py-3 text-left text-[var(--ion-text-color)] transition-[background-size] duration-500 data-[selected=true]:[background-size:100%_100%] data-[selected=true]:border-transparent data-[selected=true]:text-[color:var(--status-foreground)]";
 
   useEffect(() => {
     if (

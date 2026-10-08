@@ -319,6 +319,11 @@ ion-button {
   -webkit-tap-highlight-color: transparent;
 }
 
+ion-button.ion-activated,
+ion-button:not(.button-disabled):hover {
+  opacity: 1;
+}
+
 ion-picker {
   --highlight-background: var(--primary-color);
   filter: brightness(0.8);
@@ -394,7 +399,6 @@ ion-select.sort-select::part(inner) {
   --height: auto;
 }
 
-/* Settings-style group for sheets that list tappable rows, with a full-width line between rows. */
 .sheet-group {
   overflow: hidden;
   border: 1px solid var(--sheet-group-border);

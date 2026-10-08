@@ -1,5 +1,11 @@
-import { IonCheckbox, IonIcon, IonInput, useIonLoading } from "@ionic/react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import {
+  IonButton,
+  IonCheckbox,
+  IonIcon,
+  IonInput,
+  useIonLoading,
+} from "@ionic/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Geolocation } from "@capacitor/geolocation";
 
 import { AndroidSettings } from "capacitor-native-settings";
@@ -368,17 +374,14 @@ const AddLocationOptions = ({
     }
   };
 
-  const reducedMotion = useReducedMotion();
-  // Steps slide sideways (options <-> form). No motion when the user asks for reduced motion,
-  // or in onboarding, where this sits inside a swiper slide.
   const stepMotion = (offset: number) =>
-    reducedMotion || onboardingMode
-      ? { initial: false as const }
+    onboardingMode
+      ? { initial: false }
       : {
           initial: { x: offset, opacity: 0 },
           animate: { x: 0, opacity: 1 },
           exit: { x: offset, opacity: 0 },
-          transition: { duration: 0.18, ease: "easeOut" as const },
+          transition: { duration: 0.18, ease: "easeOut" },
         };
 
   const isCityStep = mode === "manualCitySearch" || isCityNameClicked;
@@ -422,18 +425,19 @@ const AddLocationOptions = ({
             {...stepMotion(24)}
             className={onboardingMode ? "" : "pt-5"}
           >
-            <button
-              type="button"
-              className="-ml-1 flex min-h-11 items-center gap-1 text-base"
+            <IonButton
+              fill="clear"
+              className="-ml-1 m-0 h-11 min-h-0 text-base normal-case tracking-normal [--color:var(--ion-text-color)] [--padding-end:0] [--padding-start:0]"
               onClick={handleInputPromptDismissed}
             >
               <IonIcon
+                slot="start"
                 aria-hidden="true"
-                className="text-xl"
+                className="m-0 mr-1 text-xl"
                 icon={chevronBackOutline}
               />
               Back
-            </button>
+            </IonButton>
             <h2 className="mb-0 mt-2 text-[1.875rem] font-semibold leading-tight">
               {formTitle}
             </h2>
@@ -469,18 +473,23 @@ const AddLocationOptions = ({
                     value={locationName}
                   ></IonInput>
                   {isCityNameClicked && (
-                    <button
-                      type="button"
+                    <IonButton
+                      fill="clear"
                       aria-label="Clear selected city"
-                      className="flex size-11 items-center justify-center text-xl text-[var(--sheet-secondary-text-color)]"
+                      className="m-0 size-11 min-h-0 text-xl [--color:var(--sheet-secondary-text-color)] [--padding-end:0] [--padding-start:0]"
                       onClick={() => {
                         setLocationName("");
                         setIsCityNameClicked(false);
                         setMode("manualCitySearch");
                       }}
                     >
-                      <IonIcon aria-hidden="true" icon={closeCircle} />
-                    </button>
+                      <IonIcon
+                        slot="icon-only"
+                        aria-hidden="true"
+                        className="text-xl"
+                        icon={closeCircle}
+                      />
+                    </IonButton>
                   )}
                 </div>
                 {nameError}
@@ -615,13 +624,13 @@ const AddLocationOptions = ({
                 Make this my default location
               </IonCheckbox>
             )}
-            <button
-              type="button"
-              className="mt-6 w-full rounded-lg bg-[var(--ion-color-primary)] px-4 py-3 text-[0.9375rem] font-semibold text-[var(--ion-color-primary-contrast)]"
+            <IonButton
+              expand="block"
+              className="mx-0 mb-0 mt-6 min-h-0 text-[0.9375rem] font-semibold normal-case tracking-normal [--border-radius:0.5rem] [--box-shadow:none] [--padding-bottom:0.75rem] [--padding-top:0.75rem]"
               onClick={handleSave}
             >
               Save location
-            </button>
+            </IonButton>
           </motion.div>
         ) : (
           <motion.div
