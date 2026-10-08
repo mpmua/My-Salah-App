@@ -1,4 +1,4 @@
-import { IonHeader, IonModal, IonTitle, IonToolbar } from "@ionic/react";
+import { IonModal } from "@ionic/react";
 
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 
@@ -47,18 +47,6 @@ const BottomSheetAddLocation = ({
         // setShowAddLocationForm(false);
       }}
     >
-      <IonHeader className="ion-no-border pt-9">
-        <IonToolbar
-          // className="mt-1"
-          style={{
-            "--background": "transparent",
-          }}
-        >
-          <IonTitle className="!px-5 text-left text-[1.875rem]">
-            Add location
-          </IonTitle>
-        </IonToolbar>
-      </IonHeader>
       {/* {showAddLocationSheet && ( */}
       <AddLocationOptions
         dbConnection={dbConnection}

@@ -1,11 +1,5 @@
-import {
-  IonButton,
-  IonCheckbox,
-  IonIcon,
-  IonInput,
-  useIonLoading,
-} from "@ionic/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { IonCheckbox, IonIcon, IonInput, useIonLoading } from "@ionic/react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Geolocation } from "@capacitor/geolocation";
 
 import { AndroidSettings } from "capacitor-native-settings";
@@ -15,6 +9,7 @@ import { useState } from "react";
 import cities from "../assets/cities.json";
 
 import {
+  chevronBackOutline,
   chevronForwardOutline,
   closeCircle,
   locate,
@@ -37,6 +32,9 @@ const allCities = cities.map(
     };
   },
 );
+const fieldStyles =
+  "rounded-lg border border-[color:var(--sheet-input-border-color)] !bg-[var(--sheet-bg-color)] text-[var(--ion-text-color)] ![--padding-start:1rem] ![--padding-end:1rem] ![--placeholder-color:var(--sheet-secondary-text-color)] ![--placeholder-opacity:1]";
+
 interface AddLocationOptionsProps {
   // setShowSalahTimesSettingsSheet?: React.Dispatch<
   //   React.SetStateAction<boolean>
@@ -248,32 +246,349 @@ const AddLocationOptions = ({
     }
   };
 
+  const handleSave = async () => {
+    setShowError({
+      emptyLocationError: false,
+      duplicateLocationError: false,
+      emptyLatitudeError: false,
+      emptyLongitudeError: false,
+    });
+    const locationNameTrimmed = locationName.trim();
+
+    if (locationNameTrimmed === "") {
+      setShowError((prev) => ({
+        ...prev,
+        emptyLocationError: true,
+      }));
+    }
+
+    if (coords.latitude === null) {
+      setShowError((prev) => ({
+        ...prev,
+        emptyLatitudeError: true,
+      }));
+    }
+
+    if (coords.longitude === null) {
+      setShowError((prev) => ({
+        ...prev,
+        emptyLongitudeError: true,
+      }));
+    }
+
+    if (
+      locationNameTrimmed === "" ||
+      coords.latitude === null ||
+      coords.longitude === null
+    )
+      return;
+
+    if (!userLocations) {
+      console.error("LocationNames state is undefined");
+      return;
+    }
+
+    const locationNames = userLocations.map((loc) =>
+      loc.locationName.toLowerCase(),
+    );
+
+    if (locationNames.includes(locationNameTrimmed.toLowerCase())) {
+      setShowError((prev) => ({
+        ...prev,
+        emptyLocationError: false,
+        duplicateLocationError: true,
+      }));
+      return;
+    }
+
+    if (coords.latitude !== null && coords.longitude !== null && locationName) {
+      try {
+        const isSelected =
+          userLocations.length === 0 || isDefaultLocationCheckBoxChecked
+            ? 1
+            : 0;
+
+        await toggleDBConnection(dbConnection, "open");
+
+        const result = await addUserLocation(
+          dbConnection,
+          locationName,
+          coords.latitude,
+          coords.longitude,
+          isSelected,
+        );
+
+        if (!result?.changes?.lastId) {
+          throw new Error("Failed to insert location: no ID returned");
+        }
+
+        const { allLocations } = await fetchAllLocations(dbConnection);
+        // console.log(
+        //   "FETCH ALL LOCATIONS CALLE FROM ADD LOCATION SHEET: ",
+        //   allLocations
+        // );
+
+        if (allLocations) {
+          // if (allLocations.length === 1) {
+          //   setShowSalahTimesSettingsSheet?.(true);
+          // }
+          // setShowAddLocationSheet(false);
+          setUserLocations(allLocations);
+          if (!onboardingMode) {
+            setShowLocationAddedToast(true);
+          }
+          setShowAddLocationSheet?.(false);
+          // setUserLocations([
+          //   ...userLocations,
+          //   {
+          //     id: result.changes.lastId,
+          //     locationName: locationName,
+          //     latitude: latitude,
+          //     longitude: longitude,
+          //     isSelected: userLocations.length === 0 ? 1 : 0,
+          //   },
+          // ]);
+          setUserLocations(allLocations);
+        } else {
+          console.error("Locations undefined");
+        }
+
+        handleInputPromptDismissed();
+      } catch (error) {
+      } finally {
+        await toggleDBConnection(dbConnection, "close");
+      }
+    } else {
+      console.error("lat / long undefined");
+      return;
+    }
+
+    if (onboardingMode !== null && switchToNextPage) {
+      switchToNextPage();
+    }
+  };
+
+  const reducedMotion = useReducedMotion();
+  // Steps slide sideways (options <-> form). No motion when the user asks for reduced motion,
+  // or in onboarding, where this sits inside a swiper slide.
+  const stepMotion = (offset: number) =>
+    reducedMotion || onboardingMode
+      ? { initial: false as const }
+      : {
+          initial: { x: offset, opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          exit: { x: offset, opacity: 0 },
+          transition: { duration: 0.18, ease: "easeOut" as const },
+        };
+
+  const isCityStep = mode === "manualCitySearch" || isCityNameClicked;
+  const formTitle =
+    mode === "gps"
+      ? "Name location"
+      : mode === "manualCoords"
+        ? "Enter coordinates"
+        : "Search for a city";
+  const formSubtitle =
+    mode === "gps"
+      ? "Choose a name you'll recognise later."
+      : mode === "manualCoords"
+        ? "Use decimal degrees for a precise location."
+        : null;
+  const cityResults =
+    mode === "manualCitySearch" && locationName
+      ? allCities
+          .filter((obj) => obj.search.startsWith(locationName.toLowerCase()))
+          .slice(0, 5)
+      : [];
+
+  const nameError = (showError.emptyLocationError ||
+    showError.duplicateLocationError) && (
+    <p className="mt-1.5 text-xs text-red-500">
+      {showError.emptyLocationError
+        ? "Please enter a location name"
+        : "Location already exists"}
+    </p>
+  );
+
   return (
-    <>
-      <AnimatePresence>
-        {showAddLocationForm && (
-          <motion.section
-            initial={{ x: "50%", opacity: 0 }}
-            animate={{ x: "-50%", opacity: 1 }}
-            exit={onboardingMode ? "" : { x: "50%", opacity: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="absolute top-[15%] left-1/2 w-4/5 max-w-[300px] z-10 rounded-lg
-             flex flex-col items-center justify-center -translate-y-[15%] bg-[var(--card-bg-color)]"
+    <section
+      // className={`${showAddLocationForm ? "opacity-0" : "opacity-100"}`}
+      className={`pb-[calc(2rem+env(safe-area-inset-bottom))] ${onboardingMode ? "" : "px-5"}`}
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        {showAddLocationForm ? (
+          <motion.div
+            key="form"
+            {...stepMotion(24)}
+            className={onboardingMode ? "" : "pt-5"}
           >
-            <div className="pt-3 text-center">
-              {mode === "gps" && <p className="text-xs">Name this location</p>}
-              <div className="flex items-center">
+            <button
+              type="button"
+              className="-ml-1 flex min-h-11 items-center gap-1 text-base"
+              onClick={handleInputPromptDismissed}
+            >
+              <IonIcon
+                aria-hidden="true"
+                className="text-xl"
+                icon={chevronBackOutline}
+              />
+              Back
+            </button>
+            <h2 className="mb-0 mt-2 text-[1.875rem] font-semibold leading-tight">
+              {formTitle}
+            </h2>
+            {formSubtitle && (
+              <p className="mt-1 text-[0.9375rem] leading-relaxed text-[var(--sheet-secondary-text-color)]">
+                {formSubtitle}
+              </p>
+            )}
+
+            {isCityStep ? (
+              <div className="mt-6">
+                <div className="flex items-center gap-2 rounded-lg border border-[color:var(--sheet-input-border-color)] bg-[var(--sheet-bg-color)] pl-3">
+                  <IonIcon
+                    aria-hidden="true"
+                    className="text-xl text-[var(--sheet-secondary-text-color)]"
+                    icon={searchOutline}
+                  />
+                  <IonInput
+                    className="min-w-0 flex-1 !bg-transparent text-[var(--ion-text-color)] ![--padding-start:0] ![--placeholder-color:var(--sheet-secondary-text-color)] ![--placeholder-opacity:1]"
+                    aria-label="Search for a city"
+                    type="text"
+                    // disabled={isCityNameClicked ? true : false}
+                    readonly={isCityNameClicked ? true : false}
+                    placeholder="e.g. London"
+                    onIonInput={(e) => {
+                      setLocationName(e.detail.value || "");
+                      setShowError((prev) => ({
+                        ...prev,
+                        duplicateLocationError: false,
+                        emptyLocationError: false,
+                      }));
+                    }}
+                    value={locationName}
+                  ></IonInput>
+                  {isCityNameClicked && (
+                    <button
+                      type="button"
+                      aria-label="Clear selected city"
+                      className="flex size-11 items-center justify-center text-xl text-[var(--sheet-secondary-text-color)]"
+                      onClick={() => {
+                        setLocationName("");
+                        setIsCityNameClicked(false);
+                        setMode("manualCitySearch");
+                      }}
+                    >
+                      <IonIcon aria-hidden="true" icon={closeCircle} />
+                    </button>
+                  )}
+                </div>
+                {nameError}
+                {cityResults.length > 0 && (
+                  <>
+                    <p className="mb-2 mt-5 text-sm font-semibold text-[var(--sheet-secondary-text-color)]">
+                      Results
+                    </p>
+                    <ul className="sheet-group">
+                      {cityResults.map((obj) => (
+                        <li key={obj.latitude + obj.longitude}>
+                          <button
+                            type="button"
+                            className="flex w-full items-center gap-3 px-3 py-3 text-left"
+                            onClick={() => {
+                              setLocationName(`${obj.city} - ${obj.country}`);
+                              setCoords({
+                                latitude: Number(obj.latitude),
+                                longitude: Number(obj.longitude),
+                              });
+                              setMode(null);
+                              setIsCityNameClicked(true);
+                            }}
+                          >
+                            <span className="flex size-10 items-center justify-center rounded-xl bg-[var(--sheet-icon-bg-color)] text-[var(--ion-color-primary)]">
+                              <IonIcon
+                                aria-hidden="true"
+                                className="text-[1.375rem]"
+                                icon={locationOutline}
+                              />
+                            </span>
+                            <span className="min-w-0 flex-1">
+                              <span className="font-semibold leading-snug">
+                                {obj.city}
+                              </span>
+                              <span className="mt-0.5 block text-sm leading-snug text-[var(--sheet-secondary-text-color)]">
+                                {obj.country}
+                              </span>
+                            </span>
+                            <IonIcon
+                              aria-hidden="true"
+                              className="text-lg text-[var(--sheet-secondary-text-color)]"
+                              icon={chevronForwardOutline}
+                            />
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+              </div>
+            ) : (
+              <div className="mt-6">
+                {mode === "manualCoords" && (
+                  <>
+                    <p className="mb-2 text-sm font-semibold">Latitude</p>
+                    <IonInput
+                      className={fieldStyles}
+                      aria-label="Latitude"
+                      type="text"
+                      placeholder="e.g. 51.5074"
+                      value={coords.latitude}
+                      onIonInput={(e) => {
+                        setCoords((prev) => ({
+                          ...prev,
+                          latitude: Number(e.detail.value) || null,
+                        }));
+                      }}
+                    ></IonInput>
+                    {showError.emptyLatitudeError && (
+                      <p className="mt-1.5 text-xs text-red-500">
+                        {"Please enter latitude"}
+                      </p>
+                    )}
+                    <p className="mb-2 mt-4 text-sm font-semibold">Longitude</p>
+                    <IonInput
+                      className={fieldStyles}
+                      aria-label="Longitude"
+                      type="text"
+                      placeholder="e.g. -0.1278"
+                      value={coords.longitude}
+                      onIonInput={(e) => {
+                        setCoords((prev) => ({
+                          ...prev,
+                          longitude: Number(e.detail.value) || null,
+                        }));
+                      }}
+                    ></IonInput>
+                    {showError.emptyLongitudeError && (
+                      <p className="mt-1.5 text-xs text-red-500">
+                        {"Please enter longitude"}
+                      </p>
+                    )}
+                    <p className="mt-1.5 text-xs text-[var(--sheet-secondary-text-color)]">
+                      South and west use a minus sign.
+                    </p>
+                  </>
+                )}
+                <p
+                  className={`mb-2 text-sm font-semibold ${mode === "manualCoords" ? "mt-4" : ""}`}
+                >
+                  Location name
+                </p>
                 <IonInput
-                  className="w-full min-w-0 px-2 py-2 rounded-lg"
+                  className={fieldStyles}
                   aria-label="Location name"
                   type="text"
-                  // disabled={isCityNameClicked ? true : false}
-                  readonly={isCityNameClicked ? true : false}
-                  placeholder={
-                    mode === "gps"
-                      ? "e.g. Home, Work, City Name"
-                      : "Enter Location Name"
-                  }
+                  placeholder="e.g. Home, Work, City Name"
                   onIonInput={(e) => {
                     setLocationName(e.detail.value || "");
                     setShowError((prev) => ({
@@ -284,398 +599,163 @@ const AddLocationOptions = ({
                   }}
                   value={locationName}
                 ></IonInput>
-
-                {isCityNameClicked && (
-                  <IonButton
-                    className=""
-                    onClick={() => {
-                      setLocationName("");
-                      setIsCityNameClicked(false);
-                      setMode("manualCitySearch");
-                    }}
-                    // size="small"
-                    fill="clear"
-                    color="danger"
-                  >
-                    <IonIcon icon={closeCircle} />{" "}
-                  </IonButton>
-                )}
+                {nameError}
               </div>
-              {mode === "manualCitySearch" && locationName && (
-                <ul>
-                  {allCities
-                    .filter((obj) =>
-                      obj.search.startsWith(locationName.toLowerCase()),
-                    )
-                    .slice(0, 5)
-                    .map((obj) => (
-                      <li
-                        key={obj.latitude + obj.longitude}
-                        className="block py-5 border-b border-stone-700"
-                        onClick={() => {
-                          setLocationName(`${obj.city} - ${obj.country}`);
-                          setCoords({
-                            latitude: Number(obj.latitude),
-                            longitude: Number(obj.longitude),
-                          });
-                          setMode(null);
-                          setIsCityNameClicked(true);
-                        }}
-                      >
-                        {obj.city}, {obj.country}
-                      </li>
-                    ))}
-                </ul>
-              )}
-              <p
-                className={`mb-1 text-xs text-red-500 ${
-                  showError.emptyLocationError ||
-                  showError.duplicateLocationError
-                    ? "visible"
-                    : "invisible"
-                }`}
-              >
-                {showError.emptyLocationError
-                  ? "Please enter a location name"
-                  : "Location already exists"}
-              </p>
-              {mode === "manualCoords" && (
-                <>
-                  <IonInput
-                    className="w-full min-w-0 px-2 py-2 mt-2 rounded-lg"
-                    aria-label="Latitude"
-                    type="text"
-                    placeholder="Latitude"
-                    value={coords.latitude}
-                    onIonInput={(e) => {
-                      setCoords((prev) => ({
-                        ...prev,
-                        latitude: Number(e.detail.value) || null,
-                      }));
-                    }}
-                  ></IonInput>
-                  <p
-                    className={`mb-1 text-xs text-red-500 ${
-                      showError.emptyLatitudeError ? "visible" : "invisible"
-                    }`}
-                  >
-                    {"Please enter latitude"}
-                  </p>
-                  <IonInput
-                    className="w-full min-w-0 px-2 py-2 mt-2 rounded-lg"
-                    aria-label="Longitude"
-                    type="text"
-                    placeholder="Longitude"
-                    value={coords.longitude}
-                    onIonInput={(e) => {
-                      setCoords((prev) => ({
-                        ...prev,
-                        longitude: Number(e.detail.value) || null,
-                      }));
-                    }}
-                  ></IonInput>
-                  <p
-                    className={`mb-1 text-xs text-red-500 ${
-                      showError.emptyLongitudeError ? "visible" : "invisible"
-                    }`}
-                  >
-                    {"Please enter longitude"}
-                  </p>
-                </>
-              )}
-            </div>
+            )}
+
             {userLocations && userLocations.length > 0 && (
               <IonCheckbox
-                className="mb-4 text-xs"
+                className="mt-5 [--border-radius:0.25rem]"
                 labelPlacement="end"
                 checked={isDefaultLocationCheckBoxChecked}
                 onIonChange={(e) =>
                   setIsDefaultLocationCheckBoxChecked(e.detail.checked)
                 }
               >
-                Make this the default location
+                Make this my default location
               </IonCheckbox>
             )}
-            <div className="flex justify-center w-full gap-4">
-              <IonButton
-                className="p-0 text-base text-[var(--ion-text-color)]"
-                size="small"
-                color="medium"
-                fill="solid"
-                onClick={() => {
-                  handleInputPromptDismissed();
-                }}
-              >
-                Cancel
-              </IonButton>
-              <IonButton
-                className="text-base"
-                size="small"
-                // fill="clear"
+            <button
+              type="button"
+              className="mt-6 w-full rounded-lg bg-[var(--ion-color-primary)] px-4 py-3 text-[0.9375rem] font-semibold text-[var(--ion-color-primary-contrast)]"
+              onClick={handleSave}
+            >
+              Save location
+            </button>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="options"
+            {...stepMotion(-24)}
+            className={onboardingMode ? "" : "pt-11"}
+          >
+            {!onboardingMode && (
+              <h2 className="mb-1 mt-0 text-[1.875rem] font-semibold leading-tight">
+                Add location
+              </h2>
+            )}
+            <p className="text-[0.9375rem] leading-relaxed text-[var(--sheet-secondary-text-color)]">
+              Prayer times are calculated from this location.
+            </p>
+            <section className="sheet-group mt-5" aria-label="Location methods">
+              <button
+                type="button"
+                className="flex w-full items-center gap-3 px-3 py-[0.9375rem] text-left"
                 onClick={async () => {
-                  setShowError({
-                    emptyLocationError: false,
-                    duplicateLocationError: false,
-                    emptyLatitudeError: false,
-                    emptyLongitudeError: false,
-                  });
-                  const locationNameTrimmed = locationName.trim();
+                  if (showAddLocationForm) return;
 
-                  if (locationNameTrimmed === "") {
-                    setShowError((prev) => ({
-                      ...prev,
-                      emptyLocationError: true,
-                    }));
+                  setMode("gps");
+                  // presentLocationSpinner({
+                  //   message: "Detecting location...",
+                  //   backdropDismiss: false,
+                  // });
+                  try {
+                    await handleLocationPermissions();
+                  } catch (error) {
+                    console.error(error);
                   }
-
-                  if (coords.latitude === null) {
-                    setShowError((prev) => ({
-                      ...prev,
-                      emptyLatitudeError: true,
-                    }));
-                  }
-
-                  if (coords.longitude === null) {
-                    setShowError((prev) => ({
-                      ...prev,
-                      emptyLongitudeError: true,
-                    }));
-                  }
-
-                  if (
-                    locationNameTrimmed === "" ||
-                    coords.latitude === null ||
-                    coords.longitude === null
-                  )
-                    return;
-
-                  if (!userLocations) {
-                    console.error("LocationNames state is undefined");
-                    return;
-                  }
-
-                  const locationNames = userLocations.map((loc) =>
-                    loc.locationName.toLowerCase(),
-                  );
-
-                  if (
-                    locationNames.includes(locationNameTrimmed.toLowerCase())
-                  ) {
-                    setShowError((prev) => ({
-                      ...prev,
-                      emptyLocationError: false,
-                      duplicateLocationError: true,
-                    }));
-                    return;
-                  }
-
-                  if (
-                    coords.latitude !== null &&
-                    coords.longitude !== null &&
-                    locationName
-                  ) {
-                    try {
-                      const isSelected =
-                        userLocations.length === 0 ||
-                        isDefaultLocationCheckBoxChecked
-                          ? 1
-                          : 0;
-
-                      await toggleDBConnection(dbConnection, "open");
-
-                      const result = await addUserLocation(
-                        dbConnection,
-                        locationName,
-                        coords.latitude,
-                        coords.longitude,
-                        isSelected,
-                      );
-
-                      if (!result?.changes?.lastId) {
-                        throw new Error(
-                          "Failed to insert location: no ID returned",
-                        );
-                      }
-
-                      const { allLocations } =
-                        await fetchAllLocations(dbConnection);
-                      // console.log(
-                      //   "FETCH ALL LOCATIONS CALLE FROM ADD LOCATION SHEET: ",
-                      //   allLocations
-                      // );
-
-                      if (allLocations) {
-                        // if (allLocations.length === 1) {
-                        //   setShowSalahTimesSettingsSheet?.(true);
-                        // }
-                        // setShowAddLocationSheet(false);
-                        setUserLocations(allLocations);
-                        if (!onboardingMode) {
-                          setShowLocationAddedToast(true);
-                        }
-                        setShowAddLocationSheet?.(false);
-                        // setUserLocations([
-                        //   ...userLocations,
-                        //   {
-                        //     id: result.changes.lastId,
-                        //     locationName: locationName,
-                        //     latitude: latitude,
-                        //     longitude: longitude,
-                        //     isSelected: userLocations.length === 0 ? 1 : 0,
-                        //   },
-                        // ]);
-                        setUserLocations(allLocations);
-                      } else {
-                        console.error("Locations undefined");
-                      }
-
-                      handleInputPromptDismissed();
-                    } catch (error) {
-                    } finally {
-                      await toggleDBConnection(dbConnection, "close");
-                    }
-                  } else {
-                    console.error("lat / long undefined");
-                    return;
-                  }
-
-                  if (onboardingMode !== null && switchToNextPage) {
-                    switchToNextPage();
-                  }
+                  // finally {
+                  //   await dismissLocationSpinner();
+                  // }
                 }}
               >
-                Save
-              </IonButton>
-            </div>
-          </motion.section>
+                <span className="flex size-10 items-center justify-center rounded-xl bg-[var(--sheet-icon-bg-color)] text-[var(--ion-color-primary)]">
+                  <IonIcon
+                    aria-hidden="true"
+                    className="text-[1.375rem]"
+                    icon={locationOutline}
+                  />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="flex flex-wrap items-center gap-x-1.5 gap-y-1 font-semibold leading-snug">
+                    Use my location
+                    <span className="whitespace-nowrap rounded-full bg-[var(--sheet-icon-bg-color)] px-1.5 py-0.5 text-[0.6875rem] leading-tight text-[var(--sheet-tag-text-color)]">
+                      Most accurate
+                    </span>
+                  </span>
+                  <span className="mt-0.5 block text-sm leading-snug text-[var(--sheet-secondary-text-color)]">
+                    Asks for location permission
+                  </span>
+                </span>
+                <IonIcon
+                  aria-hidden="true"
+                  className="text-lg text-[var(--sheet-secondary-text-color)]"
+                  icon={chevronForwardOutline}
+                />
+              </button>
+              <button
+                type="button"
+                className="flex w-full items-center gap-3 px-3 py-[0.9375rem] text-left"
+                onClick={() => {
+                  if (showAddLocationForm) return;
+                  setShowAddLocationForm(true);
+                  setMode("manualCitySearch");
+                }}
+              >
+                <span className="flex size-10 items-center justify-center rounded-xl bg-[var(--sheet-icon-bg-color)] text-[var(--ion-color-primary)]">
+                  <IonIcon
+                    aria-hidden="true"
+                    className="text-[1.375rem]"
+                    icon={searchOutline}
+                  />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="font-semibold leading-snug">
+                    Search for a city
+                  </span>
+                  <span className="mt-0.5 block text-sm leading-snug text-[var(--sheet-secondary-text-color)]">
+                    Built-in list, works offline
+                  </span>
+                </span>
+                <IonIcon
+                  aria-hidden="true"
+                  className="text-lg text-[var(--sheet-secondary-text-color)]"
+                  icon={chevronForwardOutline}
+                />
+              </button>
+              <button
+                type="button"
+                className="flex w-full items-center gap-3 px-3 py-[0.9375rem] text-left"
+                onClick={() => {
+                  if (showAddLocationForm) return;
+                  setMode("manualCoords");
+                  setShowAddLocationForm(true);
+                }}
+              >
+                <span className="flex size-10 items-center justify-center rounded-xl bg-[var(--sheet-icon-bg-color)] text-[var(--ion-color-primary)]">
+                  <IonIcon
+                    aria-hidden="true"
+                    className="text-[1.375rem]"
+                    icon={locate}
+                  />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="font-semibold leading-snug">
+                    Enter coordinates
+                  </span>
+                  <span className="mt-0.5 block text-sm leading-snug text-[var(--sheet-secondary-text-color)]">
+                    Exact latitude and longitude
+                  </span>
+                </span>
+                <IonIcon
+                  aria-hidden="true"
+                  className="text-lg text-[var(--sheet-secondary-text-color)]"
+                  icon={chevronForwardOutline}
+                />
+              </button>
+            </section>
+            <p className="mt-4 flex items-center gap-2 px-1 text-xs leading-relaxed text-[var(--sheet-secondary-text-color)]">
+              <IonIcon
+                aria-hidden="true"
+                className="shrink-0 text-[0.9375rem]"
+                icon={lockClosedOutline}
+              />
+              <span>This app never sends your location anywhere.</span>
+            </p>
+          </motion.div>
         )}
       </AnimatePresence>
-      <motion.section
-        animate={{ opacity: showAddLocationForm ? 0 : 1 }}
-        transition={{ duration: 0.25, ease: "easeOut" }}
-        // className={`${showAddLocationForm ? "opacity-0" : "opacity-100"}`}
-        className={`pb-[calc(2rem+env(safe-area-inset-bottom))] ${onboardingMode ? "" : "px-5"}`}
-      >
-        <p className="text-[0.9375rem] leading-relaxed text-[var(--sheet-secondary-text-color)]">
-          Prayer times are calculated from this location.
-        </p>
-        <section className="sheet-group mt-5" aria-label="Location methods">
-          <button
-            type="button"
-            className="flex w-full items-center gap-3 px-3 py-[0.9375rem] text-left"
-            onClick={async () => {
-              if (showAddLocationForm) return;
-
-              setMode("gps");
-              // presentLocationSpinner({
-              //   message: "Detecting location...",
-              //   backdropDismiss: false,
-              // });
-              try {
-                await handleLocationPermissions();
-              } catch (error) {
-                console.error(error);
-              }
-              // finally {
-              //   await dismissLocationSpinner();
-              // }
-            }}
-          >
-            <span className="flex size-10 items-center justify-center rounded-xl bg-[var(--sheet-icon-bg-color)] text-[var(--ion-color-primary)]">
-              <IonIcon
-                aria-hidden="true"
-                className="text-[1.375rem]"
-                icon={locationOutline}
-              />
-            </span>
-            <span className="min-w-0 flex-1">
-              <span className="flex flex-wrap items-center gap-x-1.5 gap-y-1 font-semibold leading-snug">
-                Use my location
-                <span className="whitespace-nowrap rounded-full bg-[var(--sheet-icon-bg-color)] px-1.5 py-0.5 text-[0.6875rem] leading-tight text-[var(--sheet-tag-text-color)]">
-                  Most accurate
-                </span>
-              </span>
-              <span className="mt-0.5 block text-sm leading-snug text-[var(--sheet-secondary-text-color)]">
-                Asks for location permission
-              </span>
-            </span>
-            <IonIcon
-              aria-hidden="true"
-              className="text-lg text-[var(--sheet-secondary-text-color)]"
-              icon={chevronForwardOutline}
-            />
-          </button>
-          <button
-            type="button"
-            className="flex w-full items-center gap-3 px-3 py-[0.9375rem] text-left"
-            onClick={() => {
-              if (showAddLocationForm) return;
-              setShowAddLocationForm(true);
-              setMode("manualCitySearch");
-            }}
-          >
-            <span className="flex size-10 items-center justify-center rounded-xl bg-[var(--sheet-icon-bg-color)] text-[var(--ion-color-primary)]">
-              <IonIcon
-                aria-hidden="true"
-                className="text-[1.375rem]"
-                icon={searchOutline}
-              />
-            </span>
-            <span className="min-w-0 flex-1">
-              <span className="font-semibold leading-snug">
-                Search for a city
-              </span>
-              <span className="mt-0.5 block text-sm leading-snug text-[var(--sheet-secondary-text-color)]">
-                Built-in list, works offline
-              </span>
-            </span>
-            <IonIcon
-              aria-hidden="true"
-              className="text-lg text-[var(--sheet-secondary-text-color)]"
-              icon={chevronForwardOutline}
-            />
-          </button>
-          <button
-            type="button"
-            className="flex w-full items-center gap-3 px-3 py-[0.9375rem] text-left"
-            onClick={() => {
-              if (showAddLocationForm) return;
-              setMode("manualCoords");
-              setShowAddLocationForm(true);
-            }}
-          >
-            <span className="flex size-10 items-center justify-center rounded-xl bg-[var(--sheet-icon-bg-color)] text-[var(--ion-color-primary)]">
-              <IonIcon
-                aria-hidden="true"
-                className="text-[1.375rem]"
-                icon={locate}
-              />
-            </span>
-            <span className="min-w-0 flex-1">
-              <span className="font-semibold leading-snug">
-                Enter coordinates
-              </span>
-              <span className="mt-0.5 block text-sm leading-snug text-[var(--sheet-secondary-text-color)]">
-                Exact latitude and longitude
-              </span>
-            </span>
-            <IonIcon
-              aria-hidden="true"
-              className="text-lg text-[var(--sheet-secondary-text-color)]"
-              icon={chevronForwardOutline}
-            />
-          </button>
-        </section>
-        <p className="mt-4 flex items-center gap-2 px-1 text-xs leading-relaxed text-[var(--sheet-secondary-text-color)]">
-          <IonIcon
-            aria-hidden="true"
-            className="shrink-0 text-[0.9375rem]"
-            icon={lockClosedOutline}
-          />
-          <span>This app never sends your location anywhere.</span>
-        </p>
-      </motion.section>
-    </>
+    </section>
   );
 };
 
