@@ -149,10 +149,10 @@ const Calendar = ({
             </p>
           </section> */}
           <div className="grid grid-cols-7 px-2 mb-3 place-items-center days-row-wrap">
-            {["M", "T", "W", "T", "F", "S", "S"].map((day, i) => (
+            {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day, i) => (
               <div
                 key={`${day}-${i}`}
-                className="w-5 h-5 text-sm font-semibold text-center individual-day"
+                className="h-5 text-[0.8125rem] font-medium text-center text-[var(--secondary-text-color)] individual-day"
               >
                 {day}
               </div>
