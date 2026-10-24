@@ -623,6 +623,7 @@ const StatsPage = ({
               showReasonsSheet={showReasonsSheet}
               reasonCountsByStatus={reasonCountsByStatus}
               status={reasonsToShow}
+              statsToShow={statsToShow}
             />
           </section>
         </motion.section>
