@@ -31,53 +31,33 @@ const ReasonsList = ({
 
           return (
             <section
-              className={`flex gap-3 py-3 ${
+              className={`py-3 ${
                 index > 0
                   ? "border-t border-[var(--app-border-color)]"
                   : ""
               }`}
               key={key}
             >
-              <span className={`flex items-center justify-center w-8 h-8 text-xs shrink-0 ${
-                partialOrFull === "partial"
-                  ? "opacity-60"
-                  : "font-semibold rounded-full bg-[var(--sheet-option-bg)]"
-              }`}>
-                {index + 1}
-              </span>
-              <div className="min-w-0 grow">
-                <div className="flex items-center justify-between gap-2">
-                  <p
-                    className={
-                      partialOrFull === "partial"
-                        ? "font-medium truncate"
-                        : "font-semibold break-words"
-                    }
-                  >
-                    {key}
-                  </p>
-                  <div className="flex items-center gap-2 text-xs whitespace-nowrap">
-                    <span className="opacity-60">
-                      {value} {value > 1 ? "times" : "time"}
-                    </span>
-                    <span
-                      className="font-semibold"
-                      style={{ color: salahStatusColorsHexCodes[status] }}
-                    >
-                      {percentage.toFixed(1)}%
-                    </span>
-                  </div>
-                </div>
-                <div className="relative h-2 mt-2 overflow-hidden bg-[var(--reasons-bar-bg)] rounded-md">
-                  <span
-                    aria-hidden="true"
-                    style={{
-                      width: `${Math.round(percentage)}%`,
-                      backgroundColor: salahStatusColorsHexCodes[status],
-                    }}
-                    className="absolute inset-y-0 left-0 rounded-md"
-                  />
-                </div>
+              <div className="flex items-baseline justify-between gap-3">
+                <p className="min-w-0 text-[0.9375rem] font-medium break-words">
+                  {key}
+                </p>
+                <p className="text-[0.8125rem] whitespace-nowrap text-[var(--secondary-text-color)]">
+                  {value} {value > 1 ? "times" : "time"}
+                  <span className="ml-1.5 font-semibold text-[var(--ion-text-color)]">
+                    {percentage.toFixed(1)}%
+                  </span>
+                </p>
+              </div>
+              <div className="h-1.5 mt-2 overflow-hidden rounded-full bg-[var(--reasons-bar-bg)]">
+                <span
+                  aria-hidden="true"
+                  style={{
+                    width: `${Math.round(percentage)}%`,
+                    backgroundColor: salahStatusColorsHexCodes[status],
+                  }}
+                  className="block h-full rounded-full"
+                />
               </div>
             </section>
           );

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { HiOutlineChevronRight } from "react-icons/hi2";
+import { IonLabel, IonSegment, IonSegmentButton } from "@ionic/react";
 import {
   reasonsToShowType,
   SalahNamesType,
   ReasonCountsByStatusType,
 } from "../../types/types";
-import { salahStatusColorsHexCodes } from "../../utils/constants";
 import ReasonsList from "./ReasonsList";
 
 interface ReasonsCardProps {
@@ -63,64 +63,43 @@ const ReasonsCard = ({
           ? `No ${salahName}Salah performed late in this period`
           : `No missed ${salahName}Salah recorded in this period`
       : `No reasons were entered for ${statusDescription} in this period`;
-  const heading =
+  const subtitle =
     activeStatus === "male-alone"
-      ? `Top Reasons For Praying ${salahName}Salah Alone`
+      ? `Why you prayed ${salahName}Salah alone`
       : activeStatus === "late"
-        ? `Top Reasons For Praying ${salahName}Salah Late`
-        : `Top Reasons For Missing ${salahName}Salah`;
+        ? `Why you prayed ${salahName}Salah late`
+        : `Why you missed ${salahName}Salah`;
 
   return (
     <section className="mt-5 overflow-hidden text-sm bg-[var(--card-bg-color)] rounded-2xl">
-      <h2 className="px-4 pt-4 text-base font-semibold text-center min-h-20">
-        {heading}
-      </h2>
-
-      <div
-        role="tablist"
-        aria-label="Reason status"
-        className="flex px-4 mt-2 border-b border-[var(--app-border-color)]"
-      >
-        {statuses.map((status) => {
-          const isSelected = status === activeStatus;
-
-          return (
-            <button
+      <section className="px-4 pt-1">
+        <h2 className="mb-0 text-base font-semibold">Reasons</h2>
+        <p className="mt-0.5 text-[0.8125rem] text-[var(--secondary-text-color)]">
+          {subtitle}
+        </p>
+        <IonSegment
+          className="mt-3 stats-period-segment ![--background:var(--sheet-option-bg)]"
+          mode="ios"
+          value={activeStatus}
+          onIonChange={(e) => {
+            setSelectedStatus(e.detail.value as keyof ReasonCountsByStatusType);
+          }}
+        >
+          {statuses.map((status) => (
+            <IonSegmentButton
               key={status}
-              id={`reasons-tab-${status}`}
-              type="button"
-              role="tab"
-              aria-selected={isSelected}
-              aria-controls={`reasons-panel-${status}`}
-              onClick={() => setSelectedStatus(status)}
-              style={
-                isSelected
-                  ? { color: salahStatusColorsHexCodes[status] }
-                  : undefined
-              }
-              className={`relative flex-1 min-h-11 -mb-px font-medium ${
-                isSelected ? "" : "opacity-60"
-              }`}
+              className="stats-period-segment-button !min-h-8"
+              value={status}
             >
-              {statusLabels[status]}
-              {isSelected && (
-                <span
-                  aria-hidden="true"
-                  className="absolute bottom-0 w-16 h-0.5 -translate-x-1/2 rounded-full left-1/2"
-                  style={{ backgroundColor: salahStatusColorsHexCodes[status] }}
-                />
-              )}
-            </button>
-          );
-        })}
-      </div>
+              <IonLabel>{statusLabels[status]}</IonLabel>
+            </IonSegmentButton>
+          ))}
+        </IonSegment>
+      </section>
 
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={activeStatus}
-          id={`reasons-panel-${activeStatus}`}
-          role="tabpanel"
-          aria-labelledby={`reasons-tab-${activeStatus}`}
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -4 }}
@@ -148,11 +127,11 @@ const ReasonsCard = ({
           setReasonsToShow(activeStatus);
           setShowReasonsSheet(true);
         }}
-        className={`flex items-center justify-between w-full px-4 py-3 text-blue-500 border-t border-[var(--app-border-color)] ${
+        className={`flex items-center justify-between w-full px-4 py-3 font-medium text-blue-500 border-t border-[var(--app-border-color)] ${
           activeReasonCount > 3 ? "visible" : "invisible"
         }`}
       >
-        <span>Show all</span>
+        <span>Show all {activeReasonCount} reasons</span>
         <HiOutlineChevronRight aria-hidden="true" />
       </button>
     </section>
