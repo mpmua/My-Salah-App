@@ -51,6 +51,15 @@ const welcomeFeatures = [
   { icon: LuCode, label: "Open source" },
 ];
 
+const exampleSalahTimes = [
+  { name: "Fajr", time: "05:32 am" },
+  { name: "Sunrise", time: "07:00 am" },
+  { name: "Dhuhr", time: "12:58 pm" },
+  { name: "Asr", time: "04:18 pm" },
+  { name: "Maghrib", time: "06:42 pm" },
+  { name: "Isha", time: "08:06 pm" },
+];
+
 const welcomeFadeUp = {
   hidden: { opacity: 0, y: 16 },
   visible: {
@@ -163,7 +172,7 @@ const Onboarding = ({
             <>
               <IonButton
                 style={{
-                  top: "calc(env(safe-area-inset-top, 0px) - 10px)",
+                  top: "calc(env(safe-area-inset-top, 0px) + 8px)",
                   display:
                     Capacitor.getPlatform() === "android" &&
                     activeSlideIndex === 7
@@ -334,22 +343,43 @@ const Onboarding = ({
               </section>
             </SwiperSlide>
             <SwiperSlide>
-              <section className="flex flex-col justify-center h-full">
-                <section className="m-4 text-center">
-                  <h1 className="mb-2 text-2xl font-bold">
-                    Do you want to turn on Salah times?
-                  </h1>
-                  <p>Turn on Salah times</p>
+              <section className="flex flex-col h-full pt-16 pb-[max(1.5rem,env(safe-area-inset-bottom))] [@media(max-height:640px)]:pt-12">
+                <h1 className="m-0 text-[1.875rem] font-bold leading-tight">
+                  Add Salah times?
+                </h1>
+                <p className="mt-3 text-base text-balance text-[var(--secondary-text-color)]">
+                  Set your location to see daily Salah times. You can skip this
+                  and set them up later.
+                </p>
+                <p className="mt-6 mb-2 text-xs font-semibold tracking-wide uppercase text-[var(--secondary-text-color)] [@media(max-height:640px)]:mt-4">
+                  Example view · illustrative times
+                </p>
+                <section
+                  aria-hidden="true"
+                  className="px-4 py-3 rounded-2xl bg-[var(--sheet-group-bg)]"
+                >
+                  <p className="mb-1 text-lg font-bold [@media(max-height:640px)]:hidden">
+                    Salah Times
+                  </p>
+                  {exampleSalahTimes.map((item) => (
+                    <div
+                      key={item.name}
+                      className="flex justify-between py-2.5 text-[0.9375rem] border-t border-[color:var(--sheet-divider-color)] first-of-type:border-t-0 [@media(max-height:640px)]:py-1"
+                    >
+                      <span className="font-semibold">{item.name}</span>
+                      {item.time}
+                    </div>
+                  ))}
                 </section>
-                <section className="flex flex-col ">
+                <section className="flex flex-col pt-6 mt-auto">
                   <IonButton
                     onClick={async () => {
                       switchToNextPage();
                       // setIsSalahTimesOnboarding(true);
                     }}
-                    className="mb-4"
+                    className="m-0 font-semibold"
                   >
-                    Yes
+                    Set up Salah times
                   </IonButton>
                   <IonButton
                     fill="clear"
@@ -357,9 +387,9 @@ const Onboarding = ({
                       swiperRef.current?.slideTo(8, 0);
                       // setIsSalahTimesOnboarding(false);
                     }}
-                    className="text-center text-white mb- rounded-2xl"
+                    className="m-0 mt-2 font-semibold [--color:var(--current-salah-color)]"
                   >
-                    No
+                    Skip for now
                   </IonButton>
                 </section>
               </section>
