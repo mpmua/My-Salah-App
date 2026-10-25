@@ -399,9 +399,11 @@ const Onboarding = ({
             </SwiperSlide>
             <SwiperSlide>
               <section className="flex flex-col h-full pt-[calc(env(safe-area-inset-top,0px)+3.5rem)]">
-                <h1 className="m-0 mb-1.5 text-[1.875rem] font-bold leading-tight">
-                  Choose a location
-                </h1>
+                {!isLocationFormOpen && (
+                  <h1 className="m-0 mb-1.5 text-[1.875rem] font-bold leading-tight">
+                    Choose a location
+                  </h1>
+                )}
                 <AddLocationOptions
                   dbConnection={dbConnection}
                   setUserLocations={setUserLocations}
