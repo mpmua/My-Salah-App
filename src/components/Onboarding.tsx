@@ -36,6 +36,7 @@ import { LATEST_APP_VERSION } from "../utils/changelog";
 import { motion } from "framer-motion";
 import {
   LuBan,
+  LuCheck,
   LuChevronRight,
   LuCode,
   LuShieldCheck,
@@ -676,16 +677,42 @@ const Onboarding = ({
 
             {isBatteryOptEnabled && (
               <SwiperSlide>
-                <section className="flex flex-col justify-center h-full">
-                  <section className="m-4 text-center">
-                    <h1 className="mb-2 text-2xl font-bold">
-                      Make sure reminders arrive on time
-                    </h1>
-                    <p>
-                      Some phones delay notifications to save battery. Turning
-                      off battery optimisation helps ensure Salah reminders are
-                      delivered on time.
-                    </p>
+                <section className="flex flex-col h-full pt-[calc(env(safe-area-inset-top,0px)+3.5rem)] pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+                  <h1 className="m-0 mb-1.5 text-[1.875rem] font-bold leading-tight">
+                    Make sure reminders arrive on time
+                  </h1>
+                  <p className="text-base text-pretty text-[var(--secondary-text-color)]">
+                    Some phones delay notifications to save battery. Turning off
+                    battery optimisation for My Salah App ensures reminders
+                    arrive on time.
+                  </p>
+                  <section
+                    aria-hidden="true"
+                    className="flex flex-col items-center justify-center flex-1 gap-3 py-6"
+                  >
+                    <div className="flex w-full gap-3 p-3.5 rounded-[1.125rem] bg-[var(--sheet-group-bg)]">
+                      <img
+                        className="rounded-full size-9"
+                        src={appLogo}
+                        alt=""
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="flex justify-between mb-0.5 text-xs text-[var(--secondary-text-color)]">
+                          My Salah App
+                          <span>{exampleNotifications[0].time}</span>
+                        </p>
+                        <p className="text-[0.9375rem] font-semibold">
+                          {exampleNotifications[0].title}
+                        </p>
+                        <p className="text-sm text-[var(--secondary-text-color)]">
+                          {exampleNotifications[0].body}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="flex items-center gap-1 rounded-full bg-[var(--tag-blue-bg)] px-2.5 py-0.5 text-xs font-semibold text-[var(--current-salah-color)]">
+                      <LuCheck />
+                      Arrives on time
+                    </span>
                   </section>
                   <section className="flex flex-col">
                     <IonButton
@@ -709,7 +736,7 @@ const Onboarding = ({
                         }
                         // switchToNextPage();
                       }}
-                      className="mb-4"
+                      className="m-0 font-semibold"
                     >
                       Improve notification reliability
                     </IonButton>
@@ -719,7 +746,7 @@ const Onboarding = ({
                         // switchToNextPage();
                         dismissOnboardingSlides();
                       }}
-                      className="mb-2 text-center text-[var(--ion-text-color)] rounded-2xl"
+                      className="m-0 mt-2 font-semibold [--color:var(--current-salah-color)]"
                     >
                       Skip for now
                     </IonButton>
