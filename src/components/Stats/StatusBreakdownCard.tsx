@@ -53,7 +53,7 @@ const StatusBreakdownCard = ({
               {item.percentage.toFixed(1)}%
             </p>
             <p className="pl-3 mt-0.5 text-[10px] leading-tight opacity-60 min-[375px]:text-[11px]">
-              {item.value.toLocaleString()} {item.value === 1 ? "prayer" : "prayers"}
+              {item.value.toLocaleString()} Salah
             </p>
           </div>
         ))}
