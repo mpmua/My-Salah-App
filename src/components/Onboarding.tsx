@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Swiper as SwiperInstance } from "swiper";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 import {
   LocationsDataObjTypeArr,
   OnboardingMode,
@@ -19,7 +19,6 @@ import {
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/pagination";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import appLogo from "/src/assets/images/icon-512.png";
 import { IonButton, IonContent, IonIcon, IonModal } from "@ionic/react";
@@ -34,6 +33,31 @@ import { Capacitor } from "@capacitor/core";
 import { adhanLibrarySalahs } from "../utils/constants";
 import { AndroidSettings } from "capacitor-native-settings";
 import { LATEST_APP_VERSION } from "../utils/changelog";
+import { motion } from "framer-motion";
+import {
+  LuBan,
+  LuCode,
+  LuShieldCheck,
+  LuUserX,
+  LuWifiOff,
+} from "react-icons/lu";
+
+const welcomeFeatures = [
+  { icon: LuShieldCheck, label: "Privacy friendly" },
+  { icon: LuUserX, label: "No account needed" },
+  { icon: LuBan, label: "No ads" },
+  { icon: LuWifiOff, label: "Works offline" },
+  { icon: LuCode, label: "Open source" },
+];
+
+const welcomeFadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
 
 interface OnboardingProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
@@ -63,6 +87,7 @@ const Onboarding = ({
   setShowLocationAddedToast,
 }: OnboardingProps) => {
   const swiperRef = useRef<SwiperInstance | null>(null);
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
   const switchToNextPage = () => {
     swiperRef.current?.slideNext();
@@ -133,14 +158,14 @@ const Onboarding = ({
           // className="flex items-center mx-5 mt-2"
           className="flex min-h-screen mx-5"
         >
-          {onboardingMode === "newUser" && (
+          {onboardingMode === "newUser" && activeSlideIndex > 0 && (
             <>
               <IonButton
                 style={{
                   top: "calc(env(safe-area-inset-top, 0px) - 10px)",
                   display:
                     Capacitor.getPlatform() === "android" &&
-                    swiperRef.current?.activeIndex === 7
+                    activeSlideIndex === 7
                       ? "none"
                       : undefined,
                 }}
@@ -172,50 +197,79 @@ const Onboarding = ({
           )}
 
           <Swiper
-            onSwiper={(swiper) => (swiperRef.current = swiper)}
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+              setActiveSlideIndex(swiper.activeIndex);
+            }}
+            onSlideChange={(swiper) => setActiveSlideIndex(swiper.activeIndex)}
             style={{ margin: 0 }}
             className="swiper"
             spaceBetween={50}
             slidesPerView={1}
             allowTouchMove={false}
             initialSlide={onboardingMode === "newUser" ? 0 : 3}
-            pagination={onboardingMode === "newUser" ? true : false}
             navigation
             // navigation={{
             //   nextEl: ".swiper-button-next",
             //   prevEl: ".swiper-button-prev",
             // }}
-            modules={[Pagination, Navigation]}
+            modules={[Navigation]}
           >
             <SwiperSlide>
-              <section className="flex flex-col justify-center h-full">
-                <h1 className="text-2xl text-center">
+              <motion.section
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  visible: {
+                    transition: { delayChildren: 0.4, staggerChildren: 0.1 },
+                  },
+                }}
+                className="flex flex-col justify-end h-full pb-36 [@media(max-height:640px)]:pb-28"
+              >
+                <motion.img
+                  variants={welcomeFadeUp}
+                  className="w-24 h-24 mb-8 [@media(max-height:640px)]:size-16 [@media(max-height:640px)]:mb-5"
+                  src={appLogo}
+                  alt=""
+                />
+                <motion.h1
+                  variants={welcomeFadeUp}
+                  className="m-0 text-[1.875rem] font-bold leading-tight text-balance"
+                >
                   Welcome to My Salah App
-                </h1>
-                <div className="text-center">
-                  <img
-                    className="block mx-auto mb-2"
-                    src={appLogo}
-                    height="70"
-                    width="60%"
-                    alt=""
-                  />
-                  <p className="p-4 text-sm leading-5">
-                    Open-source, ad-free, privacy friendly. This app collects
-                    zero data from you and everything works completely offline.
-                  </p>
-                </div>
+                </motion.h1>
+                <motion.p
+                  variants={welcomeFadeUp}
+                  className="mt-3 text-base text-balance text-[var(--secondary-text-color)]"
+                >
+                  A simple daily log to help you stay consistent.
+                </motion.p>
+                <ul className="mt-8 space-y-4 [@media(max-height:640px)]:mt-6 [@media(max-height:640px)]:space-y-3">
+                  {welcomeFeatures.map((item) => (
+                    <motion.li
+                      key={item.label}
+                      variants={welcomeFadeUp}
+                      className="flex items-center gap-4"
+                    >
+                      <item.icon
+                        aria-hidden="true"
+                        className="text-2xl shrink-0 text-[var(--current-salah-color)]"
+                      />
+                      {item.label}
+                    </motion.li>
+                  ))}
+                </ul>
                 <IonButton
-                  className="absolute w-full bottom-10"
+                  className="absolute w-full m-0 bottom-10 font-semibold"
                   onClick={() => {
                     switchToNextPage();
                     // setIsOnboarding(true);
                   }}
                 >
                   <IonIcon slot="end" icon={arrowForwardOutline} />
-                  Bismillah, Lets Go!
+                  Bismillah, let's begin
                 </IonButton>
-              </section>
+              </motion.section>
             </SwiperSlide>
             <SwiperSlide>
               <section className="flex flex-col justify-center h-full">
