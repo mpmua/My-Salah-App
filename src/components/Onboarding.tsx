@@ -463,14 +463,18 @@ const Onboarding = ({
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <section className="flex flex-col justify-center h-full">
-                <section className="m-4 text-center">
-                  <h1 className="mb-2 text-2xl font-bold">Madhab</h1>
-                  <p>Select Madhab</p>
-                </section>
-                <section className="mx-4">
-                  <IonButton
-                    expand="block"
+              <section className="flex flex-col h-full pt-[calc(env(safe-area-inset-top,0px)+3.5rem)]">
+                <h1 className="m-0 mb-1.5 text-[1.875rem] font-bold leading-tight">
+                  Madhab
+                </h1>
+                <p className="text-base text-balance text-[var(--secondary-text-color)]">
+                  Your madhab affects when Asr begins. Choose the method you
+                  follow.
+                </p>
+                <section className="mt-6 space-y-3">
+                  <button
+                    type="button"
+                    className="flex items-center w-full h-[4.5rem] pr-[1.125rem] overflow-hidden text-lg font-medium text-left rounded-2xl bg-[var(--sheet-group-bg)] text-[var(--ion-text-color)]"
                     onClick={async () => {
                       if (switchToNextPage && onboardingMode !== null) {
                         switchToNextPage();
@@ -483,15 +487,21 @@ const Onboarding = ({
                       }
                     }}
                   >
-                    <div>
-                      <p className="mt-0">Shafi'i, Maliki & Hanbali</p>
-                      <p className="mt-2 text-xs">Earlier Asr time</p>
-                    </div>
-                  </IonButton>
-                  <IonButton
-                    color="secondary"
-                    className="mt-5"
-                    expand="block"
+                    <span className="self-stretch w-[5px] mr-[1.125rem] bg-[var(--ion-color-primary)]" />
+                    <span>
+                      <span className="block">Shafi'i, Maliki or Hanbali</span>
+                      <span className="block mt-0.5 text-sm font-normal text-[var(--secondary-text-color)]">
+                        Earlier Asr time
+                      </span>
+                    </span>
+                    <LuChevronRight
+                      aria-hidden="true"
+                      className="ml-auto text-xl text-[var(--secondary-text-color)]"
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    className="flex items-center w-full h-[4.5rem] pr-[1.125rem] overflow-hidden text-lg font-medium text-left rounded-2xl bg-[var(--sheet-group-bg)] text-[var(--ion-text-color)]"
                     onClick={async () => {
                       if (switchToNextPage && onboardingMode !== null) {
                         switchToNextPage();
@@ -504,12 +514,22 @@ const Onboarding = ({
                       }
                     }}
                   >
-                    <div>
-                      <p className="mt-0">Hanafi</p>
-                      <p className="mt-2 text-xs">Later Asr time</p>
-                    </div>
-                  </IonButton>
+                    <span className="self-stretch w-[5px] mr-[1.125rem] bg-teal-500" />
+                    <span>
+                      <span className="block">Hanafi</span>
+                      <span className="block mt-0.5 text-sm font-normal text-[var(--secondary-text-color)]">
+                        Later Asr time
+                      </span>
+                    </span>
+                    <LuChevronRight
+                      aria-hidden="true"
+                      className="ml-auto text-xl text-[var(--secondary-text-color)]"
+                    />
+                  </button>
                 </section>
+                <p className="mt-4 text-sm text-[var(--secondary-text-color)]">
+                  You can change this later in Settings.
+                </p>
               </section>
             </SwiperSlide>
             <SwiperSlide>
