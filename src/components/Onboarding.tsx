@@ -343,7 +343,7 @@ const Onboarding = ({
               </section>
             </SwiperSlide>
             <SwiperSlide>
-              <section className="flex flex-col h-full pt-16 pb-[max(1.5rem,env(safe-area-inset-bottom))] [@media(max-height:640px)]:pt-12">
+              <section className="flex flex-col h-full pt-[calc(env(safe-area-inset-top,0px)+3.5rem)] pb-[max(1.5rem,env(safe-area-inset-bottom))]">
                 <h1 className="m-0 text-[1.875rem] font-bold leading-tight">
                   Add Salah times?
                 </h1>
@@ -395,30 +395,24 @@ const Onboarding = ({
               </section>
             </SwiperSlide>
             <SwiperSlide>
-              <section
-                style={{ marginTop: "calc(env(safe-area-inset-top, 0px))" }}
-                className="flex flex-col items-center justify-center"
-              >
-                <section className="m-4 text-center">
-                  <h1 className="mb-2 text-2xl font-bold">Location</h1>
-                  <p>Select your Location</p>
-                </section>
-                <section className="relative">
-                  <AddLocationOptions
-                    dbConnection={dbConnection}
-                    setUserLocations={setUserLocations}
-                    userLocations={userLocations}
-                    setShowLocationFailureToast={setShowLocationFailureToast}
-                    setShowLocationAddedToast={setShowLocationAddedToast}
-                    onboardingMode={onboardingMode}
-                    switchToNextPage={switchToNextPage}
-                  />
-                </section>
+              <section className="flex flex-col h-full pt-[calc(env(safe-area-inset-top,0px)+3.5rem)]">
+                <h1 className="m-0 mb-1.5 text-[1.875rem] font-bold leading-tight">
+                  Choose a location
+                </h1>
+                <AddLocationOptions
+                  dbConnection={dbConnection}
+                  setUserLocations={setUserLocations}
+                  userLocations={userLocations}
+                  setShowLocationFailureToast={setShowLocationFailureToast}
+                  setShowLocationAddedToast={setShowLocationAddedToast}
+                  onboardingMode={onboardingMode}
+                  switchToNextPage={switchToNextPage}
+                />
                 <IonButton
                   onClick={async () => {
                     switchToNextPage();
                   }}
-                  className={`absolute bottom-5 w-full ${userLocations.length === 0 ? "hidden" : "visible"}`}
+                  className={`absolute bottom-[max(1.5rem,env(safe-area-inset-bottom))] w-full m-0 font-semibold ${userLocations.length === 0 ? "hidden" : "visible"}`}
                 >
                   Next
                 </IonButton>
