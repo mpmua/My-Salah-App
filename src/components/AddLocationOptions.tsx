@@ -11,7 +11,7 @@ import { Geolocation } from "@capacitor/geolocation";
 import { AndroidSettings } from "capacitor-native-settings";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import { Capacitor } from "@capacitor/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cities from "../assets/cities.json";
 
 import {
@@ -55,6 +55,7 @@ interface AddLocationOptionsProps {
   onboardingMode?: OnboardingMode;
   switchToNextPage?: () => void;
   setShowAddLocationSheet?: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsLocationFormOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AddLocationOptions = ({
@@ -66,6 +67,7 @@ const AddLocationOptions = ({
   onboardingMode,
   switchToNextPage,
   setShowAddLocationSheet,
+  setIsLocationFormOpen,
 }: AddLocationOptionsProps) => {
   type CoordsObjType = {
     latitude: null | number;
@@ -95,6 +97,10 @@ const AddLocationOptions = ({
     isDefaultLocationCheckBoxChecked,
     setIsDefaultLocationCheckBoxChecked,
   ] = useState(false);
+
+  useEffect(() => {
+    setIsLocationFormOpen?.(showAddLocationForm);
+  }, [showAddLocationForm, setIsLocationFormOpen]);
 
   const addUserLocation = async (
     dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>,

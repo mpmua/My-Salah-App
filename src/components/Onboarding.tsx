@@ -98,6 +98,7 @@ const Onboarding = ({
 }: OnboardingProps) => {
   const swiperRef = useRef<SwiperInstance | null>(null);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [isLocationFormOpen, setIsLocationFormOpen] = useState(false);
 
   const switchToNextPage = () => {
     swiperRef.current?.slideNext();
@@ -168,27 +169,29 @@ const Onboarding = ({
           // className="flex items-center mx-5 mt-2"
           className="flex min-h-screen mx-5"
         >
-          {onboardingMode === "newUser" && activeSlideIndex > 0 && (
-            <>
-              <IonButton
-                style={{
-                  top: "calc(env(safe-area-inset-top, 0px) + 8px)",
-                  display:
-                    Capacitor.getPlatform() === "android" &&
-                    activeSlideIndex === 7
-                      ? "none"
-                      : undefined,
-                }}
-                fill="clear"
-                color="light"
-                size="small"
-                className="absolute text-lg z-10 left-[-5px] top-0"
-                onClick={switchToPreviousPage}
-              >
-                <IonIcon icon={chevronBackOutline} />
-              </IonButton>
-            </>
-          )}
+          {onboardingMode === "newUser" &&
+            activeSlideIndex > 0 &&
+            !isLocationFormOpen && (
+              <>
+                <IonButton
+                  style={{
+                    top: "calc(env(safe-area-inset-top, 0px) + 8px)",
+                    display:
+                      Capacitor.getPlatform() === "android" &&
+                      activeSlideIndex === 7
+                        ? "none"
+                        : undefined,
+                  }}
+                  fill="clear"
+                  color="light"
+                  size="small"
+                  className="absolute text-lg z-10 left-[-5px] top-0"
+                  onClick={switchToPreviousPage}
+                >
+                  <IonIcon icon={chevronBackOutline} />
+                </IonButton>
+              </>
+            )}
 
           {onboardingMode === "salahTimes" && (
             <>
@@ -407,6 +410,7 @@ const Onboarding = ({
                   setShowLocationAddedToast={setShowLocationAddedToast}
                   onboardingMode={onboardingMode}
                   switchToNextPage={switchToNextPage}
+                  setIsLocationFormOpen={setIsLocationFormOpen}
                 />
                 <IonButton
                   onClick={async () => {
