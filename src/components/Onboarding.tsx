@@ -173,6 +173,7 @@ const Onboarding = ({
             activeSlideIndex > 0 &&
             !isLocationFormOpen && (
               <>
+                <div className="absolute inset-x-0 top-0 z-10 h-[calc(env(safe-area-inset-top,0px)+3rem)] bg-[var(--ion-background-color)]" />
                 <IonButton
                   style={{
                     top: "calc(env(safe-area-inset-top, 0px) + 8px)",
@@ -425,16 +426,7 @@ const Onboarding = ({
               </section>
             </SwiperSlide>
             <SwiperSlide>
-              <section
-                style={{ marginTop: "calc(env(safe-area-inset-top, 0px))" }}
-                className="flex flex-col justify-center h-full"
-              >
-                <section className="m-4 text-center">
-                  <h1 className="mb-2 text-2xl font-bold">
-                    Calculation Method
-                  </h1>
-                  <p>Select your calculation method</p>
-                </section>
+              <section className="h-full -mx-5 pt-[calc(env(safe-area-inset-top,0px)+1.5rem)] [&_ion-content]:[--background:transparent]">
                 <CalculationMethodOptions
                   dbConnection={dbConnection}
                   setSegmentOption={setSegmentOption}
@@ -442,20 +434,33 @@ const Onboarding = ({
                   userLocations={userLocations}
                   userPreferences={userPreferences}
                   setUserPreferences={setUserPreferences}
-                />
+                >
+                  <h1 className="m-0 mb-1.5 text-[1.875rem] font-bold leading-tight">
+                    Calculation method
+                  </h1>
+                  <p className="mb-5 text-base text-[var(--secondary-text-color)]">
+                    Choose how your daily Salah times are calculated.
+                  </p>
+                </CalculationMethodOptions>
                 {/* <section className=""> */}
               </section>
-              <IonButton
-                disabled={
-                  userPreferences.prayerCalculationMethod === "" ? true : false
-                }
-                onClick={async () => {
-                  switchToNextPage();
-                }}
-                className={`absolute bottom-5 w-full ${userPreferences.prayerCalculationMethod === "" ? "hidden" : "visible"}`}
+              <div
+                className={`absolute inset-x-0 bottom-0 pt-3 pb-[max(1.5rem,env(safe-area-inset-bottom))] bg-[var(--ion-background-color)] ${userPreferences.prayerCalculationMethod === "" ? "hidden" : "visible"}`}
               >
-                Next
-              </IonButton>
+                <IonButton
+                  disabled={
+                    userPreferences.prayerCalculationMethod === ""
+                      ? true
+                      : false
+                  }
+                  onClick={async () => {
+                    switchToNextPage();
+                  }}
+                  className="w-full m-0 font-semibold"
+                >
+                  Next
+                </IonButton>
+              </div>
             </SwiperSlide>
             <SwiperSlide>
               <section className="flex flex-col justify-center h-full">
