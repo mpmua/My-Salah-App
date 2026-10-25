@@ -36,6 +36,7 @@ import { LATEST_APP_VERSION } from "../utils/changelog";
 import { motion } from "framer-motion";
 import {
   LuBan,
+  LuChevronRight,
   LuCode,
   LuShieldCheck,
   LuUserX,
@@ -273,10 +274,13 @@ const Onboarding = ({
             </SwiperSlide>
             <SwiperSlide>
               <section className="flex flex-col justify-center h-full">
-                <h1 className="text-3xl">I am a...</h1>
-                <section>
-                  <IonButton
-                    expand="block"
+                <h1 className="m-0 mb-6 text-[1.875rem] font-bold leading-tight">
+                  I am a...
+                </h1>
+                <section className="space-y-3">
+                  <button
+                    type="button"
+                    className="flex items-center w-full h-[4.5rem] pr-[1.125rem] overflow-hidden text-lg font-medium text-left rounded-2xl bg-[var(--sheet-group-bg)] text-[var(--ion-text-color)]"
                     onClick={async () => {
                       switchToNextPage();
                       await updateUserPrefs(
@@ -293,15 +297,16 @@ const Onboarding = ({
                       );
                     }}
                   >
-                    <div>
-                      <p>Brother</p>
-                    </div>
-                  </IonButton>
-
-                  <IonButton
-                    color="tertiary"
-                    className="mt-5"
-                    expand="block"
+                    <span className="self-stretch w-[5px] mr-[1.125rem] bg-[var(--ion-color-primary)]" />
+                    Brother
+                    <LuChevronRight
+                      aria-hidden="true"
+                      className="ml-auto text-xl text-[var(--secondary-text-color)]"
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    className="flex items-center w-full h-[4.5rem] pr-[1.125rem] overflow-hidden text-lg font-medium text-left rounded-2xl bg-[var(--sheet-group-bg)] text-[var(--ion-text-color)]"
                     onClick={async () => {
                       switchToNextPage();
                       await updateUserPrefs(
@@ -318,10 +323,13 @@ const Onboarding = ({
                       );
                     }}
                   >
-                    <div>
-                      <p>Sister</p>
-                    </div>
-                  </IonButton>
+                    <span className="self-stretch w-[5px] mr-[1.125rem] bg-[var(--ion-color-tertiary)]" />
+                    Sister
+                    <LuChevronRight
+                      aria-hidden="true"
+                      className="ml-auto text-xl text-[var(--secondary-text-color)]"
+                    />
+                  </button>
                 </section>
               </section>
             </SwiperSlide>
