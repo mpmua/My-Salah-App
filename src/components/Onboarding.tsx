@@ -756,16 +756,33 @@ const Onboarding = ({
             )}
 
             <SwiperSlide>
-              <section className="flex flex-col justify-center h-full">
-                <section className="m-4 text-center">
-                  <h1 className="mb-2 text-2xl font-bold">
-                    Stay Consistent with Your Salah
-                  </h1>
-                  <p>
-                    We’ll send you a gentle reminder each day to log which
-                    Salahs you prayed or missed. You can adjust the time or turn
-                    this off anytime in settings.
-                  </p>
+              <section className="flex flex-col h-full pt-[calc(env(safe-area-inset-top,0px)+3.5rem)] pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+                <h1 className="m-0 mb-1.5 text-[1.875rem] font-bold leading-tight">
+                  Stay consistent with your Salah
+                </h1>
+                <p className="text-base text-pretty text-[var(--secondary-text-color)]">
+                  Get a reminder at 9 pm each day to log your Salah. You can
+                  change the time or turn it off later in Settings.
+                </p>
+                <section
+                  aria-hidden="true"
+                  className="flex flex-col justify-center flex-1 py-6"
+                >
+                  <div className="flex gap-3 p-3.5 rounded-[1.125rem] bg-[var(--sheet-group-bg)]">
+                    <img className="rounded-full size-9" src={appLogo} alt="" />
+                    <div className="flex-1 min-w-0">
+                      <p className="flex justify-between mb-0.5 text-xs text-[var(--secondary-text-color)]">
+                        My Salah App
+                        <span>09:00 pm</span>
+                      </p>
+                      <p className="text-[0.9375rem] font-semibold">
+                        {exampleNotifications[1].title}
+                      </p>
+                      <p className="text-sm text-[var(--secondary-text-color)]">
+                        {exampleNotifications[1].body}
+                      </p>
+                    </div>
+                  </div>
                 </section>
                 <section className="flex flex-col">
                   <IonButton
@@ -792,7 +809,7 @@ const Onboarding = ({
                         dismissOnboardingSlides();
                       }
                     }}
-                    className="mb-4"
+                    className="m-0 font-semibold"
                   >
                     Remind me each day
                   </IonButton>
@@ -801,7 +818,7 @@ const Onboarding = ({
                     onClick={() => {
                       dismissOnboardingSlides();
                     }}
-                    className="text-[var(--ion-text-color)] mb-2text-center rounded-2xl"
+                    className="m-0 mt-2 font-semibold [--color:var(--current-salah-color)]"
                   >
                     Skip for now
                   </IonButton>
