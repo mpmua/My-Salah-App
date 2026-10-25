@@ -244,7 +244,7 @@ export const scheduleFixedTimeDailyNotification = async (
       {
         id: 1,
         title: "Daily Reminder",
-        body: `Did you log your prayers today?`,
+        body: `Did you log your Salah today?`,
         schedule: {
           on: {
             hour: hour,
@@ -328,7 +328,7 @@ export const scheduleSalahNotifications = async (
       const notificationMsg =
         salahName === "sunrise"
           ? "The sun is rising!"
-          : `It's time to pray ${upperCaseFirstLetter(salahName)}`;
+          : `It's time for ${upperCaseFirstLetter(salahName)}`;
 
       const channelId =
         setting === "adhan" && salahName === "fajr"
@@ -535,7 +535,7 @@ export const scheduleAfterIshaDailyNotifications = async (
         {
           id: 1000 + i,
           title: "Daily Reminder",
-          body: `Did you log your prayers today?`,
+          body: `Did you log your Salah today?`,
           schedule: {
             at: arr[i],
             allowWhileIdle: true,

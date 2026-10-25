@@ -60,6 +60,15 @@ const exampleSalahTimes = [
   { name: "Isha", time: "08:06 pm" },
 ];
 
+const exampleNotifications = [
+  { title: "Asr", body: "It's time for Asr", time: "now" },
+  {
+    title: "Daily Reminder",
+    body: "Did you log your Salah today?",
+    time: "09:42 pm",
+  },
+];
+
 const welcomeFadeUp = {
   hidden: { opacity: 0, y: 16 },
   visible: {
@@ -533,18 +542,44 @@ const Onboarding = ({
               </section>
             </SwiperSlide>
             <SwiperSlide>
-              <section className="flex flex-col justify-center h-full">
-                <section className="m-4 text-center">
-                  <h1 className="mb-2 text-2xl font-bold">
-                    Enable Notifications
-                  </h1>
-                  <p>
-                    We’ll notify you at each Salah time and once daily to log
-                    your Salahs. You can change sounds and customise individual
-                    reminders later.
-                  </p>
+              <section className="flex flex-col h-full pt-[calc(env(safe-area-inset-top,0px)+3.5rem)] pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+                <h1 className="m-0 mb-1.5 text-[1.875rem] font-bold leading-tight">
+                  Salah reminders
+                </h1>
+                <p className="text-base text-pretty text-[var(--secondary-text-color)]">
+                  Get an alert at each Salah time and a daily reminder after
+                  Isha. You can change these any time.
+                </p>
+                <section
+                  aria-hidden="true"
+                  className="flex flex-col justify-center flex-1 gap-3 py-6"
+                >
+                  {exampleNotifications.map((item) => (
+                    <div
+                      key={item.title}
+                      className="flex gap-3 p-3.5 rounded-[1.125rem] bg-[var(--sheet-group-bg)]"
+                    >
+                      <img
+                        className="rounded-full size-9"
+                        src={appLogo}
+                        alt=""
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="flex justify-between mb-0.5 text-xs text-[var(--secondary-text-color)]">
+                          My Salah App
+                          <span>{item.time}</span>
+                        </p>
+                        <p className="text-[0.9375rem] font-semibold">
+                          {item.title}
+                        </p>
+                        <p className="text-sm text-[var(--secondary-text-color)]">
+                          {item.body}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </section>
-                <section className="flex flex-col ">
+                <section className="flex flex-col">
                   <IonButton
                     onClick={async () => {
                       const res = await handleNotificationPermissions();
@@ -622,16 +657,16 @@ const Onboarding = ({
                         dismissOnboardingSlides();
                       }
                     }}
-                    className="mb-4"
+                    className="m-0 font-semibold"
                   >
-                    Allow notifications
+                    Turn on reminders
                   </IonButton>
                   <IonButton
                     fill="clear"
                     onClick={() => {
                       dismissOnboardingSlides();
                     }}
-                    className="mb-2 text-center rounded-2xl text-[var(--ion-text-color)]"
+                    className="m-0 mt-2 font-semibold [--color:var(--current-salah-color)]"
                   >
                     Skip for now
                   </IonButton>
