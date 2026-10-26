@@ -129,7 +129,7 @@ const App = () => {
     [],
   );
   const [isMultiEditMode, setIsMultiEditMode] = useState<boolean>(false);
-  const [showJoyRideEditIcon, setShowJoyRideEditIcon] =
+  const [showMultiEditIntro, setShowMultiEditIntro] =
     useState<boolean>(false);
   const [streakDatesObjectsArr, setStreakDatesObjectsArr] = useState<
     streakDatesObjType[]
@@ -984,8 +984,8 @@ const App = () => {
                   dbConnection={dbConnection}
                   setFetchedSalahData={setFetchedSalahData}
                   setUserPreferences={setUserPreferences}
-                  setShowJoyRideEditIcon={setShowJoyRideEditIcon}
-                  showJoyRideEditIcon={showJoyRideEditIcon}
+                  setShowMultiEditIntro={setShowMultiEditIntro}
+                  showMultiEditIntro={showMultiEditIntro}
                   userPreferences={userPreferences}
                   fetchedSalahData={fetchedSalahData}
                   setMissedSalahList={setMissedSalahList}
@@ -1041,7 +1041,7 @@ const App = () => {
               render={() => (
                 <SalahTimesPage
                   dbConnection={dbConnection}
-                  setShowJoyRideEditIcon={setShowJoyRideEditIcon}
+                  setShowMultiEditIntro={setShowMultiEditIntro}
                   setUserPreferences={setUserPreferences}
                   userPreferences={userPreferences}
                   setUserLocations={setUserLocations}
@@ -1091,7 +1091,7 @@ const App = () => {
       <Onboarding
         setOnboardingMode={setOnboardingMode}
         onboardingMode={onboardingMode}
-        setShowJoyRideEditIcon={setShowJoyRideEditIcon}
+        setShowMultiEditIntro={setShowMultiEditIntro}
         dbConnection={dbConnection}
         setUserPreferences={setUserPreferences}
         userPreferences={userPreferences}

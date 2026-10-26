@@ -52,7 +52,7 @@ import CalculationMethodOptions from "../components/CalculationMethodOptions";
 
 interface SalahTimesPageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
-  setShowJoyRideEditIcon: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowMultiEditIntro: React.Dispatch<React.SetStateAction<boolean>>;
   setUserPreferences: React.Dispatch<React.SetStateAction<userPreferencesType>>;
   userPreferences: userPreferencesType;
   setUserLocations: React.Dispatch<
@@ -74,7 +74,7 @@ interface SalahTimesPageProps {
 
 const SalahTimesPage = ({
   dbConnection,
-  setShowJoyRideEditIcon,
+  setShowMultiEditIntro,
   setUserPreferences,
   userPreferences,
   setUserLocations,
@@ -337,7 +337,7 @@ const SalahTimesPage = ({
               </IonModal>
 
               <Onboarding
-                setShowJoyRideEditIcon={setShowJoyRideEditIcon}
+                setShowMultiEditIntro={setShowMultiEditIntro}
                 dbConnection={dbConnection}
                 setUserPreferences={setUserPreferences}
                 userPreferences={userPreferences}

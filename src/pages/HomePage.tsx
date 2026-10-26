@@ -27,8 +27,8 @@ import {
 interface HomePageProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   setUserPreferences: React.Dispatch<React.SetStateAction<userPreferencesType>>;
-  setShowJoyRideEditIcon: React.Dispatch<React.SetStateAction<boolean>>;
-  showJoyRideEditIcon: boolean;
+  setShowMultiEditIntro: React.Dispatch<React.SetStateAction<boolean>>;
+  showMultiEditIntro: boolean;
   setFetchedSalahData: React.Dispatch<
     React.SetStateAction<SalahRecordsArrayType>
   >;
@@ -47,8 +47,8 @@ interface HomePageProps {
 const HomePage = ({
   dbConnection,
   setUserPreferences,
-  setShowJoyRideEditIcon,
-  showJoyRideEditIcon,
+  setShowMultiEditIntro,
+  showMultiEditIntro,
   setFetchedSalahData,
   fetchedSalahData,
   userPreferences,
@@ -206,7 +206,7 @@ const HomePage = ({
                 <TbEdit aria-hidden="true" />
               </span>
               <p className="flex-1 text-[1.0625rem] font-semibold">
-                Select prayers
+                Select Salah
               </p>
               <p
                 aria-live="polite"
@@ -233,8 +233,8 @@ const HomePage = ({
             <SalahTable
               dbConnection={dbConnection}
               // setUserPreferences={setUserPreferences}
-              setShowJoyRideEditIcon={setShowJoyRideEditIcon}
-              showJoyRideEditIcon={showJoyRideEditIcon}
+              setShowMultiEditIntro={setShowMultiEditIntro}
+              showMultiEditIntro={showMultiEditIntro}
               userPreferences={userPreferences}
               setFetchedSalahData={setFetchedSalahData}
               fetchedSalahData={fetchedSalahData}

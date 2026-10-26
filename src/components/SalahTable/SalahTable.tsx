@@ -1,7 +1,6 @@
 import "react-virtualized/styles.css";
 import { Column, Table, AutoSizer } from "react-virtualized";
 import { motion, AnimatePresence } from "framer-motion";
-import Joyride, { CallBackProps, Step } from "react-joyride";
 import {
   HiOutlineChevronDoubleUp,
   HiChevronDoubleDown,
@@ -15,6 +14,7 @@ import {
   userPreferencesType,
 } from "../../types/types";
 import BottomSheetSalahStatus from "../BottomSheets/BottomSheetSalahStatus";
+import BottomSheetMultiEditIntro from "../BottomSheets/BottomSheetMultiEditIntro";
 
 import { LuDot } from "react-icons/lu";
 import { TbEdit } from "react-icons/tb";
@@ -36,8 +36,8 @@ import { IonButton } from "@ionic/react";
 interface SalahTableProps {
   dbConnection: React.MutableRefObject<SQLiteDBConnection | undefined>;
   // setUserPreferences: React.Dispatch<React.SetStateAction<userPreferencesType>>;
-  setShowJoyRideEditIcon: React.Dispatch<React.SetStateAction<boolean>>;
-  showJoyRideEditIcon: boolean;
+  setShowMultiEditIntro: React.Dispatch<React.SetStateAction<boolean>>;
+  showMultiEditIntro: boolean;
   setFetchedSalahData: React.Dispatch<
     React.SetStateAction<SalahRecordsArrayType>
   >;
@@ -57,8 +57,8 @@ interface SalahTableProps {
 const SalahTable = ({
   dbConnection,
   // setUserPreferences,
-  setShowJoyRideEditIcon,
-  showJoyRideEditIcon,
+  setShowMultiEditIntro,
+  showMultiEditIntro,
   setFetchedSalahData,
   fetchedSalahData,
   userPreferences,
@@ -79,7 +79,7 @@ const SalahTable = ({
   };
   const [showBoxAnimation, setShowBoxAnimation] = useState(false);
   const clonedSelectedSalahAndDate = useRef<SalahByDateObjType>({});
-  const [multiEditIconAnimation, setMultiEditIconAnimation] = useState(true);
+  const [showSingleCellHint, setShowSingleCellHint] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
 
   const tableRef = useRef<Table | null>(null);
@@ -137,86 +137,9 @@ const SalahTable = ({
     }
   };
 
-  const joyRideonBoardingSteps: Step[] = [
-    {
-      target: ".multi-edit-icon",
-      content:
-        "Tap this icon to edit multiple Salah entries across different dates at once (provided they share the same status, reasons, and notes).",
-      disableBeacon: true,
-    },
-
-    {
-      target: ".single-table-cell",
-      content:
-        "Alternatively, you can update a Salah individually by tapping on a specific cell.",
-      disableBeacon: true,
-      placement: "center",
-    },
-  ];
-
-  const handleJoyRide = async (data: CallBackProps) => {
-    if (data.action === "next") {
-      setMultiEditIconAnimation(false);
-    }
-
-    // await updateUserPrefs(
-    //   dbConnection,
-    //   "isExistingUser",
-    //   "1",
-    //   setUserPreferences,
-    // );
-
-    // if (data.action === "prev") {
-    //   setMultiEditIconAnimation(true);
-    // }
-
-    if (data.status === "ready") {
-      // console.log("JOYRIDE COMPLETE");
-
-      setShowJoyRideEditIcon(false);
-
-      // console.log("EXISTING USER FLAG CHANGED TO 1 IN DB");
-    }
-  };
-
   return (
     <section className="salah-table-wrap hide-scrollbar">
-      <Joyride
-        disableOverlay={false}
-        disableOverlayClose={true}
-        run={showJoyRideEditIcon}
-        locale={{
-          last: "Done",
-          next: "Next",
-          back: "Back",
-        }}
-        steps={joyRideonBoardingSteps}
-        continuous
-        disableScrolling={true}
-        hideCloseButton={true}
-        callback={handleJoyRide}
-        styles={{
-          options: {
-            backgroundColor: "#27272a",
-            arrowColor: "#ffffff",
-            textColor: "#fff",
-            zIndex: 10000,
-          },
-          buttonNext: {
-            backgroundColor: "#2563eb",
-            color: "#fff",
-            borderRadius: "5px",
-            padding: "8px 12px",
-          },
-          buttonBack: {
-            backgroundColor: "#f44336",
-            color: "#fff",
-            borderRadius: "5px",
-            padding: "8px 12px",
-          },
-        }}
-      />
-      <div className="h-[95%]">
+      <div className="relative h-[95%]">
         <AutoSizer>
           {({ height, width }) => (
             <Table
@@ -278,7 +201,7 @@ const SalahTable = ({
                   >
                     {/* <IonIcon
                       className={`multi-edit-icon text-[var(--ion-text-color)] ${
-                        showJoyRideEditIcon && multiEditIconAnimation
+                        showMultiEditIntro && multiEditIconAnimation
                           ? "animate-bounce"
                           : ""
                       }`}
@@ -286,13 +209,7 @@ const SalahTable = ({
                       icon={createOutline}
                     /> */}
 
-                    <TbEdit
-                      className={`multi-edit-icon text-[var(--ion-text-color)] text-lg ${
-                        showJoyRideEditIcon && multiEditIconAnimation
-                          ? "animate-bounce"
-                          : ""
-                      }`}
-                    />
+                    <TbEdit className="text-[var(--ion-text-color)] text-lg" />
                   </IonButton>
                 )}
                 cellRenderer={({ rowData }) => {
@@ -335,6 +252,10 @@ const SalahTable = ({
                       <section
                         onClick={() => {
                           if (isMultiEditMode) return;
+                          if (showSingleCellHint) {
+                            setShowSingleCellHint(false);
+                            setShowMultiEditIntro(false);
+                          }
                           handleTableCellClick(salahName, rowData.date);
                         }}
                       >
@@ -342,19 +263,17 @@ const SalahTable = ({
                           <LuDot
                             style={{
                               color: "var(--table-dot-icon-color)",
-                              backgroundColor:
-                                salahName === "Asar" && showJoyRideEditIcon
-                                  ? "white"
-                                  : "",
                             }}
                             className={`${salahTableIndividualSquareStyles} fill-current [stroke-width:3] ${
-                              showJoyRideEditIcon && salahName === "Asar"
-                                ? "single-table-cell animate-bounce"
+                              showSingleCellHint &&
+                              !isMultiEditMode &&
+                              salahName === "Fajr"
+                                ? "!rounded-full outline outline-2 outline-offset-[6px] outline-[var(--current-salah-color)]"
                                 : ""
                             } 
                                 `}
                             // ${
-                            //   showJoyRideEditIcon && salahName === "Asar"
+                            //   showMultiEditIntro && salahName === "Asar"
                             //     ? "animate-bounce"
                             //     : ""
                             // }
@@ -420,6 +339,23 @@ const SalahTable = ({
             </Table>
           )}
         </AutoSizer>
+        {showSingleCellHint && !isMultiEditMode && (
+          <div className="absolute inset-x-4 top-[7.5rem] z-10 flex items-start gap-3 rounded-[0.875rem] bg-[var(--sheet-group-bg)] px-3.5 py-3 text-sm leading-snug">
+            <p className="flex-1">
+              You can also update a Salah on its own by tapping its dot.
+            </p>
+            <button
+              type="button"
+              className="font-semibold text-[var(--current-salah-color)]"
+              onClick={() => {
+                setShowSingleCellHint(false);
+                setShowMultiEditIntro(false);
+              }}
+            >
+              Got it
+            </button>
+          </div>
+        )}
       </div>
       {isScrolling && (
         <motion.div
@@ -498,6 +434,11 @@ const SalahTable = ({
           </button>
         </motion.div>
       )}
+      <BottomSheetMultiEditIntro
+        showMultiEditIntroSheet={showMultiEditIntro && !showSingleCellHint}
+        setShowSingleCellHint={setShowSingleCellHint}
+        setIsMultiEditMode={setIsMultiEditMode}
+      />
       <BottomSheetSalahStatus
         setFetchedSalahData={setFetchedSalahData}
         fetchedSalahData={fetchedSalahData}

@@ -85,7 +85,7 @@ interface OnboardingProps {
   userPreferences: userPreferencesType;
   setOnboardingMode: React.Dispatch<React.SetStateAction<OnboardingMode>>;
   onboardingMode?: OnboardingMode;
-  setShowJoyRideEditIcon: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowMultiEditIntro: React.Dispatch<React.SetStateAction<boolean>>;
   setUserLocations: React.Dispatch<
     React.SetStateAction<LocationsDataObjTypeArr>
   >;
@@ -100,7 +100,7 @@ const Onboarding = ({
   userPreferences,
   setOnboardingMode,
   onboardingMode,
-  setShowJoyRideEditIcon,
+  setShowMultiEditIntro,
   setUserLocations,
   userLocations,
   setShowLocationFailureToast,
@@ -157,7 +157,7 @@ const Onboarding = ({
 
       localStorage.setItem("appVersion", LATEST_APP_VERSION);
 
-      setShowJoyRideEditIcon(true);
+      setShowMultiEditIntro(true);
     }
     setOnboardingMode(null);
   };
@@ -593,13 +593,11 @@ const Onboarding = ({
                         res !== undefined
                       ) {
                         switchToNextPage();
-                        // Case 2: User is on android device + batt opt is disabled > close onboarding and trigger joyride
                       } else if (
                         Capacitor.getPlatform() === "android" &&
                         !isBatteryOptEnabled
                       ) {
                         dismissOnboardingSlides();
-                        // Case 3: User is on non-android device > close onboarding and trigger joyride
                       } else {
                         dismissOnboardingSlides();
                       }
