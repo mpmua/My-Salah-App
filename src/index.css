@@ -61,8 +61,6 @@
   --secondary-text-color: #566476;
   --missed-salah-sheet-btn-color: rgba(0, 84, 233, 0.09);
   --wreath-color: #000000;
-  --reasons-bg-color-status-sheet: #FBFCFC;
-  --reasons-border-color-status-sheet: #e3e7ed;
   --calendar-arrow-btn-color: #d2d2d2;
   --reasons-bar-bg: #e5e5e7;
   --scrollbar-track: rgb(103, 103, 103);
@@ -122,8 +120,6 @@ body.dark {
   --secondary-text-color: #aebbd0;
   --missed-salah-sheet-btn-color: rgba(30, 144, 255, 0.14);
   --wreath-color: #e9e9e9;
-  --reasons-bg-color-status-sheet: #191b1d;
-  --reasons-border-color-status-sheet: #555b63;
   --calendar-arrow-btn-color: #252525;
   --reasons-bar-bg: #282828;
   --scrollbar-track: rgb(103, 103, 103);
