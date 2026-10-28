@@ -90,7 +90,7 @@ export const calculationMethods = [
 ] as const;
 
 export const reasonsStyles =
-  "flex min-h-7 max-w-full items-center break-words rounded-full border border-[color:var(--sheet-divider-color)] bg-[var(--sheet-pill-bg)] px-3 py-1 text-[0.8125rem] leading-snug text-[var(--ion-text-color)] data-[selected=true]:border-[color:var(--reasons-border-active-color-status-sheet)] data-[selected=true]:text-[color:var(--reasons-text-active-color-status-sheet)]";
+  "flex min-h-7 max-w-full items-center break-words rounded-full border border-[color:var(--sheet-divider-color)] bg-[var(--sheet-pill-bg)] px-3 py-1 text-[0.8125rem] leading-snug text-[var(--ion-text-color)] data-[selected=true]:border-transparent data-[selected=true]:text-[#111]";
 
 export const salahStatusColorsHexCodes = {
   group: "#5FAE82",

@@ -580,7 +580,7 @@ const BottomSheetSalahStatus = ({
                 </div>
               )}
               {Array.isArray(userPreferences.reasons) && (
-                <div className="flex flex-wrap gap-x-2.5 gap-y-2 text-[var(--ion-text-color)]">
+                <div className="flex flex-wrap gap-x-2.5 gap-y-3 text-[var(--ion-text-color)]">
                   <AnimatePresence>
                     {[
                       ...new Set([
@@ -598,7 +598,7 @@ const BottomSheetSalahStatus = ({
                           }}
                           animate={{
                             backgroundColor: selectedReasons.includes(item)
-                              ? "var(--reasons-bg-active-color-status-sheet)"
+                              ? salahStatusColorsHexCodes[salahStatus]
                               : "var(--sheet-pill-bg)",
                           }}
                           transition={{ duration: 0.3 }}
@@ -686,7 +686,7 @@ const BottomSheetSalahStatus = ({
         </div>
 
         {Array.isArray(userPreferences.reasons) && (
-          <div className="flex flex-wrap gap-x-2.5 gap-y-2">
+          <div className="flex flex-wrap gap-x-2.5 gap-y-3">
             {[...new Set([...selectedReasons, ...userPreferences.reasons])]
               .sort((a, b) => a.localeCompare(b))
               .map((item) => (
@@ -695,7 +695,7 @@ const BottomSheetSalahStatus = ({
                   data-selected={selectedReasons.includes(item)}
                   style={{
                     backgroundColor: selectedReasons.includes(item)
-                      ? "var(--reasons-bg-active-color-status-sheet)"
+                      ? salahStatusColorsHexCodes[salahStatus]
                       : "",
                   }}
                   className={reasonsStyles}

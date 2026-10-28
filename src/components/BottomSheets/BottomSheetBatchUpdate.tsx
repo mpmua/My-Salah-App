@@ -451,7 +451,7 @@ const BottomSheetBatchUpdate = ({
                     </h2>
                   </div>
                 )}
-                <div className="flex flex-wrap gap-x-2.5 gap-y-2 text-[var(--ion-text-color)]">
+                <div className="flex flex-wrap gap-x-2.5 gap-y-3 text-[var(--ion-text-color)]">
                   {[...userPreferences.reasons]
                     .sort((a, b) => a.localeCompare(b))
                     .map((reason) => {
@@ -463,7 +463,7 @@ const BottomSheetBatchUpdate = ({
                           }}
                           animate={{
                             backgroundColor: selected
-                              ? "var(--reasons-bg-active-color-status-sheet)"
+                              ? salahStatusColorsHexCodes[batchUpdateObj.status]
                               : "var(--sheet-pill-bg)",
                           }}
                           transition={{ duration: 0.3 }}
