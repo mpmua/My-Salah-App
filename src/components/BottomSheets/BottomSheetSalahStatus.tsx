@@ -351,102 +351,73 @@ const BottomSheetSalahStatus = ({
         {" "}
         <section
           ref={sheetWrapper}
-          className="w-[90%] mx-auto mb-5 rounded-lg text-white pb-env-safe-area-inset-bottom transition-all duration-300 ease-in-out"
+          className="w-[90%] mx-auto mb-5 flex max-h-[calc(var(--sheet-max-height)-1.25rem)] flex-col rounded-lg text-white pb-env-safe-area-inset-bottom transition-all duration-300 ease-in-out"
         >
-          <h1 className="mb-2 text-left text-[1.375rem] font-bold leading-tight text-[var(--ion-text-color)]">
-            How did you pray{" "}
-            {Object.keys(selectedSalahAndDate).length === 1 &&
-            Object.values(selectedSalahAndDate)[0].length === 1
-              ? `${Object.values(selectedSalahAndDate)[0][0] === "Asar" ? "Asr" : Object.values(selectedSalahAndDate)[0][0]} ${determineDateRecency(
-                  Object.keys(selectedSalahAndDate)[0],
-                )}?`
-              : `these Salah?`}
-          </h1>
-          <p className="mb-6 text-sm leading-normal text-[var(--ion-text-color)] opacity-60">
-            Choose the status that matches your prayer.
-          </p>
+          <div className="ion-content-scroll-host min-h-0 overflow-y-auto">
+            <h1 className="mb-2 text-left text-[1.375rem] font-bold leading-tight text-[var(--ion-text-color)]">
+              How did you pray{" "}
+              {Object.keys(selectedSalahAndDate).length === 1 &&
+              Object.values(selectedSalahAndDate)[0].length === 1
+                ? `${Object.values(selectedSalahAndDate)[0][0] === "Asar" ? "Asr" : Object.values(selectedSalahAndDate)[0][0]} ${determineDateRecency(
+                    Object.keys(selectedSalahAndDate)[0],
+                  )}?`
+                : `these Salah?`}
+            </h1>
+            <p className="mb-6 text-sm leading-normal text-[var(--ion-text-color)] opacity-60">
+              Choose the status that matches your prayer.
+            </p>
 
-          <div className="grid items-stretch grid-cols-2 gap-2">
-            {userPreferences.userGender === "male" ? (
-              <motion.button
-                type="button"
-                variants={salahStatusVariants}
-                initial="default"
-                animate={salahStatus === "group" ? "animate" : "default"}
-                aria-pressed={salahStatus === "group"}
-                data-selected={salahStatus === "group"}
-                onClick={() => {
-                  setSalahStatus("group");
-                }}
-                style={
-                  {
-                    "--status-color": salahStatusColorsHexCodes.group,
-                    "--status-foreground": "#111",
-                    borderLeft: `5px solid ${salahStatusColorsHexCodes.group}`,
-                  } as React.CSSProperties
-                }
-                className={statusBoxStyles}
-              >
-                <GoPeople
-                  aria-hidden="true"
-                  className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
-                />
-                <span className="text-[0.9375rem] font-semibold leading-snug">
-                  In Jamaah
-                </span>
-                <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
-                  In congregation
-                </span>
-              </motion.button>
-            ) : (
-              <motion.button
-                type="button"
-                variants={salahStatusVariants}
-                initial="default"
-                animate={salahStatus === "female-alone" ? "animate" : "default"}
-                aria-pressed={salahStatus === "female-alone"}
-                data-selected={salahStatus === "female-alone"}
-                onClick={() => {
-                  setSalahStatus("female-alone");
-                }}
-                style={
-                  {
-                    "--status-color": salahStatusColorsHexCodes["female-alone"],
-                    "--status-foreground": "#111",
-                    borderLeft: `5px solid ${salahStatusColorsHexCodes["female-alone"]}`,
-                  } as React.CSSProperties
-                }
-                className={statusBoxStyles}
-              >
-                <GoPerson
-                  aria-hidden="true"
-                  className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
-                />
-                <span className="text-[0.9375rem] font-semibold leading-snug">
-                  Prayed
-                </span>
-                <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
-                  Prayer completed
-                </span>
-              </motion.button>
-            )}
-            {userPreferences.userGender === "male" ? (
-              <>
+            <div className="grid items-stretch grid-cols-2 gap-2">
+              {userPreferences.userGender === "male" ? (
                 <motion.button
                   type="button"
                   variants={salahStatusVariants}
                   initial="default"
-                  animate={salahStatus === "male-alone" ? "animate" : "default"}
-                  aria-pressed={salahStatus === "male-alone"}
-                  data-selected={salahStatus === "male-alone"}
+                  animate={salahStatus === "group" ? "animate" : "default"}
+                  aria-pressed={salahStatus === "group"}
+                  data-selected={salahStatus === "group"}
                   onClick={() => {
-                    setSalahStatus("male-alone");
+                    setSalahStatus("group");
                   }}
                   style={
                     {
-                      "--status-color": salahStatusColorsHexCodes["male-alone"],
+                      "--status-color": salahStatusColorsHexCodes.group,
                       "--status-foreground": "#111",
-                      borderLeft: `5px solid ${salahStatusColorsHexCodes["male-alone"]}`,
+                      borderLeft: `5px solid ${salahStatusColorsHexCodes.group}`,
+                    } as React.CSSProperties
+                  }
+                  className={statusBoxStyles}
+                >
+                  <GoPeople
+                    aria-hidden="true"
+                    className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
+                  />
+                  <span className="text-[0.9375rem] font-semibold leading-snug">
+                    In Jamaah
+                  </span>
+                  <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
+                    In congregation
+                  </span>
+                </motion.button>
+              ) : (
+                <motion.button
+                  type="button"
+                  variants={salahStatusVariants}
+                  initial="default"
+                  animate={
+                    salahStatus === "female-alone" ? "animate" : "default"
+                  }
+                  aria-pressed={salahStatus === "female-alone"}
+                  data-selected={salahStatus === "female-alone"}
+                  onClick={() => {
+                    setSalahStatus("female-alone");
+                  }}
+                  style={
+                    {
+                      "--status-color":
+                        salahStatusColorsHexCodes["female-alone"],
+                      "--status-foreground": "#111",
+                      borderLeft: `5px solid ${salahStatusColorsHexCodes["female-alone"]}`,
                     } as React.CSSProperties
                   }
                   className={statusBoxStyles}
@@ -456,189 +427,226 @@ const BottomSheetSalahStatus = ({
                     className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
                   />
                   <span className="text-[0.9375rem] font-semibold leading-snug">
-                    On Time
+                    Prayed
                   </span>
                   <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
-                    Alone, on time
+                    Prayer completed
                   </span>
                 </motion.button>
-              </>
-            ) : (
-              <>
-                <motion.button
-                  type="button"
-                  variants={salahStatusVariants}
-                  initial="default"
-                  animate={salahStatus === "excused" ? "animate" : "default"}
-                  aria-pressed={salahStatus === "excused"}
-                  data-selected={salahStatus === "excused"}
-                  onClick={() => {
-                    setSalahStatus("excused");
-                  }}
-                  style={
-                    {
-                      "--status-color": salahStatusColorsHexCodes.excused,
-                      "--status-foreground": "#fff",
-                      borderLeft: `5px solid ${salahStatusColorsHexCodes.excused}`,
-                    } as React.CSSProperties
-                  }
-                  className={statusBoxStyles}
-                >
-                  <PiFlower
-                    aria-hidden="true"
-                    className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
-                  />
-                  <span className="text-[0.9375rem] font-semibold leading-snug">
-                    Excused
-                  </span>
-                  <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
-                    Prayer excused
-                  </span>
-                </motion.button>
-              </>
-            )}
+              )}
+              {userPreferences.userGender === "male" ? (
+                <>
+                  <motion.button
+                    type="button"
+                    variants={salahStatusVariants}
+                    initial="default"
+                    animate={
+                      salahStatus === "male-alone" ? "animate" : "default"
+                    }
+                    aria-pressed={salahStatus === "male-alone"}
+                    data-selected={salahStatus === "male-alone"}
+                    onClick={() => {
+                      setSalahStatus("male-alone");
+                    }}
+                    style={
+                      {
+                        "--status-color":
+                          salahStatusColorsHexCodes["male-alone"],
+                        "--status-foreground": "#111",
+                        borderLeft: `5px solid ${salahStatusColorsHexCodes["male-alone"]}`,
+                      } as React.CSSProperties
+                    }
+                    className={statusBoxStyles}
+                  >
+                    <GoPerson
+                      aria-hidden="true"
+                      className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
+                    />
+                    <span className="text-[0.9375rem] font-semibold leading-snug">
+                      On Time
+                    </span>
+                    <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
+                      Alone, on time
+                    </span>
+                  </motion.button>
+                </>
+              ) : (
+                <>
+                  <motion.button
+                    type="button"
+                    variants={salahStatusVariants}
+                    initial="default"
+                    animate={salahStatus === "excused" ? "animate" : "default"}
+                    aria-pressed={salahStatus === "excused"}
+                    data-selected={salahStatus === "excused"}
+                    onClick={() => {
+                      setSalahStatus("excused");
+                    }}
+                    style={
+                      {
+                        "--status-color": salahStatusColorsHexCodes.excused,
+                        "--status-foreground": "#fff",
+                        borderLeft: `5px solid ${salahStatusColorsHexCodes.excused}`,
+                      } as React.CSSProperties
+                    }
+                    className={statusBoxStyles}
+                  >
+                    <PiFlower
+                      aria-hidden="true"
+                      className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
+                    />
+                    <span className="text-[0.9375rem] font-semibold leading-snug">
+                      Excused
+                    </span>
+                    <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
+                      Prayer excused
+                    </span>
+                  </motion.button>
+                </>
+              )}
 
-            <motion.button
-              type="button"
-              variants={salahStatusVariants}
-              initial="default"
-              animate={salahStatus === "late" ? "animate" : "default"}
-              aria-pressed={salahStatus === "late"}
-              data-selected={salahStatus === "late"}
-              onClick={() => {
-                setSalahStatus("late");
-              }}
-              style={
-                {
-                  "--status-color": salahStatusColorsHexCodes.late,
-                  "--status-foreground": "#111",
-                  borderLeft: `5px solid ${salahStatusColorsHexCodes.late}`,
-                } as React.CSSProperties
-              }
-              className={statusBoxStyles}
+              <motion.button
+                type="button"
+                variants={salahStatusVariants}
+                initial="default"
+                animate={salahStatus === "late" ? "animate" : "default"}
+                aria-pressed={salahStatus === "late"}
+                data-selected={salahStatus === "late"}
+                onClick={() => {
+                  setSalahStatus("late");
+                }}
+                style={
+                  {
+                    "--status-color": salahStatusColorsHexCodes.late,
+                    "--status-foreground": "#111",
+                    borderLeft: `5px solid ${salahStatusColorsHexCodes.late}`,
+                  } as React.CSSProperties
+                }
+                className={statusBoxStyles}
+              >
+                <GoClock
+                  aria-hidden="true"
+                  className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
+                />
+                <span className="text-[0.9375rem] font-semibold leading-snug">
+                  Late
+                </span>
+                <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
+                  After its time
+                </span>
+              </motion.button>
+
+              <motion.button
+                type="button"
+                variants={salahStatusVariants}
+                initial="default"
+                animate={salahStatus === "missed" ? "animate" : "default"}
+                aria-pressed={salahStatus === "missed"}
+                data-selected={salahStatus === "missed"}
+                onClick={() => {
+                  setSalahStatus("missed");
+                }}
+                style={
+                  {
+                    "--status-color": salahStatusColorsHexCodes.missed,
+                    "--status-foreground": "#111",
+                    borderLeft: `5px solid ${salahStatusColorsHexCodes.missed}`,
+                  } as React.CSSProperties
+                }
+                className={statusBoxStyles}
+              >
+                <GoSkip
+                  aria-hidden="true"
+                  className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
+                />
+                <span className="text-[0.9375rem] font-semibold leading-snug">
+                  Missed
+                </span>
+                <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
+                  Not prayed
+                </span>
+              </motion.button>
+            </div>
+            <section
+              style={{ maxHeight: reasonsHeight + "px" }}
+              ref={modalSheetSalahReasonsWrap}
+              className="mt-8 mb-5 overflow-x-hidden salah-status-modal-reasons-wrap scrollable-container ion-content-scroll-host"
             >
-              <GoClock
-                aria-hidden="true"
-                className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
-              />
-              <span className="text-[0.9375rem] font-semibold leading-snug">
-                Late
-              </span>
-              <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
-                After its time
-              </span>
-            </motion.button>
+              {userPreferences.reasons.length > 0 && (
+                <div>
+                  <h2 className="mb-3 text-sm font-semibold text-start text-[var(--ion-text-color)]">
+                    Reasons (optional)
+                  </h2>
+                </div>
+              )}
+              {Array.isArray(userPreferences.reasons) && (
+                <div className="flex flex-wrap gap-x-2.5 gap-y-2 text-[var(--ion-text-color)]">
+                  <AnimatePresence>
+                    {[
+                      ...new Set([
+                        ...selectedReasons,
+                        ...userPreferences.reasons,
+                      ]),
+                    ]
+                      .sort((a, b) => a.localeCompare(b))
 
-            <motion.button
-              type="button"
-              variants={salahStatusVariants}
-              initial="default"
-              animate={salahStatus === "missed" ? "animate" : "default"}
-              aria-pressed={salahStatus === "missed"}
-              data-selected={salahStatus === "missed"}
-              onClick={() => {
-                setSalahStatus("missed");
-              }}
-              style={
-                {
-                  "--status-color": salahStatusColorsHexCodes.missed,
-                  "--status-foreground": "#111",
-                  borderLeft: `5px solid ${salahStatusColorsHexCodes.missed}`,
-                } as React.CSSProperties
-              }
-              className={statusBoxStyles}
-            >
-              <GoSkip
-                aria-hidden="true"
-                className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
-              />
-              <span className="text-[0.9375rem] font-semibold leading-snug">
-                Missed
-              </span>
-              <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
-                Not prayed
-              </span>
-            </motion.button>
-          </div>
-          <section
-            style={{ maxHeight: reasonsHeight + "px" }}
-            ref={modalSheetSalahReasonsWrap}
-            className="mt-8 mb-5 overflow-x-hidden salah-status-modal-reasons-wrap scrollable-container ion-content-scroll-host"
-          >
-            {userPreferences.reasons.length > 0 && (
-              <div>
-                <h2 className="mb-3 text-sm font-semibold text-start text-[var(--ion-text-color)]">
-                  Reasons (optional)
-                </h2>
-              </div>
-            )}
-            {Array.isArray(userPreferences.reasons) && (
-              <div className="flex flex-wrap gap-x-2.5 gap-y-2 text-[var(--ion-text-color)]">
-                <AnimatePresence>
-                  {[
-                    ...new Set([
-                      ...selectedReasons,
-                      ...userPreferences.reasons,
-                    ]),
-                  ]
-                    .sort((a, b) => a.localeCompare(b))
-
-                    .map((item) => (
-                      <motion.p
-                        // layout="position"
-                        initial={{
-                          backgroundColor: "var(--sheet-pill-bg)",
-                        }}
-                        animate={{
-                          backgroundColor: selectedReasons.includes(item)
-                            ? "var(--reasons-bg-active-color-status-sheet)"
-                            : "var(--sheet-pill-bg)",
-                        }}
-                        transition={{ duration: 0.3 }}
-                        exit={{ scale: [1, 1.2, 0], opacity: 0 }}
-                        key={item}
-                        data-selected={selectedReasons.includes(item)}
-                        className={reasonsStyles}
-                        onClick={async () => {
-                          if (!selectedReasons.includes(item)) {
-                            setSelectedReasons((prev) => [...prev, item]);
-                          } else if (selectedReasons.includes(item)) {
-                            if (!userPreferences.reasons.includes(item)) {
-                              const confirmMsgRes = await showConfirmMsg(
-                                "Confirm",
-                                "This reason has been deleted from the reasons list, deselecting it will cause it to be removed permanently from this Salah entry, proceed?",
+                      .map((item) => (
+                        <motion.p
+                          // layout="position"
+                          initial={{
+                            backgroundColor: "var(--sheet-pill-bg)",
+                          }}
+                          animate={{
+                            backgroundColor: selectedReasons.includes(item)
+                              ? "var(--reasons-bg-active-color-status-sheet)"
+                              : "var(--sheet-pill-bg)",
+                          }}
+                          transition={{ duration: 0.3 }}
+                          exit={{ scale: [1, 1.2, 0], opacity: 0 }}
+                          key={item}
+                          data-selected={selectedReasons.includes(item)}
+                          className={reasonsStyles}
+                          onClick={async () => {
+                            if (!selectedReasons.includes(item)) {
+                              setSelectedReasons((prev) => [...prev, item]);
+                            } else if (selectedReasons.includes(item)) {
+                              if (!userPreferences.reasons.includes(item)) {
+                                const confirmMsgRes = await showConfirmMsg(
+                                  "Confirm",
+                                  "This reason has been deleted from the reasons list, deselecting it will cause it to be removed permanently from this Salah entry, proceed?",
+                                );
+                                if (!confirmMsgRes) return;
+                              }
+                              setSelectedReasons((prev) =>
+                                prev.filter((reason) => reason !== item),
                               );
-                              if (!confirmMsgRes) return;
                             }
-                            setSelectedReasons((prev) =>
-                              prev.filter((reason) => reason !== item),
-                            );
-                          }
-                        }}
-                      >
-                        {item}
-                      </motion.p>
-                    ))}
-                </AnimatePresence>
-              </div>
-            )}
-          </section>
-          <div className="text-sm">
-            <h2 className="mb-2 text-sm font-semibold text-[var(--ion-text-color)]">
-              Notes (optional)
-            </h2>
-            <IonTextarea
-              aria-label="notes"
-              autoGrow={true}
-              rows={1}
-              className="rounded-lg border border-[color:var(--sheet-input-border-color)] bg-[var(--sheet-bg-color)] text-[var(--ion-text-color)] ![--padding-start:1rem] ![--padding-end:1rem] ![--placeholder-color:var(--secondary-text-color)] ![--placeholder-opacity:1]"
-              placeholder="Add a note..."
-              value={notes}
-              onIonInput={(e) => {
-                // @ts-ignore
-                handleNotes(e);
-              }}
-            ></IonTextarea>
+                          }}
+                        >
+                          {item}
+                        </motion.p>
+                      ))}
+                  </AnimatePresence>
+                </div>
+              )}
+            </section>
+            <div className="text-sm">
+              <h2 className="mb-2 text-sm font-semibold text-[var(--ion-text-color)]">
+                Notes (optional)
+              </h2>
+              <IonTextarea
+                aria-label="notes"
+                autoGrow={true}
+                rows={1}
+                className="rounded-lg border border-[color:var(--sheet-input-border-color)] bg-[var(--sheet-bg-color)] text-[var(--ion-text-color)] ![--padding-start:1rem] ![--padding-end:1rem] ![--placeholder-color:var(--secondary-text-color)] ![--placeholder-opacity:1]"
+                placeholder="Add a note..."
+                value={notes}
+                onIonInput={(e) => {
+                  // @ts-ignore
+                  handleNotes(e);
+                }}
+              ></IonTextarea>
+            </div>
           </div>
           <IonButton
             expand="block"

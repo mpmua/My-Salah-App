@@ -18,7 +18,7 @@ const BottomSheetAboutUs = ({ triggerId }: BottomSheetAboutUsProps) => {
       initialBreakpoint={INITIAL_MODAL_BREAKPOINT}
       breakpoints={MODAL_BREAKPOINTS}
     >
-      <div className="pb-6 mt-10 rounded-lg">
+      <div className="ion-content-scroll-host max-h-[calc(var(--sheet-max-height)-2.5rem)] overflow-y-auto pb-6 mt-10 rounded-lg">
         <div className="text-center">
           {/* <img
             className="block mx-auto mb-2"

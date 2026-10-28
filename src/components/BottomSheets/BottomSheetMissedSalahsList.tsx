@@ -6,21 +6,21 @@ import {
   SalahNamesType,
   SalahRecordsArrayType,
 } from "../../types/types";
-import { salahStatusColorsHexCodes } from "../../utils/constants";
+import {
+  INITIAL_MODAL_BREAKPOINT,
+  MODAL_BREAKPOINTS,
+  salahStatusColorsHexCodes,
+} from "../../utils/constants";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 
 import { useEffect, useMemo, useState } from "react";
 import {
-  IonButton,
-  IonButtons,
   IonContent,
-  IonHeader,
   IonIcon,
   IonLabel,
   IonModal,
   IonSegment,
   IonSegmentButton,
-  IonToolbar,
 } from "@ionic/react";
 import { toggleDBConnection } from "../../utils/dbUtils";
 import { format, parse } from "date-fns";
@@ -219,7 +219,7 @@ const MissedSalahsListBottomSheet = ({
   return (
     <IonModal
       mode="ios"
-      // className="modal-height"
+      className="modal-height"
       isOpen={showMissedSalahsSheet}
       onWillPresent={() => {
         // setShowCompletedMsg(false);
@@ -229,26 +229,14 @@ const MissedSalahsListBottomSheet = ({
         // setShowCompletedMsg(false);
         setIsClickedItem("");
       }}
-      // initialBreakpoint={INITIAL_MODAL_BREAKPOINT}
-      // breakpoints={MODAL_BREAKPOINTS}
+      initialBreakpoint={INITIAL_MODAL_BREAKPOINT}
+      breakpoints={MODAL_BREAKPOINTS}
     >
-      <IonHeader className="ion-no-border">
-        <IonToolbar className="[--background:var(--sheet-bg-color)]">
-          <IonButtons slot="end">
-            <IonButton
-              // strong={true}
-              onClick={() => setShowMissedSalahsSheet(false)}
-            >
-              Close
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
       <IonContent
         scrollY={false}
         className="relative [--background:var(--sheet-bg-color)]"
       >
-        <section className="px-5">
+        <section className="px-5 pt-8">
           <h1 className="mb-1 mt-0 font-bold leading-tight">Missed Salah</h1>
           {!(
             restructuredMissedSalahList.length === 0 && salahToShow === "All"
@@ -341,6 +329,7 @@ const MissedSalahsListBottomSheet = ({
               <AutoSizer disableHeight>
                 {({ width }) => (
                   <List
+                    className="ion-content-scroll-host"
                     height={800}
                     width={width}
                     itemData={restructuredMissedSalahList}

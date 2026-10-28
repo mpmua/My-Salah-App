@@ -135,7 +135,7 @@ BottomSheetSalahTimesSettingsProps) => {
     <IonModal
       mode="ios"
       isOpen={showSalahTimesSettingsSheet}
-      className={`${isPlatform("ios") ? "" : "modal-height"}`}
+      className="modal-height"
       // presentingElement={presentingElement!}
       // style={{ "--height": "95vh" }}
       // expandToScroll={false}

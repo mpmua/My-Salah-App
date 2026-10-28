@@ -7,7 +7,6 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  isPlatform,
   useIonViewWillLeave,
 } from "@ionic/react";
 import {
@@ -309,12 +308,11 @@ const SalahTimesPage = ({
                 setShowLocationAddedToast={setShowLocationAddedToast}
               />
               <IonModal
-                style={{ "--height": "80vh" }}
                 isOpen={showCalcMethodsSheet}
                 onDidDismiss={() => {
                   setShowCalcMethodsSheet(false);
                 }}
-                className={`${isPlatform("ios") ? "" : "modal-height"}`}
+                className="modal-height"
                 mode="ios"
                 initialBreakpoint={INITIAL_MODAL_BREAKPOINT}
                 breakpoints={MODAL_BREAKPOINTS}

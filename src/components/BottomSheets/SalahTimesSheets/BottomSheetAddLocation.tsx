@@ -48,14 +48,16 @@ const BottomSheetAddLocation = ({
       }}
     >
       {/* {showAddLocationSheet && ( */}
-      <AddLocationOptions
-        dbConnection={dbConnection}
-        setUserLocations={setUserLocations}
-        userLocations={userLocations}
-        setShowLocationFailureToast={setShowLocationFailureToast}
-        setShowLocationAddedToast={setShowLocationAddedToast}
-        setShowAddLocationSheet={setShowAddLocationSheet}
-      />
+      <div className="ion-content-scroll-host max-h-[var(--sheet-max-height)] overflow-y-auto">
+        <AddLocationOptions
+          dbConnection={dbConnection}
+          setUserLocations={setUserLocations}
+          userLocations={userLocations}
+          setShowLocationFailureToast={setShowLocationFailureToast}
+          setShowLocationAddedToast={setShowLocationAddedToast}
+          setShowAddLocationSheet={setShowAddLocationSheet}
+        />
+      </div>
       {/* // )}  */}
     </IonModal>
   );

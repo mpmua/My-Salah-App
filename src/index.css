@@ -10,6 +10,7 @@
 
 :root {
   --max-width: 700px;
+  --sheet-max-height: 95vh;
 
   /* --primary-color: rgb(244, 245, 249); */
   --primary-color: rgb(237, 237, 237);
@@ -403,7 +404,7 @@ ion-select.sort-select::part(inner) {
 }
 
 .modal-height {
-  --height: 95vh;
+  --height: var(--sheet-max-height);
 }
 
 .modal-header-margin {
@@ -560,8 +561,8 @@ td {
     margin-right: 0.5em;
   }
 
-  .modal-height {
-    --height: calc(100dvh - 10vh);
+  :root {
+    --sheet-max-height: calc(100dvh - 10vh);
   }
 
   ion-app {

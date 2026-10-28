@@ -44,7 +44,7 @@ const BottomSheetMultiEditIntro = ({
       initialBreakpoint={INITIAL_MODAL_BREAKPOINT}
       breakpoints={MODAL_BREAKPOINTS}
     >
-      <section className="px-5 pt-8 pb-[calc(1.5rem+env(safe-area-inset-bottom))] text-[var(--ion-text-color)]">
+      <section className="ion-content-scroll-host max-h-[var(--sheet-max-height)] overflow-y-auto px-5 pt-8 pb-[calc(1.5rem+env(safe-area-inset-bottom))] text-[var(--ion-text-color)]">
         <h1 className="mb-1.5 mt-0 text-[1.625rem] font-bold leading-tight">
           Update many Salah at once
         </h1>

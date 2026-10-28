@@ -118,7 +118,7 @@ const BottomSheetLocationsList = ({
     <IonModal
       isOpen={showLocationsListSheet}
       mode="ios"
-      className={`${isPlatform("ios") ? "" : "modal-height"}`}
+      className="modal-height"
       onDidDismiss={() => {
         setShowLocationsListSheet(false);
       }}

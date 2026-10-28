@@ -235,7 +235,7 @@ const BottomSheetNotifications = ({
         await getBatteryOptimizationStatus();
       }}
     >
-      <section className="px-5 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom))]">
+      <section className="ion-content-scroll-host max-h-[var(--sheet-max-height)] overflow-y-auto px-5 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom))]">
         <h1 className="mb-4 font-bold leading-tight">Notifications</h1>
         <section className="flex items-center gap-3 px-4 py-3 sheet-group">
           <span className="flex-1 min-w-0">

@@ -35,7 +35,7 @@ const BottomSheetLatitudeRules = ({
       // expandToScroll={false}
     >
       {/* <IonContent> */}
-      <section className="px-5 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom))]">
+      <section className="ion-content-scroll-host max-h-[var(--sheet-max-height)] overflow-y-auto px-5 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom))]">
         <h1 className="mb-4 font-bold leading-tight">High latitude rule</h1>
         <IonRadioGroup value={userPreferences.highLatitudeRule}>
           <div className="divide-y divide-[color:var(--sheet-divider-color)]">

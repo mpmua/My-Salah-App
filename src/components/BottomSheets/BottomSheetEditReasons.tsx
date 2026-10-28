@@ -9,7 +9,7 @@ import { LuPlus, LuX } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { VscDebugRestart } from "react-icons/vsc";
-import { IonContent, IonModal, isPlatform } from "@ionic/react";
+import { IonContent, IonModal } from "@ionic/react";
 import { Keyboard, KeyboardResize } from "@capacitor/keyboard";
 import { Capacitor } from "@capacitor/core";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
@@ -55,7 +55,7 @@ BottomSheetStartDateProps) => {
   return (
     <IonModal
       mode="ios"
-      className={`${isPlatform("ios") ? "" : "modal-height"}`}
+      className="modal-height"
       // presentingElement={presentingElement!}
       // style={{ "--height": "95vh" }}
       // expandToScroll={false}

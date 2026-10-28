@@ -63,7 +63,7 @@ const BottomSheetCustomAngles = ({
         setShowCustomAnglesSheet(false);
       }}
     >
-      <section className="px-5 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom))]">
+      <section className="ion-content-scroll-host max-h-[var(--sheet-max-height)] overflow-y-auto px-5 pt-8 pb-[calc(2rem+env(safe-area-inset-bottom))]">
         <h1 className="mb-1 font-bold leading-tight">
           {customAngleSalah === "fajrAngle" ? "Fajr angle" : "Isha angle"}
         </h1>

@@ -1,4 +1,4 @@
-import { IonModal, isPlatform } from "@ionic/react";
+import { IonModal } from "@ionic/react";
 
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 
@@ -37,7 +37,7 @@ const BottomSheetCalculationMethods = ({
   return (
     <IonModal
       style={{ "--height": "80vh" }}
-      className={`${isPlatform("ios") ? "" : "modal-height"}`}
+      className="modal-height"
       mode="ios"
       trigger={triggerId}
       initialBreakpoint={INITIAL_MODAL_BREAKPOINT}
