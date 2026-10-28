@@ -236,7 +236,7 @@ const MissedSalahsListBottomSheet = ({
         scrollY={false}
         className="relative [--background:var(--sheet-bg-color)]"
       >
-        <section className="px-5 pt-8">
+        <section className="flex h-full flex-col px-5 pt-8 pb-[env(safe-area-inset-bottom)]">
           <h1 className="mb-1 mt-0 font-bold leading-tight">Missed Salah</h1>
           {!(
             restructuredMissedSalahList.length === 0 && salahToShow === "All"
@@ -325,12 +325,12 @@ const MissedSalahsListBottomSheet = ({
           )}
 
           {restructuredMissedSalahList.length > 0 ? (
-            <div>
-              <AutoSizer disableHeight>
-                {({ width }) => (
+            <div className="min-h-0 flex-1">
+              <AutoSizer>
+                {({ height, width }) => (
                   <List
                     className="ion-content-scroll-host"
-                    height={800}
+                    height={height}
                     width={width}
                     itemData={restructuredMissedSalahList}
                     itemCount={restructuredMissedSalahList.length}
