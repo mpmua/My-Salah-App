@@ -60,6 +60,8 @@
   --sheet-input-border-color: #b5bbc4;
   --secondary-text-color: #566476;
   --missed-salah-sheet-btn-color: rgba(0, 84, 233, 0.09);
+  --missed-counter-bg: rgba(230, 57, 70, 0.12);
+  --missed-counter-text: #c62834;
   --wreath-color: #000000;
   --calendar-arrow-btn-color: #d2d2d2;
   --reasons-bar-bg: #e5e5e7;
@@ -119,6 +121,8 @@ body.dark {
   --sheet-input-border-color: #555b63;
   --secondary-text-color: #aebbd0;
   --missed-salah-sheet-btn-color: rgba(30, 144, 255, 0.14);
+  --missed-counter-bg: rgba(230, 57, 70, 0.16);
+  --missed-counter-text: #ff7a82;
   --wreath-color: #e9e9e9;
   --calendar-arrow-btn-color: #252525;
   --reasons-bar-bg: #282828;

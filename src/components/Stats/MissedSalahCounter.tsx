@@ -1,7 +1,7 @@
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import { SalahByDateObjType, userPreferencesType } from "../../types/types";
 
-import { salahStatusColorsHexCodes } from "../../utils/constants";
+import { LuHistory } from "react-icons/lu";
 import Joyride, { CallBackProps } from "react-joyride";
 import { getMissedSalahCount, updateUserPrefs } from "../../utils/helpers";
 
@@ -87,16 +87,14 @@ const MissedSalahCounter = ({
         }}
         style={{ position: "relative", display: "inline-block" }}
       >
-        <div
-          className="missed-salah-counter numberCircle flex items-center justify-center min-w-[16px] h-[30px] aspect-square rounded-full border-[1.5px] border-[#c11414]"
-          style={{ borderColor: salahStatusColorsHexCodes["missed"] }}
-        >
+        <div className="missed-salah-counter flex h-[30px] items-center gap-[5px] rounded-full bg-[var(--missed-counter-bg)] pl-[9px] pr-[11px] text-sm font-semibold text-[var(--missed-counter-text)]">
+          <LuHistory aria-hidden="true" className="text-lg" />
           {/* <p className="text-xs text-white">99</p> */}
-          <p className="text-xs text-white">
+          <span>
             {getMissedSalahCount(missedSalahList) < 100
               ? getMissedSalahCount(missedSalahList)
               : "99+"}
-          </p>
+          </span>
         </div>
       </div>
     </>
