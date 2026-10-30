@@ -8,6 +8,7 @@ import {
   MODAL_BREAKPOINTS,
 } from "../../utils/constants";
 import format from "date-fns/format";
+import parse from "date-fns/parse";
 import { SQLiteDBConnection } from "@capacitor-community/sqlite";
 import { IonContent, IonModal } from "@ionic/react";
 import { toggleDBConnection } from "../../utils/dbUtils";
@@ -42,7 +43,7 @@ const BottomSheetSingleDateView = ({
   ];
 
   const formatDateWithOrdinal = (clickedDate: string) => {
-    const date = new Date(clickedDate);
+    const date = parse(clickedDate, "yyyy-MM-dd", new Date());
     const formattedDate = format(date, "EEEE, do MMMM yyyy");
     return formattedDate;
   };
