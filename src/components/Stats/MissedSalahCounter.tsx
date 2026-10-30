@@ -25,7 +25,7 @@ const MissedSalahCounter = ({
   const joyRideMissedSalahCounterToolTip = [
     {
       target: ".missed-salah-counter",
-      content: "Tap this circle to see all your missed salah and complete them",
+      content: "Tap this icon to see all your missed salah and complete them",
       disableBeacon: true,
     },
   ];

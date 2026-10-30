@@ -246,7 +246,6 @@ ion-segment-button {
 }
 
 ion-modal {
-  --card-bg-color: var(--sheet-bg-color);
   --background: var(--sheet-bg-color) !important;
 }
 
