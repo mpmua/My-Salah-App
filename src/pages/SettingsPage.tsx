@@ -395,7 +395,7 @@ const SettingsPage = ({
               <SettingIndividual
                 onClick={() => setShowBatchUpdateModal(true)}
                 headingText={"Bulk update Salah"}
-                subText={`Update multiple days at once`}
+                subText={`Update years or decades of history at once`}
               />
               <BottomSheetBatchUpdate
                 dbConnection={dbConnection}

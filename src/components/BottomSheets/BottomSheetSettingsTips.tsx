@@ -20,7 +20,7 @@ const exampleSettings = [
   {
     icon: LuListChecks,
     label: "Bulk update Salah",
-    description: "Update multiple days at once",
+    description: "Update years or decades of history at once",
   },
 ];
 
