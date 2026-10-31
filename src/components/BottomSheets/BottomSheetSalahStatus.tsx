@@ -364,7 +364,7 @@ const BottomSheetSalahStatus = ({
                 : `these Salah?`}
             </h1>
             <p className="mb-6 text-sm leading-normal text-[var(--ion-text-color)] opacity-60">
-              Choose the status that matches your prayer.
+              Choose the status that matches your Salah.
             </p>
 
             <div className="grid items-stretch grid-cols-2 gap-2">
@@ -430,7 +430,7 @@ const BottomSheetSalahStatus = ({
                     Prayed
                   </span>
                   <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
-                    Prayer completed
+                    Salah completed
                   </span>
                 </motion.button>
               )}
@@ -463,10 +463,10 @@ const BottomSheetSalahStatus = ({
                       className="mb-1 text-[1.75rem] group-data-[selected=false]:text-[color:var(--status-color)]"
                     />
                     <span className="text-[0.9375rem] font-semibold leading-snug">
-                      On Time
+                      Alone
                     </span>
                     <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
-                      Alone, on time
+                      On time
                     </span>
                   </motion.button>
                 </>
@@ -499,7 +499,7 @@ const BottomSheetSalahStatus = ({
                       Excused
                     </span>
                     <span className="mt-0.5 text-[0.8125rem] leading-snug group-data-[selected=false]:opacity-70">
-                      Prayer excused
+                      Salah excused
                     </span>
                   </motion.button>
                 </>

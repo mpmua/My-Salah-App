@@ -411,7 +411,7 @@ const BottomSheetBatchUpdate = ({
                         <span className="min-w-0">
                           <span className="block text-sm font-semibold leading-5 text-[var(--ion-text-color)] group-data-[selected=true]:text-[color:var(--status-foreground)]">
                             {status === "male-alone"
-                              ? "On Time"
+                              ? "Alone"
                               : status === "female-alone"
                                 ? "Prayed"
                                 : status === "group"
@@ -422,11 +422,11 @@ const BottomSheetBatchUpdate = ({
                             {status === "group"
                               ? "In congregation"
                               : status === "male-alone"
-                                ? "Alone, on time"
+                                ? "On time"
                                 : status === "female-alone"
-                                  ? "Prayer completed"
+                                  ? "Salah completed"
                                   : status === "excused"
-                                    ? "Prayer excused"
+                                    ? "Salah excused"
                                     : status === "late"
                                       ? "After its time"
                                       : "Not prayed"}

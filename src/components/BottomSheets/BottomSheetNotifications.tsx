@@ -241,7 +241,7 @@ const BottomSheetNotifications = ({
           <span className="flex-1 min-w-0">
             <span className="font-semibold leading-snug">Daily reminder</span>
             <span className="mt-0.5 block text-sm leading-snug text-[var(--secondary-text-color)]">
-              A gentle reminder to log your salah
+              A gentle reminder to log your Salah
             </span>
           </span>
           <IonToggle
@@ -413,10 +413,10 @@ const BottomSheetNotifications = ({
             <section className="flex items-center gap-3 px-4 py-3 mt-5 sheet-group">
               <span className="flex-1 min-w-0">
                 <span className="font-semibold leading-snug">
-                  Prayer time alerts
+                  Salah time alerts
                 </span>
                 <span className="mt-0.5 block text-sm leading-snug text-[var(--secondary-text-color)]">
-                  Turns on alerts for all five prayers. Change each one on the
+                  Turns on alerts for all five Salah. Change each one on the
                   Salah Times page.
                 </span>
               </span>

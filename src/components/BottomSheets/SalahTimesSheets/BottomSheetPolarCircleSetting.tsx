@@ -43,9 +43,9 @@ const BottomSheetPolarCircleSetting = ({
         </h1>
         <p className="mb-4 text-[0.9375rem] leading-relaxed text-[var(--secondary-text-color)]">
           This setting is intended for users in polar regions or with advanced
-          knowledge of prayer calculation methods. For most users, it will not
+          knowledge of Salah calculation methods. For most users, it will not
           have any effect. Only change this if you understand how it works, as
-          incorrect settings can affect your prayer times.
+          incorrect settings can affect your Salah times.
         </p>
         <IonRadioGroup value={userPreferences.polarCircleResolution}>
           <div className="divide-y divide-[color:var(--sheet-divider-color)]">

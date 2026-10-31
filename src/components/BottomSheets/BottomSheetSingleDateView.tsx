@@ -148,7 +148,7 @@ const BottomSheetSingleDateView = ({
                         {item.salahStatus === "group"
                           ? "In Jamaah"
                           : item.salahStatus === "male-alone"
-                            ? "On Time"
+                            ? "Alone"
                             : item.salahStatus === "female-alone"
                               ? "prayed"
                               : item.salahStatus || "No data"}
