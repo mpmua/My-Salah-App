@@ -15,6 +15,7 @@ import {
 } from "../../types/types";
 import BottomSheetSalahStatus from "../BottomSheets/BottomSheetSalahStatus";
 import BottomSheetMultiEditIntro from "../BottomSheets/BottomSheetMultiEditIntro";
+import BottomSheetSettingsTips from "../BottomSheets/BottomSheetSettingsTips";
 
 import { LuDot } from "react-icons/lu";
 import { TbEdit } from "react-icons/tb";
@@ -80,6 +81,8 @@ const SalahTable = ({
   const [showBoxAnimation, setShowBoxAnimation] = useState(false);
   const clonedSelectedSalahAndDate = useRef<SalahByDateObjType>({});
   const [showSingleCellHint, setShowSingleCellHint] = useState(false);
+  const [showSettingsTipsSheet, setShowSettingsTipsSheet] = useState(false);
+  const [isSettingsTipsPending, setIsSettingsTipsPending] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
 
   const tableRef = useRef<Table | null>(null);
@@ -89,6 +92,13 @@ const SalahTable = ({
       clonedSelectedSalahAndDate.current = { ...selectedSalahAndDate };
     }
   }, [selectedSalahAndDate]);
+
+  useEffect(() => {
+    if (isSettingsTipsPending && !showUpdateStatusModal) {
+      setIsSettingsTipsPending(false);
+      setShowSettingsTipsSheet(true);
+    }
+  }, [isSettingsTipsPending, showUpdateStatusModal]);
 
   useEffect(() => {
     return () => {
@@ -257,6 +267,7 @@ const SalahTable = ({
                           if (showSingleCellHint) {
                             setShowSingleCellHint(false);
                             setShowMultiEditIntro(false);
+                            setIsSettingsTipsPending(true);
                           }
                           handleTableCellClick(salahName, rowData.date);
                         }}
@@ -352,6 +363,7 @@ const SalahTable = ({
               onClick={() => {
                 setShowSingleCellHint(false);
                 setShowMultiEditIntro(false);
+                setShowSettingsTipsSheet(true);
               }}
             >
               Got it
@@ -440,6 +452,10 @@ const SalahTable = ({
         showMultiEditIntroSheet={showMultiEditIntro && !showSingleCellHint}
         setShowSingleCellHint={setShowSingleCellHint}
         setIsMultiEditMode={setIsMultiEditMode}
+      />
+      <BottomSheetSettingsTips
+        showSettingsTipsSheet={showSettingsTipsSheet}
+        setShowSettingsTipsSheet={setShowSettingsTipsSheet}
       />
       <BottomSheetSalahStatus
         setFetchedSalahData={setFetchedSalahData}
