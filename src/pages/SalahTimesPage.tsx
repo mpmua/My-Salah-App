@@ -429,7 +429,7 @@ const SalahTimesPage = ({
             ).map(([name, time]) => (
               <div
                 // border-[var(--ion-text-color)]
-                className={`relative flex h-14 items-center justify-between border-b border-[color:var(--table-row-border-color)] pl-4 ${
+                className={`relative flex h-12 items-center justify-between border-b border-[color:var(--table-row-border-color)] pl-4 ${
                   isShowingToday &&
                   name === nextSalahNameAndTime.currentSalah &&
                   name !== "sunrise"
