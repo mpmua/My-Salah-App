@@ -364,6 +364,9 @@ const BottomSheetNotifications = ({
                   </span>
                   <IonSelect
                     label=""
+                    interfaceOptions={{
+                      mode: isPlatform("ios") ? "ios" : "md",
+                    }}
                     disabled={
                       !isAfterIshaOptionEnabled
                       // userPreferences.prayerCalculationMethod === "" ||

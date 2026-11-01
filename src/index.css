@@ -261,6 +261,10 @@ ion-header {
   padding-top: 5px;
 } */
 
+ion-alert {
+  --background: var(--card-bg-color) !important;
+}
+
 ion-select-option {
   --color: blue; /* changes option text color */
 }

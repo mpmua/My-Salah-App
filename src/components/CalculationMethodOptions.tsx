@@ -175,6 +175,7 @@ const CalculationMethodOptions = ({
                 placeholder="Select country"
                 value={userPreferences.country || undefined}
                 label="Country"
+                interfaceOptions={{ mode: isPlatform("ios") ? "ios" : "md" }}
                 onIonChange={async (e) => {
                   const selectedCountry: countryOptionsType = e.detail.value;
 
