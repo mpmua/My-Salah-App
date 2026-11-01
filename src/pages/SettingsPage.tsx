@@ -284,10 +284,10 @@ const SettingsPage = ({
               >
                 <div className="flex items-center justify-between gap-3 border-t border-[color:var(--sheet-divider-color)] py-3 pr-[1.125rem] group-first:border-t-0">
                   <div>
-                    <p className="text-base font-medium leading-snug">
+                    <p className="text-[1.0625rem] font-medium leading-snug">
                       Notifications
                     </p>
-                    <p className="mt-0.5 text-[0.8125rem] leading-snug text-[var(--secondary-text-color)]">
+                    <p className="mt-0.5 text-sm leading-snug text-[var(--secondary-text-color)]">
                       Daily reminder and Salah alerts
                     </p>
                   </div>
@@ -347,10 +347,10 @@ const SettingsPage = ({
               <div className="group pl-[1.125rem]">
                 <div className="flex items-center justify-between gap-3 border-t border-[color:var(--sheet-divider-color)] py-3 pr-[1.125rem] group-first:border-t-0">
                   <div>
-                    <p className="text-base font-medium leading-snug">
+                    <p className="text-[1.0625rem] font-medium leading-snug">
                       {"Missed Salah Counter"}
                     </p>
-                    <p className="mt-0.5 text-[0.8125rem] leading-snug text-[var(--secondary-text-color)]">
+                    <p className="mt-0.5 text-sm leading-snug text-[var(--secondary-text-color)]">
                       {"Show the missed Salah counter on Home"}
                     </p>
                   </div>
