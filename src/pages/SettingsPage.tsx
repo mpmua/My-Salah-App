@@ -50,7 +50,6 @@ interface SettingsPageProps {
     userStartDate: string,
   ) => Promise<void>;
   isAppActive: boolean;
-  theme: themeType;
   handleTheme: (theme?: themeType) => string;
   fetchDataFromDB: (isDBImported?: boolean) => Promise<void>;
   setUserPreferences: React.Dispatch<React.SetStateAction<userPreferencesType>>;

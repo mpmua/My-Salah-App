@@ -272,12 +272,9 @@ const App = () => {
     return () => clearInterval(interval);
   }, [userLocations, isDatabaseInitialised, userPreferences]);
 
-  const [theme, setTheme] = useState<themeType>("dark");
-
   const handleTheme = (theme?: themeType) => {
     let themeColor = theme ? theme : userPreferences.theme;
 
-    setTheme(themeColor);
     let statusBarThemeColor: string = "#242424";
 
     if (themeColor === "system") {
@@ -1009,7 +1006,6 @@ const App = () => {
                   setUserPreferences={setUserPreferences}
                   handleSalahTrackingDataFromDB={handleSalahTrackingDataFromDB}
                   isAppActive={isAppActive}
-                  theme={theme}
                   handleTheme={handleTheme}
                   fetchDataFromDB={fetchDataFromDB}
                   userPreferences={userPreferences}
