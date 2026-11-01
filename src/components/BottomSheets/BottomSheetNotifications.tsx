@@ -365,6 +365,7 @@ const BottomSheetNotifications = ({
                   <IonSelect
                     label=""
                     interfaceOptions={{
+                      header: "Remind me after Isha",
                       mode: isPlatform("ios") ? "ios" : "md",
                     }}
                     disabled={
