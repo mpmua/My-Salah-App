@@ -200,7 +200,7 @@ const HomePage = ({
           </IonButtons>
         </IonToolbar>
         {isMultiEditMode && (
-          <IonToolbar className="page-header-toolbar">
+          <IonToolbar className="page-header-toolbar pt-[var(--ion-safe-area-top,0)]">
             <div className="flex items-center gap-3 px-2">
               <span className="flex size-8 items-center justify-center rounded-full bg-[var(--multi-edit-accent-color)] text-white">
                 <TbEdit aria-hidden="true" />
@@ -266,7 +266,7 @@ const HomePage = ({
             mode="ios"
             className="ion-no-border border-t border-[var(--table-row-border-color)]"
           >
-            <IonToolbar className="[--background:var(--primary-color)] [--padding-end:1rem] [--padding-start:1rem]">
+            <IonToolbar className="pb-[var(--ion-safe-area-bottom,0)] [--background:var(--primary-color)] [--padding-end:1rem] [--padding-start:1rem]">
               <div className="flex items-center gap-3">
                 <IonButton
                   className="m-0 flex-1 text-[0.9375rem] font-semibold [--background:var(--multi-edit-cancel-color)] [--color:var(--ion-text-color)]"
