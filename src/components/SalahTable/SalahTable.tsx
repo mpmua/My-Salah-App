@@ -88,9 +88,7 @@ const SalahTable = ({
   const tableRef = useRef<Table | null>(null);
 
   useEffect(() => {
-    if (Object.keys(selectedSalahAndDate).length > 0) {
-      clonedSelectedSalahAndDate.current = { ...selectedSalahAndDate };
-    }
+    clonedSelectedSalahAndDate.current = { ...selectedSalahAndDate };
   }, [selectedSalahAndDate]);
 
   useEffect(() => {
@@ -302,7 +300,7 @@ const SalahTable = ({
                                 ? {
                                     initial: { scale: 0 },
                                     // animate: { scale: [1.3, 1] },
-                                    animate: { scale: [0, 1] },
+                                    animate: { scale: 1.3 },
                                     transition: {
                                       type: "spring",
                                       stiffness: 300,
