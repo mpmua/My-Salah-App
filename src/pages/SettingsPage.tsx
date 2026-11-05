@@ -427,7 +427,7 @@ const SettingsPage = ({
               className="hidden"
               onChange={handleDBImport}
               type="file"
-              accept=".json"
+              // accept=".json"
               id="backupfile"
               name="backupfile"
             ></input>
