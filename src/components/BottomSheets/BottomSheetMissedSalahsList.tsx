@@ -171,47 +171,49 @@ const MissedSalahsListBottomSheet = ({
         // key={key}
         // style={style}
         style={style}
-        className="flex items-center gap-3 border-b border-[color:var(--sheet-divider-color)] text-[var(--ion-text-color)]"
+        className="pb-2.5 text-[var(--ion-text-color)]"
       >
-        <div
-          style={{
-            backgroundColor:
-              isClickedItem === key
-                ? salahStatusColorsHexCodes["late"]
-                : salahStatusColorsHexCodes["missed"],
-            transition: "background-color 250ms ease",
-          }}
-          className="h-9 w-1 shrink-0 rounded-full"
-        />
-        <div
-          // style={{ borderBottom: "1px solid var(--app-border-color)" }}
-          className="min-w-0 flex-1"
-        >
-          <p className="text-base font-medium leading-snug">
-            {salah === "Asar" ? "Asr" : salah}
-          </p>
-          <p className="mt-0.5 text-[0.8125rem] text-[var(--secondary-text-color)]">
-            {format(parse(date, "yyyy-MM-dd", new Date()), "EEE d MMM ’yy")}
-          </p>
+        <div className="flex h-full items-center gap-3 rounded-2xl bg-[var(--sheet-group-bg)] p-3">
+          <div
+            style={{
+              backgroundColor:
+                isClickedItem === key
+                  ? salahStatusColorsHexCodes["late"]
+                  : salahStatusColorsHexCodes["missed"],
+              transition: "background-color 250ms ease",
+            }}
+            className="size-5 shrink-0 rounded-md"
+          />
+          <div
+            // style={{ borderBottom: "1px solid var(--app-border-color)" }}
+            className="min-w-0 flex-1"
+          >
+            <p className="text-base font-medium leading-snug">
+              {salah === "Asar" ? "Asr" : salah}
+            </p>
+            <p className="mt-0.5 text-[0.8125rem] text-[var(--secondary-text-color)]">
+              {format(parse(date, "yyyy-MM-dd", new Date()), "EEE d MMM ’yy")}
+            </p>
+          </div>
+          <button
+            data-done={isClickedItem === key}
+            style={
+              {
+                "--late-color": salahStatusColorsHexCodes["late"],
+              } as React.CSSProperties
+            }
+            className="flex h-8 shrink-0 items-center gap-1.5 rounded-full bg-[var(--missed-salah-sheet-btn-color)] pl-2.5 pr-3 text-[0.8125rem] font-semibold text-[var(--current-salah-color)] transition-colors duration-[250ms] data-[done=true]:bg-[var(--late-color)] data-[done=true]:text-[#111]"
+            onClick={async () => {
+              setIsClickedItem(key);
+              // TODO: Below toggle has been put in place as DB connection was being closed if app went to the background then came back to the foreground, this toggle ensures DB connection is opened before DB operations take place, a better solution is needed in the future, could just open and close DB connection each time users clicks on 'mark as done' as opposed to opening/closing connection when sheet is opened/closed
+              await toggleDBConnection(dbConnection, "open");
+              await modifySalahStatusInDB(date, salah);
+            }}
+          >
+            <LuCheck aria-hidden="true" className="text-sm" />
+            {isClickedItem === key ? "Made up" : "Done"}
+          </button>
         </div>
-        <button
-          data-done={isClickedItem === key}
-          style={
-            {
-              "--late-color": salahStatusColorsHexCodes["late"],
-            } as React.CSSProperties
-          }
-          className="flex h-8 shrink-0 items-center gap-1.5 rounded-full bg-[var(--missed-salah-sheet-btn-color)] pl-2.5 pr-3 text-[0.8125rem] font-semibold text-[var(--current-salah-color)] transition-colors duration-[250ms] data-[done=true]:bg-[var(--late-color)] data-[done=true]:text-[#111]"
-          onClick={async () => {
-            setIsClickedItem(key);
-            // TODO: Below toggle has been put in place as DB connection was being closed if app went to the background then came back to the foreground, this toggle ensures DB connection is opened before DB operations take place, a better solution is needed in the future, could just open and close DB connection each time users clicks on 'mark as done' as opposed to opening/closing connection when sheet is opened/closed
-            await toggleDBConnection(dbConnection, "open");
-            await modifySalahStatusInDB(date, salah);
-          }}
-        >
-          <LuCheck aria-hidden="true" className="text-sm" />
-          {isClickedItem === key ? "Made up" : "Done"}
-        </button>
       </div>
     );
   };
@@ -334,7 +336,7 @@ const MissedSalahsListBottomSheet = ({
                     width={width}
                     itemData={restructuredMissedSalahList}
                     itemCount={restructuredMissedSalahList.length}
-                    itemSize={68}
+                    itemSize={74}
                   >
                     {Row}
                   </List>

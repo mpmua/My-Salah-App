@@ -1,7 +1,7 @@
-import { GoCalendar, GoGraph } from "react-icons/go";
+import { LuBug, LuSparkles } from "react-icons/lu";
 // import { LATEST_APP_VERSION } from "../utils/changelog";
-import monthlyStatsPreview from "../assets/images/stats-update-monthly.png";
-import yearlyStatsPreview from "../assets/images/stats-update-yearly.png";
+import statusSheetPreview from "../assets/images/refresh-update-status.png";
+import missedSalahPreview from "../assets/images/refresh-update-missed-salah.png";
 interface MajorUpdateOverlayProps {
   setShowMajorUpdateOverlay: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -32,7 +32,7 @@ const MajorUpdateOverlay = ({
       <section className="flex-1 w-full max-w-xl min-h-0 mx-auto overflow-y-auto">
         <div
           aria-hidden="true"
-          className="relative max-w-sm mx-auto mb-6 overflow-hidden h-72"
+          className="relative max-w-sm mx-auto mb-6 overflow-hidden h-60"
           style={{
             maskImage:
               "linear-gradient(to bottom, black 70%, transparent 100%)",
@@ -41,18 +41,18 @@ const MajorUpdateOverlay = ({
           }}
         >
           <img
-            src={monthlyStatsPreview}
+            src={statusSheetPreview}
             alt=""
             width={780}
             height={1688}
-            className="absolute top-4 left-[4%] w-[45%] -rotate-[8deg] rounded-2xl shadow-2xl"
+            className="absolute top-4 left-[8%] w-[38%] -rotate-[8deg] rounded-2xl shadow-2xl"
           />
           <img
-            src={yearlyStatsPreview}
+            src={missedSalahPreview}
             alt=""
             width={780}
             height={1688}
-            className="absolute top-4 right-[4%] w-[45%] rotate-[8deg] rounded-2xl shadow-2xl"
+            className="absolute top-4 right-[8%] w-[38%] rotate-[8deg] rounded-2xl shadow-2xl"
           />
         </div>
 
@@ -62,17 +62,18 @@ const MajorUpdateOverlay = ({
         </p>
 
         <h1 className="mt-3 mb-0 text-2xl font-bold leading-tight">
-          A New Look for Your Salah Stats
+          A Refreshed Look
         </h1>
 
         <p className="mt-3 text-sm leading-relaxed text-white/80">
-          See your Salah stats by month, by year, or across your whole history.
+          A few key screens have been redesigned, and the rest have been
+          polished.
         </p>
 
         <section className="pb-4 mt-6 space-y-6">
           <div className="flex gap-3">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl shrink-0 bg-[#c583f1]/10">
-              <GoCalendar
+              <LuSparkles
                 aria-hidden="true"
                 className="w-5 h-5 text-[#c583f1]"
               />
@@ -80,30 +81,28 @@ const MajorUpdateOverlay = ({
 
             <div>
               <h2 className="m-0 text-base font-bold text-[#c583f1]">
-                Monthly, Yearly & Overall
+                New & Improved Design
               </h2>
 
               <p className="mt-2 text-sm leading-relaxed text-white/80">
-                Pick a Salah or view all five. Tap a year or month to explore
-                your history. Yearly mode also highlights your best month.
+                Some screens, like logging a Salah, have a whole new design.
+                Others have been polished to feel cleaner and more consistent.
               </p>
             </div>
           </div>
 
           <div className="flex gap-3">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl shrink-0 bg-[#f6cf45]/10">
-              <GoGraph aria-hidden="true" className="w-5 h-5 text-[#f6cf45]" />
+              <LuBug aria-hidden="true" className="w-5 h-5 text-[#f6cf45]" />
             </div>
 
             <div>
               <h2 className="m-0 text-base font-bold text-[#f6cf45]">
-                A Clearer Stats Page
+                Minor Bug Fixes
               </h2>
 
               <p className="mt-2 text-sm leading-relaxed text-white/80">
-                The stats page has a cleaner look, with a clearer Salah
-                breakdown, refreshed streak card, and tabs for reasons instead
-                of swiping.
+                A few minor bugs have been fixed.
               </p>
             </div>
           </div>

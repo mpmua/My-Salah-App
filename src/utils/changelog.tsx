@@ -4,11 +4,34 @@ import { Capacitor } from "@capacitor/core";
 // 2.Change verisonNum of the first object in changeLogs to a string number (eg "3.0")
 // 3. Add new object to changeLogs Array with its versionNum being the variable LATEST_APP_VERSION
 
-export const LATEST_APP_VERSION: string = "5.3";
+export const LATEST_APP_VERSION: string = "5.4";
 
 export const changeLogs = [
   {
     versionNum: LATEST_APP_VERSION,
+    changes: [
+      {
+        heading: "Improvement: A Fresh New Look",
+        text: (
+          <>
+            <strong>Improved:</strong> The app has been given a refresh. Some
+            screens and sheets have changed more than others, so things may look
+            a little different.
+          </>
+        ),
+      },
+      {
+        heading: "Fix: Minor Bug Fixes",
+        text: (
+          <>
+            <strong>Fixed:</strong> A few minor bugs have been fixed.
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    versionNum: "5.3",
     changes: [
       ...(Capacitor.getPlatform() === "android"
         ? [

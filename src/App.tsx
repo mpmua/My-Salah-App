@@ -311,7 +311,7 @@ const App = () => {
       localStorage.getItem("appVersion") &&
       localStorage.getItem("appVersion") !== LATEST_APP_VERSION
     ) {
-      if (LATEST_APP_VERSION === "5.2") {
+      if (LATEST_APP_VERSION === "5.4") {
         setShowMajorUpdateOverlay(true);
       } else if (LATEST_APP_VERSION === "5.3") {
         setShowChangelogSheet(true);
