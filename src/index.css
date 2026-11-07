@@ -263,6 +263,7 @@ ion-header {
 
 ion-alert {
   --background: var(--card-bg-color) !important;
+  --ion-color-step-100: transparent;
 }
 
 ion-select-option {
