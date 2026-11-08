@@ -24,8 +24,8 @@
   --input-color-scheme: light;
   --sheet-icon-bg-color: #e7f0ff;
   --sheet-divider-color: #e3e7ed;
-  --sheet-group-bg: #f4f6f9;
-  --sheet-group-border: #e3e7ed;
+  --sheet-group-bg: #f5f5f5;
+  --sheet-group-border: transparent;
   --sheet-pill-bg: #e6e9ee;
   --sheet-tag-text-color: #0b5bdc;
   --sheet-option-bg: rgb(240, 240, 240);
