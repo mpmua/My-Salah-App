@@ -206,6 +206,11 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   display: none;
 }
 
+input::-webkit-date-and-time-value {
+  margin: 0;
+  line-height: 2.75rem;
+}
+
 ion-title {
   /* color: #fff; */
 }

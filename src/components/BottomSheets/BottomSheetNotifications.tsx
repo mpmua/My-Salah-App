@@ -325,7 +325,7 @@ const BottomSheetNotifications = ({
               </IonRadioGroup>
               {selectedDailyNotificationOption === "fixedTime" ? (
                 <div className="flex items-center justify-between gap-3 px-4 py-3">
-                  <span className="text-[var(--secondary-text-color)]">
+                  <span className="whitespace-nowrap text-[var(--secondary-text-color)]">
                     Remind me at
                   </span>
                   <IonInput
@@ -338,7 +338,7 @@ const BottomSheetNotifications = ({
                         // "--background": "var(--card-bg-color)",
                       }
                     }
-                    className="w-auto rounded-xl !bg-[var(--sheet-pill-bg)] [--padding-end:0.875rem] [--padding-start:0.875rem]"
+                    className="!w-[8.5rem] rounded-xl !bg-[var(--sheet-pill-bg)] ![--padding-end:0.875rem] ![--padding-start:0.875rem]"
                     type="time"
                     dir="auto"
                     id="appt"

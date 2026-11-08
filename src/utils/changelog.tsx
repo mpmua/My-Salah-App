@@ -11,7 +11,7 @@ export const changeLogs = [
     versionNum: LATEST_APP_VERSION,
     changes: [
       {
-        heading: "Improvement: A Fresh New Look",
+        heading: "Improvement: A Refreshed Look",
         text: (
           <>
             <strong>Improved:</strong> The app has been given a refresh. Some
