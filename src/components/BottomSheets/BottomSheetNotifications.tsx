@@ -21,6 +21,7 @@ import {
   isBatteryOptimizationEnabled,
   // requestIgnoreBatteryOptimization,
   scheduleAfterIshaDailyNotifications,
+  showAlert,
 } from "../../utils/helpers";
 import {
   IonButton,
@@ -306,21 +307,32 @@ const BottomSheetNotifications = ({
 
                 {/* {userPreferences.prayerCalculationMethod !== "" &&
                   userLocations.length > 0 && ( */}
-                <IonRadio
-                  mode={isPlatform("ios") ? "ios" : "md"}
-                  labelPlacement="start"
-                  justify="space-between"
-                  value="afterIsha"
-                  color="primary"
-                  disabled={
-                    // userPreferences.prayerCalculationMethod === "" ||
-                    // userLocations.length === 0
-                    !isAfterIshaOptionEnabled
-                  }
-                  className="w-full border-t border-[color:var(--sheet-divider-color)] px-4 py-3 [--color:var(--secondary-text-color)]"
+                <div
+                  onClick={() => {
+                    if (!isAfterIshaOptionEnabled) {
+                      showAlert(
+                        "Salah times not set",
+                        "Please set up Salah times to use the 'After Isha' option.",
+                      );
+                    }
+                  }}
                 >
-                  After Isha
-                </IonRadio>
+                  <IonRadio
+                    mode={isPlatform("ios") ? "ios" : "md"}
+                    labelPlacement="start"
+                    justify="space-between"
+                    value="afterIsha"
+                    color="primary"
+                    disabled={
+                      // userPreferences.prayerCalculationMethod === "" ||
+                      // userLocations.length === 0
+                      !isAfterIshaOptionEnabled
+                    }
+                    className="w-full border-t border-[color:var(--sheet-divider-color)] px-4 py-3 [--color:var(--secondary-text-color)]"
+                  >
+                    After Isha
+                  </IonRadio>
+                </div>
                 {/* )} */}
               </IonRadioGroup>
               {selectedDailyNotificationOption === "fixedTime" ? (
@@ -407,7 +419,7 @@ const BottomSheetNotifications = ({
             </section>
             {!isAfterIshaOptionEnabled && (
               <p className="mt-2 text-sm leading-snug text-[var(--secondary-text-color)]">
-                Please set up salah times to use the 'After Isha' option
+                Please set up Salah times to use the 'After Isha' option
               </p>
             )}
           </div>
