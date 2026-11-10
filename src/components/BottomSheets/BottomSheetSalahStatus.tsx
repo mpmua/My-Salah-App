@@ -72,6 +72,7 @@ const BottomSheetSalahStatus = ({
   const [salahStatus, setSalahStatus] = useState<SalahStatusType>("");
   const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
   const [reasonsHeight, setReasonsHeight] = useState(0);
+  const [animateReasons, setAnimateReasons] = useState(false);
 
   const [notes, setNotes] = useState("");
   const handleNotes = (e: CustomEvent<{ value: string }>) => {
@@ -332,7 +333,11 @@ const BottomSheetSalahStatus = ({
         className="modal-fit-content"
         mode="ios"
         onWillPresent={() => {
+          setAnimateReasons(false);
           checkDBForSalah();
+        }}
+        onDidPresent={() => {
+          setAnimateReasons(true);
         }}
         onDidDismiss={() => {
           setShowUpdateStatusModal(false);
@@ -568,7 +573,10 @@ const BottomSheetSalahStatus = ({
               </motion.button>
             </div>
             <section
-              style={{ maxHeight: reasonsHeight + "px" }}
+              style={{
+                maxHeight: reasonsHeight + "px",
+                transition: animateReasons ? undefined : "none",
+              }}
               ref={modalSheetSalahReasonsWrap}
               className="mt-8 mb-5 overflow-x-hidden salah-status-modal-reasons-wrap scrollable-container ion-content-scroll-host"
             >
