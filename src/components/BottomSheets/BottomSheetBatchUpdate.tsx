@@ -492,7 +492,7 @@ const BottomSheetBatchUpdate = ({
               aria-label="notes"
               autoGrow={true}
               rows={1}
-              className="rounded-md border border-[color:var(--sheet-divider-color)] bg-[var(--sheet-group-bg)] text-[0.8125rem] text-[var(--ion-text-color)] ![--padding-start:0.875rem] ![--padding-end:0.875rem] ![--padding-top:0.8125rem] ![--padding-bottom:0.8125rem] ![--placeholder-color:var(--secondary-text-color)] ![--placeholder-opacity:1]"
+              className="rounded-md border border-[color:var(--sheet-divider-color)] bg-[var(--sheet-group-bg)] !text-[0.8125rem] text-[var(--ion-text-color)] ![--padding-start:0.875rem] ![--padding-end:0.875rem] ![--padding-top:0.8125rem] ![--padding-bottom:0.8125rem] ![--placeholder-color:var(--secondary-text-color)] ![--placeholder-opacity:1]"
               placeholder="Add a note..."
               value={batchUpdateObj.notes}
               onIonInput={(e) => {
