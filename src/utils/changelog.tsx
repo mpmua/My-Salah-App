@@ -4,7 +4,7 @@ import { Capacitor } from "@capacitor/core";
 // 2.Change verisonNum of the first object in changeLogs to a string number (eg "3.0")
 // 3. Add new object to changeLogs Array with its versionNum being the variable LATEST_APP_VERSION
 
-export const LATEST_APP_VERSION: string = "5.4";
+export const LATEST_APP_VERSION: string = "5.5";
 
 export const changeLogs = [
   {
