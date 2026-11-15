@@ -236,9 +236,9 @@ const BottomSheetSalahStatus = ({
 
       if (Capacitor.isNativePlatform()) {
         if (
-          incrementedSaveButtonTapCount === 3 ||
-          incrementedSaveButtonTapCount === 10 ||
-          incrementedSaveButtonTapCount === 20 ||
+          incrementedSaveButtonTapCount === 2 ||
+          incrementedSaveButtonTapCount === 8 ||
+          incrementedSaveButtonTapCount === 15 ||
           incrementedSaveButtonTapCount % 50 === 0
         ) {
           InAppReview.requestReview();
@@ -358,7 +358,7 @@ const BottomSheetSalahStatus = ({
           ref={sheetWrapper}
           className="w-[90%] mx-auto mb-5 flex max-h-[calc(var(--sheet-max-height)-1.25rem)] flex-col rounded-lg text-white pb-env-safe-area-inset-bottom"
         >
-          <div className="ion-content-scroll-host min-h-0 overflow-y-auto">
+          <div className="min-h-0 overflow-y-auto ion-content-scroll-host">
             <h1 className="mb-2 text-left text-[1.375rem] font-bold leading-tight text-[var(--ion-text-color)]">
               How did you pray{" "}
               {Object.keys(selectedSalahAndDate).length === 1 &&
