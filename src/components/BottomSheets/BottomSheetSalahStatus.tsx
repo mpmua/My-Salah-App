@@ -578,7 +578,7 @@ const BottomSheetSalahStatus = ({
                 transition: animateReasons ? undefined : "none",
               }}
               ref={modalSheetSalahReasonsWrap}
-              className="mt-8 mb-5 overflow-x-hidden salah-status-modal-reasons-wrap scrollable-container ion-content-scroll-host"
+              className="mt-2 mb-5 overflow-x-hidden salah-status-modal-reasons-wrap scrollable-container ion-content-scroll-host"
             >
               {userPreferences.reasons.length > 0 && (
                 <div>
