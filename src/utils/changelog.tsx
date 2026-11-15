@@ -14,17 +14,17 @@ export const changeLogs = [
         heading: "Improvement: A Refreshed Look",
         text: (
           <>
-            <strong>Improved:</strong> The app has been given a refresh. Some
-            screens and sheets have changed more than others, so things may look
-            a little different.
+            <strong>Improved:</strong> The app has been given a polish. Many
+            screens and sheets have been refined to look cleaner and feel more
+            consistent.
           </>
         ),
       },
       {
-        heading: "Fix: Minor Bug Fixes",
+        heading: "Fix: Bug Fixes",
         text: (
           <>
-            <strong>Fixed:</strong> A few minor bugs have been fixed.
+            <strong>Fixed:</strong> Various bugs have been fixed.
           </>
         ),
       },

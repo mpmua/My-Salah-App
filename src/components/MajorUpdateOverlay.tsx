@@ -66,8 +66,8 @@ const MajorUpdateOverlay = ({
         </h1>
 
         <p className="mt-3 text-sm leading-relaxed text-white/80">
-          A few key screens have been redesigned, and the rest have been
-          polished.
+          The app has been given a polish, with a number of improvements to its
+          look and feel.
         </p>
 
         <section className="pb-4 mt-6 space-y-6">
@@ -81,12 +81,12 @@ const MajorUpdateOverlay = ({
 
             <div>
               <h2 className="m-0 text-base font-bold text-[#c583f1]">
-                New & Improved Design
+                Improved Design
               </h2>
 
               <p className="mt-2 text-sm leading-relaxed text-white/80">
-                Some screens, like logging a Salah, have a whole new design.
-                Others have been polished to feel cleaner and more consistent.
+                Many screens and sheets have been refined to look cleaner and
+                feel more consistent.
               </p>
             </div>
           </div>
@@ -98,11 +98,11 @@ const MajorUpdateOverlay = ({
 
             <div>
               <h2 className="m-0 text-base font-bold text-[#f6cf45]">
-                Minor Bug Fixes
+                Bug Fixes
               </h2>
 
               <p className="mt-2 text-sm leading-relaxed text-white/80">
-                A few minor bugs have been fixed.
+                Various bugs have been fixed.
               </p>
             </div>
           </div>
