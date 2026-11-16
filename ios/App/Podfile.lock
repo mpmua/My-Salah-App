@@ -1,39 +1,39 @@
 PODS:
-  - Capacitor (8.1.0):
+  - Capacitor (8.6.2):
     - CapacitorCordova
-  - CapacitorApp (8.0.0):
+  - CapacitorApp (8.1.2):
     - Capacitor
   - CapacitorCommunityInAppReview (8.0.0):
     - Capacitor
-  - CapacitorCommunitySqlite (8.0.0):
+  - CapacitorCommunitySqlite (8.1.1):
     - Capacitor
     - SQLCipher
     - ZIPFoundation
-  - CapacitorCordova (8.1.0)
-  - CapacitorDialog (8.0.0):
+  - CapacitorCordova (8.6.2)
+  - CapacitorDialog (8.0.1):
     - Capacitor
-  - CapacitorFilesystem (8.1.1):
+  - CapacitorFilesystem (8.1.5):
     - Capacitor
-    - IONFilesystemLib (~> 1.1.0)
-  - CapacitorGeolocation (8.1.0):
+    - IONFilesystemLib (= 2.0.1)
+  - CapacitorGeolocation (8.2.4):
     - Capacitor
-    - IONGeolocationLib (= 2.0.0)
-  - CapacitorKeyboard (8.0.0):
+    - IONGeolocationLib (= 3.0.0)
+  - CapacitorKeyboard (8.0.6):
     - Capacitor
   - CapacitorLocalNotifications (8.0.0):
     - Capacitor
-  - CapacitorNativeSettings (8.0.0):
+  - CapacitorNativeSettings (8.2.0):
     - Capacitor
-  - CapacitorShare (8.0.0):
+  - CapacitorShare (8.0.3):
     - Capacitor
-  - CapacitorSplashScreen (8.0.0):
+  - CapacitorSplashScreen (8.0.2):
     - Capacitor
-  - CapacitorStatusBar (8.0.0):
+  - CapacitorStatusBar (8.0.4):
     - Capacitor
-  - CapacitorToast (8.0.0):
+  - CapacitorToast (8.0.1):
     - Capacitor
-  - IONFilesystemLib (1.1.0)
-  - IONGeolocationLib (2.0.0)
+  - IONFilesystemLib (2.0.1)
+  - IONGeolocationLib (3.0.0)
   - SQLCipher (4.10.0):
     - SQLCipher/standard (= 4.10.0)
   - SQLCipher/common (4.10.0)
@@ -98,23 +98,23 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/toast"
 
 SPEC CHECKSUMS:
-  Capacitor: 830fc6ff88e99bb5ba48350f02c01ab01ba3b2b8
-  CapacitorApp: cfa0120a1f3a6f69d4d37d3041782aa5c5167d0b
+  Capacitor: a74163dfeb1940b630e39d8881ecdf0c2b11e591
+  CapacitorApp: 542f92c179e3e08ed5d787846bcfa1b377e9745e
   CapacitorCommunityInAppReview: 2a4296ea3e7e4799a87340bd1161c173bd22f3bd
-  CapacitorCommunitySqlite: 618bf60537d8a455c65abc39af94d1e735cb6fe3
-  CapacitorCordova: e8b76fd95fc1e157775abc484c59cc0de464095d
-  CapacitorDialog: c4d52ac6a863f8093f9d815b19584c644bdfe98c
-  CapacitorFilesystem: e7d12e8146659fc5f155fc6e619362b669b10f3a
-  CapacitorGeolocation: a2009727714adfa58bf093300b15856aa59e4b7a
-  CapacitorKeyboard: 0a2e7c0635ccf3db60abed14bd6f35147ce25942
+  CapacitorCommunitySqlite: c81d3d8e8081bf1e84a6924cb34295c2488bee29
+  CapacitorCordova: 8e68a712e47128cf5b97e88b9c2b406b9b956b22
+  CapacitorDialog: d43769d1245d315ffc931b2ca3d4eea76870798b
+  CapacitorFilesystem: 23beb239d41c889b38be13fe6a7a2f28d8250b62
+  CapacitorGeolocation: 5105b12f9f3e2090e38e809fae165225ed4ed846
+  CapacitorKeyboard: d96c5f659eb0a33dfc734640252836fa9575e8ad
   CapacitorLocalNotifications: b0003a1b69c95badd88f9cb56b1965ace20eb346
-  CapacitorNativeSettings: 72809f6bb84b8649cced16b2423b3b67e6be05cd
-  CapacitorShare: 703a2744f755982f1a4950f5120bea9763d6dfea
-  CapacitorSplashScreen: 4b78177a21f0f73ccc1c78dd93b2a94854ac4b83
-  CapacitorStatusBar: c6fa2d404083e41d145ea56698707a6986d4428b
-  CapacitorToast: 6275c84283ac9c424a20554e71b8a6263f44554c
-  IONFilesystemLib: 50b9a0f3052a9b40b9bedb43f328a8fe222f9f87
-  IONGeolocationLib: a5e40b54edc2ee9902036eda5aaa41ddf07bb68d
+  CapacitorNativeSettings: d4d10e9626d16a97a23b6f00ab1f30fc85801311
+  CapacitorShare: c19ef886b846555a4eca4f085d4414b6cac91d4b
+  CapacitorSplashScreen: 120117d1b2264bba31a6e6f998f51e510144dd12
+  CapacitorStatusBar: 9b98299f3d119657ea338c047e0b876714c213ad
+  CapacitorToast: 0432f40d66143ab56a322095e09740aa2c9a88a5
+  IONFilesystemLib: 306469e4c563f61de82d7bca2bbfed9e64d1b2d2
+  IONGeolocationLib: a125d4f91ea353652026e5da6e5bee0414a57d37
   SQLCipher: eb79c64049cb002b4e9fcb30edb7979bf4706dfc
   ZIPFoundation: dfd3d681c4053ff7e2f7350bc4e53b5dba3f5351
 
