@@ -7,6 +7,24 @@ import { Capacitor } from "@capacitor/core";
 export const LATEST_APP_VERSION: string = "5.5";
 
 export const changeLogs = [
+  ...(Capacitor.getPlatform() === "ios"
+    ? [
+        {
+          versionNum: "5.6",
+          changes: [
+            {
+              heading: "Fix: iOS 27 Compatibility",
+              text: (
+                <>
+                  <strong>Fixed:</strong> Resolved an issue that stopped the
+                  app from working on devices running iOS 27.
+                </>
+              ),
+            },
+          ],
+        },
+      ]
+    : []),
   {
     versionNum: LATEST_APP_VERSION,
     changes: [
