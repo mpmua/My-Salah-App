@@ -888,6 +888,9 @@ const App = () => {
       ) {
         isActiveStreak = true;
       }
+      if (i === 1 && !isStreakBreakingStatus(firstDateSalahStatuses)) {
+        streakDatesArr.push(previousDate);
+      }
       if (
         isConsecutiveDay(previousDate, currentDate) &&
         !isStreakBreakingStatus(salahStatuses)
@@ -896,9 +899,7 @@ const App = () => {
           excusedDays += 1;
         }
 
-        i === 1 && !isStreakBreakingStatus(firstDateSalahStatuses)
-          ? streakDatesArr.push(previousDate, currentDate)
-          : streakDatesArr.push(currentDate);
+        streakDatesArr.push(currentDate);
 
         if (isConsecutiveDay(previousDate, todaysDate)) {
           handleEndOfStreak(
