@@ -89,13 +89,13 @@ const BottomSheetStreaksHistory = ({
         </p>
 
         {/* {filteredStreakDatesObjectsArr.slice(1).map((item, i) => { */}
-        <ul>
+        <ul className="space-y-2.5">
           {filteredStreakDatesObjectsArr.map((item, i) => {
             return (
               item.days > 0 && (
                 <li
                   key={i}
-                  className="border-t border-[color:var(--sheet-divider-color)] py-3.5 first:border-t-0"
+                  className="rounded-2xl bg-[var(--sheet-group-bg)] p-3"
                 >
                   <section className="flex items-baseline justify-between gap-3">
                     <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.9375rem] font-medium">
