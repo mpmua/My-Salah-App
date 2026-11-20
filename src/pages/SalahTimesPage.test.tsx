@@ -149,7 +149,7 @@ describe("ingeration tests for when atleast one location exists", () => {
     expect(locationName).not.toBeInTheDocument();
 
     const locationDeleteToast = await screen.findByTestId(
-      "location-deletion-toast"
+      "location-successfully-deleted-toast"
     );
     expect(locationDeleteToast).toBeInTheDocument();
   });

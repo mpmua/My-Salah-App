@@ -23,7 +23,6 @@ import {
 } from "../../../utils/constants";
 import { fetchAllLocations, toggleDBConnection } from "../../../utils/dbUtils";
 import ActionSheet from "../../ActionSheet";
-import Toast from "../../Toast";
 
 import {
   cancelNotifications,
@@ -66,7 +65,6 @@ const BottomSheetLocationsList = ({
   const [locationToDeleteId, setLocationToDeleteId] = useState<null | number>(
     null,
   );
-  const [showDeleteLocationToast, setShowDeleteLocationToast] = useState(false);
 
   const updateActiveLocation = async (id: number) => {
     if (!dbConnection || !dbConnection.current) {
@@ -210,13 +208,6 @@ const BottomSheetLocationsList = ({
         </button>
       </section>
       {/* </IonPage> */}
-
-      <Toast
-        isOpen={showDeleteLocationToast}
-        message="Location deleted"
-        setShow={setShowDeleteLocationToast}
-        testId={"location-deletion-toast"}
-      />
 
       <ActionSheet
         // trigger="open-delete-location-action-sheet"
