@@ -45,11 +45,10 @@ const BottomSheetSettingsTips = ({
     >
       <section className="ion-content-scroll-host max-h-[var(--sheet-max-height)] overflow-y-auto px-5 pt-8 pb-[calc(1.5rem+env(safe-area-inset-bottom))] text-[var(--ion-text-color)]">
         <h1 className="mb-1.5 mt-0 text-[1.625rem] font-bold leading-tight">
-          Good to know
+          Finally...
         </h1>
         <p className="text-[0.9375rem] leading-relaxed text-[var(--secondary-text-color)]">
-          You can change your start date and update a few days, years or even
-          decades of history at once, any time, from the Settings page.
+          You can change many things from the Settings page, such as:
         </p>
         <div
           aria-hidden="true"
@@ -64,7 +63,7 @@ const BottomSheetSettingsTips = ({
                 <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[var(--sheet-bg-color)] text-[var(--secondary-text-color)]">
                   <item.icon className="text-lg" />
                 </span>
-                <div className="min-w-0 flex-1">
+                <div className="flex-1 min-w-0">
                   <p className="text-[0.9375rem] font-semibold">{item.label}</p>
                   <p className="text-sm text-[var(--secondary-text-color)]">
                     {item.description}
@@ -79,7 +78,7 @@ const BottomSheetSettingsTips = ({
           className="m-0 mt-6 font-semibold"
           onClick={() => modal.current?.dismiss()}
         >
-          Got it
+          Finish Onboarding
         </IonButton>
       </section>
     </IonModal>

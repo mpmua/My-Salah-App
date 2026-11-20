@@ -278,7 +278,8 @@ const SalahTable = ({
                             className={`${salahTableIndividualSquareStyles} fill-current [stroke-width:3] ${
                               showSingleCellHint &&
                               !isMultiEditMode &&
-                              salahName === "Fajr"
+                              salahName === "Fajr" &&
+                              rowData.date === format(new Date(), "yyyy-MM-dd")
                                 ? "!rounded-full outline outline-2 outline-offset-[6px] outline-[var(--current-salah-color)]"
                                 : ""
                             } 
