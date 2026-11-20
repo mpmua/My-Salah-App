@@ -402,7 +402,7 @@ ion-select.sort-select::part(inner) {
   background: var(--sheet-group-bg);
 }
 
-.sheet-group > * + * {
+.sheet-group:not(.flex) > * + * {
   border-top: 1px solid var(--sheet-divider-color);
 }
 
