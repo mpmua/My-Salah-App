@@ -153,28 +153,40 @@ const BottomSheetSingleDateView = ({
                             ? "prayed"
                             : item.salahStatus || "No data"}
                     </p>
-                    {item.reasons.length > 0 && (
-                      <p className="text-[0.9375rem] text-[var(--secondary-text-color)]">
-                        {item.reasons.split(",").length > 1
-                          ? "Reasons: "
-                          : "Reason: "}
-                        {item.reasons
-                          .split(", ")
-                          .filter((reason) => reason.length > 0)
-                          .sort()
-                          .join(", ")}
-                      </p>
-                    )}
                   </div>
                 </div>
               </div>
 
-              {item.notes.length > 0 && (
+              {item.reasons.length > 0 && (
                 <div className="mt-3">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[var(--secondary-text-color)]">
+                    {item.reasons.split(",").length > 1 ? "Reasons" : "Reason"}
+                  </p>
+                  <div className="mt-2.5 flex flex-wrap gap-x-1.5 gap-y-2.5">
+                    {item.reasons
+                      .split(", ")
+                      .filter((reason) => reason.length > 0)
+                      .sort()
+                      .map((reason) => (
+                        <span
+                          key={reason}
+                          className="rounded-full border border-[color:var(--sheet-divider-color)] bg-[var(--sheet-pill-bg)] px-3 py-[3px] text-[0.8125rem] leading-snug"
+                        >
+                          {reason}
+                        </span>
+                      ))}
+                  </div>
+                </div>
+              )}
+
+              {item.notes.length > 0 && (
+                <div className="mt-4">
                   <p className="text-xs font-semibold uppercase tracking-wider text-[var(--secondary-text-color)]">
                     Note
                   </p>
-                  <p className="mt-1">{item.notes}</p>
+                  <p className="mt-2.5 border-l-[3px] border-[color:var(--sheet-divider-color)] pl-3">
+                    {item.notes}
+                  </p>
                 </div>
               )}
             </div>
